@@ -1,5 +1,5 @@
 from foodStorage import FoodStorage
 
-class Fridge(FoodStorage):
+class Freezer(FoodStorage):
     def __init__(self):
-        super()
+        super().__init__()
