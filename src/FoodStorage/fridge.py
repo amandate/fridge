@@ -1,4 +1,4 @@
-from foodStorage import FoodStorage
+from .foodStorage import FoodStorage
 
 class Fridge(FoodStorage):
     def __init__(self):

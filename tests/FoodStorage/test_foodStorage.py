@@ -1,7 +1,7 @@
 import unittest
-from foodStorage import FoodStorage
+from src.FoodStorage.foodStorage import FoodStorage
 
-class TestFoodStorage(unittest.TestCase):
+class Test_FoodStorage(unittest.TestCase):
 
     def testInitializeFoodStorage(self):
         foodStorage = FoodStorage()

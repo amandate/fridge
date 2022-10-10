@@ -1,7 +1,7 @@
 import unittest
-from freezer import Freezer
+from src.FoodStorage.freezer import Freezer
 
-class TestFreezer(unittest.TestCase):
+class Test_Freezer(unittest.TestCase):
 
     def testInitializeFreezer(self):
         freezer = Freezer()
