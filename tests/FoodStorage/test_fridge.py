@@ -7,10 +7,6 @@ class Test_Fridge(unittest.TestCase):
     def setUp(self):
         self.fridge = Fridge()
 
-    ''' Asserts that our current inventory is empty. '''
-    def _checkEmptyInventory(self):
-        self.assertEquals([], self.foodStorage.list())
-
     def testInitializeFridge(self):
         self.assertFalse(self.fridge.isOpen)
         self.assertTrue(isEmptyInventory(self.fridge))
