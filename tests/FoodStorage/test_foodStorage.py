@@ -9,18 +9,14 @@ class Test_FoodStorage(unittest.TestCase):
 
     def testInitializeFoodStorage(self):
         self.assertFalse(self.foodStorage.isOpen)
-        self._checkEmptyInventory()
-
-    ''' Asserts that our current inventory is empty. '''
-    def _checkEmptyInventory(self):
-        self.assertEquals([], self.foodStorage.list())
+        self.assertTrue(isEmptyInventory(self.foodStorage))
 
     def testAddFoods(self):
         # Inventory should start as empty
-        self._checkEmptyInventory()
+        self.assertTrue(isEmptyInventory(self.foodStorage))
 
         # Inventory should be sorted after adding multiple foods
-        addMultipleFoods()
+        addMultipleFoods(self.foodStorage, [food1, food2, food3])
         self.assertEquals(
             [(fooddate3, food3), (fooddate1, food1), (fooddate2, food2)], 
             self.foodStorage.list()
