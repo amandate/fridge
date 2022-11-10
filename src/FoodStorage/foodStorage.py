@@ -34,7 +34,7 @@ class FoodStorage:
 
     ''' Lists our inventory in order of earliest expiration date. '''
     def list(self):
-        self.__sortInventory__()
+        self._sortInventory()
         return self._sortedInventory
     
     def update(self, food):
