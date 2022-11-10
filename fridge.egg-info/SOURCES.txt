@@ -1,0 +1,7 @@
+README.md
+setup.cfg
+setup.py
+fridge.egg-info/PKG-INFO
+fridge.egg-info/SOURCES.txt
+fridge.egg-info/dependency_links.txt
+fridge.egg-info/top_level.txt
