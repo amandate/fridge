@@ -5,4 +5,5 @@ class Food(object):
         self.use_by_length = use_by_length
     
     def openItem():
-        pass 
+        #update expiration date with use by date 
+        
