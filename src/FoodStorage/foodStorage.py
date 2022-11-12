@@ -16,7 +16,7 @@ class FoodStorage:
     def addFoods(self, list_of_foods):
         for food in list_of_foods:
             self.add(food)
-        print("Successfully added all foods: ${list_of_foods}")
+        print(f"Successfully added all foods: {list_of_foods}")
 
     ''' Adds food item to self._inventoryPQ. '''
     def add(self, food):
@@ -28,7 +28,7 @@ class FoodStorage:
 
     ''' Gets the notice message for a food that's about to expire or is expired. '''
     def _getExpirationNotice(self, expiration_date):
-        remaining_days = expiration_date - self.current_day
+        remaining_days = (expiration_date - self.current_day).days
         if remaining_days > 0:
             return f" [{remaining_days} days until expired!]"
         elif remaining_days < 0:
@@ -40,13 +40,14 @@ class FoodStorage:
         otherwise. In other words, returns whether something is going to expire
         self.expiration_window days from self.current_day. '''
     def _isWithinExpirationWindow(self, expiration_date):
+        a = self.current_day + self.expiration_window
         return expiration_date < self.current_day + self.expiration_window
 
     ''' Prints self._sortedInventory to user.'''
     def _printList(self):
         for expiration_date, food in self._sortedInventory:
-            notice = self._getExpirationNotice() if self._isWithinExpirationWindow(expiration_date) else ""
-            print(f"{food.name} {expiration_date}{notice}")
+            notice = self._getExpirationNotice(expiration_date) if self._isWithinExpirationWindow(expiration_date) else ""
+            print(f"{food.name} {expiration_date.date()}{notice}")
 
     ''' Updates self._sortedInventory. If there were new foods added, since we last 
         updated our self._sortedInventory, we add everything from the current 
