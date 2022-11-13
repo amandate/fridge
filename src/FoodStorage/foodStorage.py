@@ -2,7 +2,9 @@ from src.Constants.constants import \
     ADD_FOODS_SUCCESS_MESSAGE, \
     EMPTY_MESSAGE, \
     FOOD_ABOUT_TO_EXPIRE_MESSAGE, \
+    FOOD_ABOUT_TO_EXPIRE_MESSAGE_SINGULAR, \
     FOOD_EXPIRED_MESSAGE, \
+    FOOD_EXPIRED_MESSAGE_SINGULAR, \
     FOOD_EXPIRED_TODAY_MESSAGE
 from datetime import date, timedelta
 from queue import PriorityQueue
@@ -36,8 +38,12 @@ class FoodStorage:
     def _getExpirationNotice(self, expiration_date):
         if self._isWithinExpirationWindow(expiration_date):
             remaining_days = (expiration_date - self.current_day).days
+            if remaining_days == 1:
+                return FOOD_ABOUT_TO_EXPIRE_MESSAGE_SINGULAR.format(remaining_days)
             if remaining_days > 0:
                 return FOOD_ABOUT_TO_EXPIRE_MESSAGE.format(remaining_days)
+            elif remaining_days == -1:
+                return FOOD_EXPIRED_MESSAGE_SINGULAR.format(-1 * remaining_days)
             elif remaining_days < 0:
                 return FOOD_EXPIRED_MESSAGE.format(-1 * remaining_days)
             else:
