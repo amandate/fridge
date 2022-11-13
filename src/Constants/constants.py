@@ -1,0 +1,5 @@
+ADD_FOODS_SUCCESS_MESSAGE = "Successfully added all foods: {}"
+EMPTY_MESSAGE = ""
+FOOD_ABOUT_TO_EXPIRE_MESSAGE = "[{} days until expired!]"
+FOOD_EXPIRED_MESSAGE = "[{} days past expiration date!]"
+FOOD_EXPIRED_TODAY_MESSAGE = "[Expires today! Last day to use this!]"
