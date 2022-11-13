@@ -39,11 +39,11 @@ class FoodStorage:
         if self._isWithinExpirationWindow(expiration_date):
             remaining_days = (expiration_date - self.current_day).days
             if remaining_days == 1:
-                return FOOD_ABOUT_TO_EXPIRE_MESSAGE_SINGULAR.format(remaining_days)
+                return FOOD_ABOUT_TO_EXPIRE_MESSAGE_SINGULAR
+            elif remaining_days == -1:
+                return FOOD_EXPIRED_MESSAGE_SINGULAR
             elif remaining_days > 0:
                 return FOOD_ABOUT_TO_EXPIRE_MESSAGE.format(remaining_days)
-            elif remaining_days == -1:
-                return FOOD_EXPIRED_MESSAGE_SINGULAR.format(-1 * remaining_days)
             elif remaining_days < 0:
                 return FOOD_EXPIRED_MESSAGE.format(-1 * remaining_days)
             else:
