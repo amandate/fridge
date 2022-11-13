@@ -76,7 +76,7 @@ class FoodStorage:
             return
 
         self.isOpen = True
-        self.current_day = datetime.today()
+        self.current_day = date.today()
         self.list()
     
     def update(self, food):

@@ -9,6 +9,7 @@ class Test_Fridge(unittest.TestCase):
 
     def testInitializeFridge(self):
         self.assertFalse(self.fridge.isOpen)
+        self.assertEquals(dateToday, self.fridge.current_day)
         self.assertTrue(isEmptyInventory(self.fridge))
 
     def testAddFoods(self):
@@ -22,12 +23,19 @@ class Test_Fridge(unittest.TestCase):
             self.fridge.list()
             )
 
-        # Adding a new food, after listing, should still return a sorted inventory.
-        self.fridge.add(food1)
+        # Adding new food, after listing, should still return a sorted inventory.
+        self.fridge.addFoods([foodFuture, foodTomorrow, foodToday])
         self.assertEquals(
-            [(fooddate3, food3), (fooddate1, food1), (fooddate1, food1), (fooddate2, food2)], 
+            [(fooddate3, food3), (fooddate1, food1), (fooddate2, food2), 
+            (dateToday, foodToday), (dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
             self.fridge.list()
             )
+
+    def testOpen(self):
+        self.assertFalse(self.fridge.isOpen)
+
+        self.fridge.open()
+        self.assertTrue(self.fridge.isOpen)
 
 if __name__ == '__main__':
     unittest.main()

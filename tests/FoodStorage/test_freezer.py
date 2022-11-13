@@ -9,6 +9,7 @@ class Test_Freezer(unittest.TestCase):
 
     def testInitializeFreezer(self):
         self.assertFalse(self.freezer.isOpen)
+        self.assertEquals(dateToday, self.freezer.current_day)
         self.assertTrue(isEmptyInventory(self.freezer))
 
     def testAddFoods(self):
@@ -22,12 +23,19 @@ class Test_Freezer(unittest.TestCase):
             self.freezer.list()
             )
 
-        # Adding a new food, after listing, should still return a sorted inventory.
-        self.freezer.add(food1)
+        # Adding new food, after listing, should still return a sorted inventory.
+        self.freezer.addFoods([foodFuture, foodTomorrow, foodToday])
         self.assertEquals(
-            [(fooddate3, food3), (fooddate1, food1), (fooddate1, food1), (fooddate2, food2)], 
+            [(fooddate3, food3), (fooddate1, food1), (fooddate2, food2), 
+            (dateToday, foodToday), (dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
             self.freezer.list()
             )
+
+    def testOpen(self):
+        self.assertFalse(self.freezer.isOpen)
+
+        self.freezer.open()
+        self.assertTrue(self.freezer.isOpen)
 
 
 if __name__ == '__main__':
