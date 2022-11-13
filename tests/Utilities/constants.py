@@ -1,9 +1,9 @@
 from src.Food.food import Food
-from datetime import datetime
+from datetime import date
 
-fooddate1 = datetime(2022, 11, 8)
-fooddate2 = datetime(2022, 11, 10)
-fooddate3 = datetime(2022, 11, 6)
+fooddate1 = date(2022, 11, 8)
+fooddate2 = date(2022, 11, 10)
+fooddate3 = date(2022, 11, 6)
 
 food1 = Food("apple", fooddate1, 3)
 food2 = Food("pear", fooddate2, 3)

@@ -1,10 +1,10 @@
 from queue import PriorityQueue
-from datetime import *
+from datetime import date, timedelta
 
 class FoodStorage:
     def __init__(self, expiration_window=7):
         self.isOpen = False
-        self.current_day = datetime.today()
+        self.current_day = date.today()
         self._inventoryPQ = PriorityQueue()
         self._sortedInventory = []
 
@@ -47,7 +47,7 @@ class FoodStorage:
     def _printList(self):
         for expiration_date, food in self._sortedInventory:
             notice = self._getExpirationNotice(expiration_date) if self._isWithinExpirationWindow(expiration_date) else ""
-            print(f"{food.name} {expiration_date.date()}{notice}")
+            print(f"{food.name} {expiration_date}{notice}")
 
     ''' Updates self._sortedInventory. If there were new foods added, since we last 
         updated our self._sortedInventory, we add everything from the current 
