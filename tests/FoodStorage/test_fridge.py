@@ -1,4 +1,4 @@
-from src.Constants.constants import *
+from src.Constants.messages import *
 from src.FoodStorage.fridge import Fridge
 from tests.Utilities.constants import *
 from tests.Utilities.utils import *

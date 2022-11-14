@@ -1,11 +1,4 @@
-from src.Constants.constants import \
-    ADD_FOODS_SUCCESS_MESSAGE, \
-    EMPTY_MESSAGE, \
-    FOOD_ABOUT_TO_EXPIRE_MESSAGE, \
-    FOOD_ABOUT_TO_EXPIRE_MESSAGE_SINGULAR, \
-    FOOD_EXPIRED_MESSAGE, \
-    FOOD_EXPIRED_MESSAGE_SINGULAR, \
-    FOOD_EXPIRED_TODAY_MESSAGE
+from src.Constants.messages import *
 from datetime import date, timedelta
 from queue import PriorityQueue
 
