@@ -13,7 +13,7 @@ class Test_Freezer(unittest.TestCase):
 
     def testInitializeFreezer(self):
         self.assertFalse(self.freezer.isOpen)
-        self.assertEquals(dateToday, self.freezer.current_day)
+        self.assertEquals(dateToday, self.freezer.current_date)
         self.assertTrue(isEmptyInventory(self.freezer))
 
     def testAddFoods(self):

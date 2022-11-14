@@ -12,7 +12,7 @@ from queue import PriorityQueue
 class FoodStorage:
     def __init__(self, expiration_window=7):
         self.isOpen = False
-        self.current_day = date.today()
+        self.current_date = date.today()
         self._inventoryPQ = PriorityQueue()
         self._sortedInventory = []
 
@@ -37,7 +37,7 @@ class FoodStorage:
     ''' Gets the notice message for a food that's about to expire or is expired. '''
     def _getExpirationNotice(self, expiration_date):
         if self._isWithinExpirationWindow(expiration_date):
-            remaining_days = (expiration_date - self.current_day).days
+            remaining_days = (expiration_date - self.current_date).days
             if remaining_days == 1:
                 return FOOD_ABOUT_TO_EXPIRE_MESSAGE_SINGULAR
             elif remaining_days == -1:
@@ -52,10 +52,10 @@ class FoodStorage:
 
     ''' Returns True if the expiration_date is within our expiration_window and False
         otherwise. In other words, returns whether something is going to expire
-        self.expiration_window days from self.current_day. '''
+        self.expiration_window days from self.current_date. '''
     def _isWithinExpirationWindow(self, expiration_date):
-        a = self.current_day + self.expiration_window
-        return expiration_date < self.current_day + self.expiration_window
+        a = self.current_date + self.expiration_window
+        return expiration_date < self.current_date + self.expiration_window
 
     ''' Prints self._sortedInventory to user.'''
     def _printList(self):
@@ -90,7 +90,7 @@ class FoodStorage:
             return
 
         self.isOpen = True
-        self.current_day = date.today()
+        self.current_date = date.today()
         self.list()
     
     def update(self, food):

@@ -13,7 +13,7 @@ class Test_FoodStorage(unittest.TestCase):
 
     def testInitializeFoodStorage(self):
         self.assertFalse(self.foodStorage.isOpen)
-        self.assertEquals(dateToday, self.foodStorage.current_day)
+        self.assertEquals(dateToday, self.foodStorage.current_date)
         self.assertTrue(isEmptyInventory(self.foodStorage))
 
     def testAddFoods(self):
@@ -63,7 +63,7 @@ class Test_FoodStorage(unittest.TestCase):
         self.assertEquals(expectedListOutput, actualListOutput)
 
         sys.stdout = sys.__stdout__
-        
+
     def testOpen(self):
         self.assertFalse(self.foodStorage.isOpen)
 

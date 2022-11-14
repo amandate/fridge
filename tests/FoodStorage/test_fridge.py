@@ -13,7 +13,7 @@ class Test_Fridge(unittest.TestCase):
 
     def testInitializeFridge(self):
         self.assertFalse(self.fridge.isOpen)
-        self.assertEquals(dateToday, self.fridge.current_day)
+        self.assertEquals(dateToday, self.fridge.current_date)
         self.assertTrue(isEmptyInventory(self.fridge))
 
     def testAddFoods(self):
