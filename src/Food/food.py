@@ -3,7 +3,7 @@ from datetime import date, timedelta
 class Food(object):
     def __init__(self, name, expiration_date, use_by_length):
         self.name = name
-        self.expiration_date = date(expiration_date)
+        self.expiration_date = date.fromisoformat(expiration_date)
         self.use_by_length = timedelta(days = use_by_length)
         self.isOpen = False
     
