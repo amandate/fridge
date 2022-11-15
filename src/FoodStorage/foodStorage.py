@@ -11,15 +11,14 @@ class FoodStorage:
         self.expiration_window = timedelta(days=expiration_window)
         self.isOpen = False
 
-        self._inventoryPQ = PriorityQueue()
         self._nameToFood = {}
         self._sortedInventory = []
-        self._stagedForRemoval = set()
+        self._foodStorageUpdated = False
 
     ''' Adds food item to self._inventoryPQ. '''
     def add(self, food):
         date = food.expiration_date
-        self._inventoryPQ.put((date, food))
+        self._foodStorageUpdated = True
         self._nameToFood[food.name] = food
 
     ''' Adds each food item from list_of_foods to self._inventoryPQ '''
@@ -30,7 +29,7 @@ class FoodStorage:
 
     def remove(self, foodName):
         if foodName in self._nameToFood:
-            self._stagedForRemoval.add(foodName)
+            self._foodStorageUpdated = True
             self._nameToFood.pop(foodName)
 
     def removeFoods(self, list_of_food_names):
@@ -72,26 +71,10 @@ class FoodStorage:
         self._sortedInventory into self._inventoryPQ and use it to repopulate 
         self._sortedInventory_. '''
     def _sortInventory(self):
-        if not self._inventoryPQ.empty():
-            while self._sortedInventory:
-                self._inventoryPQ.put(self._sortedInventory.pop())
+        if self._foodStorageUpdated:
+            self._sortedInventory = sorted(self._nameToFood.items())
+            self._foodStorageUpdated = False
 
-            while not self._inventoryPQ.empty():
-                food_pair = self._inventoryPQ.get()
-                if food_pair[1].name in self._stagedForRemoval:
-                    self._stagedForRemoval.remove(food_pair[1].name)
-                else:
-                    self._sortedInventory.append(food_pair)
-        elif self._stagedForRemoval:
-            i = 0
-            while i < len(self._sortedInventory):
-                food = self._sortedInventory[i][1]
-                if food.name in self._stagedForRemoval:
-                    self._stagedForRemoval.remove(food.name)
-                    self._sortedInventory.pop(i)
-                else:
-                    i+=1
-            self._stagedForRemoval = set()
 
     ''' Prints out a list of our inventory in order of earliest expiration date and also 
         returns the list in the form of an array. '''
@@ -112,4 +95,10 @@ class FoodStorage:
         self.list()
     
     def update(self, foodName):
-        return
+        if foodName in self._nameToFood:
+            self._foodStorageUpdated = True
+            self._nameToFood[foodName].open()
+
+    def updateFoods(self, list_of_food_names):
+        for food in list_of_food_names:
+            self.update(food)

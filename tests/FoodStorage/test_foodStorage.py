@@ -13,7 +13,7 @@ class Test_FoodStorage(unittest.TestCase):
 
     def testInitializeFoodStorage(self):
         self.assertFalse(self.foodStorage.isOpen)
-        self.assertEquals(dateToday, self.foodStorage.current_date)
+        self.assertEqual(dateToday, self.foodStorage.current_date)
         self.assertTrue(isEmptyInventory(self.foodStorage))
 
     def testAddFoods(self):
@@ -93,6 +93,36 @@ class Test_FoodStorage(unittest.TestCase):
 
         self.foodStorage.open()
         self.assertTrue(self.foodStorage.isOpen)
+
+    def testUpdateFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.foodStorage))
+
+        # PQ, _sortedList, _stagedForRemoval are empty
+        # _stagedForUpdate has items
+        self.foodStorage.updateFoods([name1, name3])
+        self.assertEquals([], self.foodStorage.list())
+
+        # PQ has items
+        # _sortedList and _stagedForRemoval are empty
+        # _stagedForUpdate has items
+        self.foodStorage.addFoods([food1, food2])
+        self.foodStorage.update(name1)
+        self.assertEquals([(fooddate2, food2), (fooddate1, food1)], self.foodStorage.list())
+
+        # PQ is empty
+        # _sortedList has items
+        # _stagedForRemoval is empty
+        # _stagedForUpdate has items
+        self.foodStorage.update(name2)
+        self.assertEquals([(dateYesterday, foodYesterday)], self.foodStorage.list())
+
+        # At this point, PQ, _sortedList, and _stagedForRemoval have items
+        self.foodStorage.addFoods([foodFuture, foodTomorrow, foodToday])
+        self.foodStorage.removeFoods([nameToday, nameYesterday])
+        self.assertEquals(
+            [(dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
+            self.foodStorage.list())
         
 if __name__ == '__main__':
     unittest.main()
