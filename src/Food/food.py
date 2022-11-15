@@ -5,7 +5,7 @@ class Food(object):
         self.name = name
         self.expiration_date = date.fromisoformat(expiration_date)
         
-        # use_by_date indicates the amount of time a food's quality will deteriorate after it is opened and suggests the food item should be consumed in that given timeframe.
+        # use_by_date indicates the amount of time (in days) a food's quality will deteriorate after it is opened
         self.use_by_date = timedelta(days = use_by_date)
         self.isOpen = False
     
