@@ -12,6 +12,7 @@ class FoodStorage:
         self.isOpen = False
 
         self._inventoryPQ = PriorityQueue()
+        self._nameToFood = {}
         self._sortedInventory = []
         self._stagedForRemoval = set()
 
@@ -19,6 +20,7 @@ class FoodStorage:
     def add(self, food):
         date = food.expiration_date
         self._inventoryPQ.put((date, food))
+        self._nameToFood[food.name] = food
 
     ''' Adds each food item from list_of_foods to self._inventoryPQ '''
     def addFoods(self, list_of_foods):
@@ -26,13 +28,15 @@ class FoodStorage:
             self.add(food)
         print(ADD_FOODS_SUCCESS_MESSAGE.format(list_of_foods))
 
-    def remove(self, food):
-        self._stagedForRemoval.add(food)
+    def remove(self, foodName):
+        if foodName in self._nameToFood:
+            self._stagedForRemoval.add(foodName)
+            self._nameToFood.pop(foodName)
 
-    def removeFoods(self, list_of_foods):
-        for food in list_of_foods:
+    def removeFoods(self, list_of_food_names):
+        for food in list_of_food_names:
             self.remove(food)
-        print(REMOVE_FOODS_SUCCESS_MESSAGE.format(list_of_foods))
+        print(REMOVE_FOODS_SUCCESS_MESSAGE.format(list_of_food_names))
 
     ''' Gets the notice message for a food that's about to expire or is expired. '''
     def _getExpirationNotice(self, expiration_date):
@@ -74,16 +78,16 @@ class FoodStorage:
 
             while not self._inventoryPQ.empty():
                 food_pair = self._inventoryPQ.get()
-                if food_pair[1] in self._stagedForRemoval:
-                    self._stagedForRemoval.remove(food_pair[1])
+                if food_pair[1].name in self._stagedForRemoval:
+                    self._stagedForRemoval.remove(food_pair[1].name)
                 else:
                     self._sortedInventory.append(food_pair)
         elif self._stagedForRemoval:
             i = 0
             while i < len(self._sortedInventory):
                 food = self._sortedInventory[i][1]
-                if food in self._stagedForRemoval:
-                    self._stagedForRemoval.remove(food)
+                if food.name in self._stagedForRemoval:
+                    self._stagedForRemoval.remove(food.name)
                     self._sortedInventory.pop(i)
                 else:
                     i+=1

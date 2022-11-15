@@ -40,21 +40,21 @@ class Test_Fridge(unittest.TestCase):
         self.assertTrue(isEmptyInventory(self.fridge))
 
         # At this point, PQ and _sortedList are empty and _stagedForRemoval has items
-        self.fridge.removeFoods([food1, food3])
+        self.fridge.removeFoods([name1, name3])
         self.assertEquals([], self.fridge.list())
 
         # At this point, PQ has items, _sortedList is empty, and _stagedForRemoval has items
         self.fridge.addFoods([food1, food2, food3, foodYesterday])
-        self.fridge.removeFoods([food1, food3])
+        self.fridge.removeFoods([name1, name3])
         self.assertEquals([(fooddate2, food2), (dateYesterday, foodYesterday)], self.fridge.list())
 
         # At this point, PQ is empty but _sortedList and _stagedForRemoval have items
-        self.fridge.remove(food2)
+        self.fridge.remove(name2)
         self.assertEquals([(dateYesterday, foodYesterday)], self.fridge.list())
 
         # At this point, PQ, _sortedList, and _stagedForRemoval have items
         self.fridge.addFoods([foodFuture, foodTomorrow, foodToday])
-        self.fridge.removeFoods([foodToday, foodYesterday])
+        self.fridge.removeFoods([nameToday, nameYesterday])
         self.assertEquals(
             [(dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
             self.fridge.list())
