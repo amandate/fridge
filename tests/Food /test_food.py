@@ -16,6 +16,9 @@ class Test_Food(unittest.TestCase):
         self.assertFalse(self.food.isOpen)  
     
     def testCompareFoods(self):
+        # Checks that comparators are comparing expiration dates and names properly. 
+        # Various test cases involving situations where expiration dates and names 
+        # are different and/or the same. 
         self.assertLess(food1, food2) # date1 < date2
         self.assertLess(food1, food4) # date1 = date4
         self.assertLessEqual(food1, food4) # date1 = date4
@@ -28,6 +31,7 @@ class Test_Food(unittest.TestCase):
         self.assertGreater(food2, food1) # date2 > date1
         self.assertGreater(food4, food1) # date4 = date1
 
+        # When given a list of food items, food items should be sorted. 
         actual = sorted([food1, food6, food3, food2, food5, food4])
         expected = [food3, food1, food5, food6, food4, food2]
         self.assertEqual(expected, actual)
