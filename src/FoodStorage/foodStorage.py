@@ -67,9 +67,9 @@ class FoodStorage:
 
     ''' Prints self._sortedInventory to user.'''
     def _printList(self):
-        for expiration_date, food in self._sortedInventory:
+        for food in self._sortedInventory:
             notice = self._getExpirationNotice(expiration_date)
-            print(f"{food.name} {expiration_date} {notice}")
+            print(f"{food.name} {food.expiration_date} {notice}")
 
     ''' Updates self._sortedInventory if there has been new updates since the last
         time we called .list() '''
