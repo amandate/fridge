@@ -74,16 +74,8 @@ class Test_FoodStorage(unittest.TestCase):
         # Inventory should start as empty
         self.assertTrue(isEmptyInventory(self.foodStorage))
 
-        # Grab print output from calling list()
-        capturedUpdateOutput = io.StringIO()
-        sys.stdout = capturedUpdateOutput
-
         # Update nonexistent foods
         self.foodStorage.updateFoods([name1, name3])
-        expectedUpdateOutput = f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name1)}\n" + \
-                               f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name3)}\n"
-        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
-        sys.stdout = sys.__stdout__ # reset standout
         self.assertTrue(isEmptyInventory(self.foodStorage))
 
         # Update food that's there

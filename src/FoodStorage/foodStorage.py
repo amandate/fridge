@@ -63,7 +63,7 @@ class FoodStorage:
         self._sortedInventory_. '''
     def _sortInventory(self):
         if self._hasUpdates:
-            self._sortedInventory = sorted(self._inventory.items())
+            self._sortedInventory = sorted(self._inventory.values())
             self._hasUpdates = False
 
 
