@@ -99,32 +99,17 @@ class Test_Fridge(unittest.TestCase):
         # Inventory should start as empty
         self.assertTrue(isEmptyInventory(self.fridge))
 
-        # Grab print output from calling list()
-        capturedUpdateOutput = io.StringIO()
-        sys.stdout = capturedUpdateOutput
-
         # Update nonexistent foods
         self.fridge.updateFoods([name1, name3])
-        expectedUpdateOutput = f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name1)}\n" + \
-                               f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name3)}\n"
-        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
-        sys.stdout = sys.__stdout__ # reset standout
+
         self.assertTrue(isEmptyInventory(self.fridge))
 
         # Update food that's there
         self.fridge.addFoods([food1, food2])
         self.assertEqual([food1, food2], self.fridge.list())
 
-        # Grab print output from calling list()
-        capturedUpdateOutput = io.StringIO()
-        sys.stdout = capturedUpdateOutput
-
         self.fridge.update(name1)
-        expectedUpdateOutput = \
-            f"{UPDATE_FOODS_SUCCESS_MESSAGE.format(food1, Food(name1, fooddate1open, 3))}\n"
-        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
         self.assertEqual([food2, food1], self.fridge.list())
-        sys.stdout = sys.__stdout__ # reset standout
 
 if __name__ == '__main__':
     unittest.main()

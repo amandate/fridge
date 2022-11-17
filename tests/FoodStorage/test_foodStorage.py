@@ -106,16 +106,8 @@ class Test_FoodStorage(unittest.TestCase):
         self.foodStorage.addFoods([food1, food2])
         self.assertEqual([food1, food2], self.foodStorage.list())
 
-        # Grab print output from calling list()
-        capturedUpdateOutput = io.StringIO()
-        sys.stdout = capturedUpdateOutput
-
         self.foodStorage.update(name1)
-        expectedUpdateOutput = \
-            f"{UPDATE_FOODS_SUCCESS_MESSAGE.format(food1, Food(name1, fooddate1open, 3))}\n"
-        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
         self.assertEqual([food2, food1], self.foodStorage.list())
-        sys.stdout = sys.__stdout__ # reset standout
         
 if __name__ == '__main__':
     unittest.main()

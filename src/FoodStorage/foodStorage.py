@@ -101,10 +101,10 @@ class FoodStorage:
             prevFood = self._inventory[foodName]
 
             self._hasUpdates = True
-            newFood = self._inventory[foodName].open()
-            UPDATE_FOODS_SUCCESS_MESSAGE.format(prevFood, newFood)
+            self._inventory[foodName].open()
+            print(UPDATE_FOODS_SUCCESS_MESSAGE.format(prevFood, self._inventory[foodName]))
         else:
-            UPDATE_FOODS_FAILURE_MESSAGE.format(foodName)
+            print(UPDATE_FOODS_FAILURE_MESSAGE.format(foodName))
 
     def updateFoods(self, list_of_food_names):
         for food in list_of_food_names:
