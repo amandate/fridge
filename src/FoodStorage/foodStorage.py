@@ -12,21 +12,35 @@ class FoodStorage:
 
         self._inventory = {}
         self._sortedInventory = []
+
+        # Indicates if we've had updates since the last time .list() was called.
         self._hasUpdates = False
 
-    ''' Adds food item to self._inventoryPQ. '''
+    ''' Adds food item to self._inventory and sets our self._hasUpdates flag to True. '''
     def add(self, food):
         self._hasUpdates = True
         self._inventory[food.name] = food
+        print(ADD_FOOD_SUCCESS_MESSAGE.format(food))
 
-    ''' Adds each food item from list_of_foods to self._inventoryPQ '''
+    ''' Adds each food item from list_of_foods to self._inventory '''
     def addFoods(self, list_of_foods):
         for food in list_of_foods:
             self.add(food)
-        print(ADD_FOODS_SUCCESS_MESSAGE.format(list_of_foods))
 
-    def remove(self, food):
-        return
+    ''' Removes food_name from self._inventory and sets out self._hasUpdates flag to
+        True. Prints an error message if we try removing a food that doesn't exist. '''
+    def remove(self, food_name):
+        if food_name in self._inventory:
+            self._hasUpdates = True
+            self._inventory.pop(food_name)
+            print(REMOVE_FOOD_SUCCESS_MESSAGE.format(food_name))
+        else:
+            print(REMOVE_FOOD_FAILURE_MESSAGE.format(food_name))
+
+    ''' Removes each food item from list_of_food_names from self._inventory '''
+    def removeFoods(self, list_of_food_names):
+        for food in list_of_food_names:
+            self.remove(food)
 
     ''' Gets the notice message for a food that's about to expire or is expired. '''
     def _getExpirationNotice(self, expiration_date):
@@ -57,15 +71,12 @@ class FoodStorage:
             notice = self._getExpirationNotice(food.expiration_date)
             print(f"{food.name} {food.expiration_date} {notice}")
 
-    ''' Updates self._sortedInventory. If there were new foods added, since we last 
-        updated our self._sortedInventory, we add everything from the current 
-        self._sortedInventory into self._inventoryPQ and use it to repopulate 
-        self._sortedInventory_. '''
+    ''' Updates self._sortedInventory if there has been new updates since the last
+        time we called .list() '''
     def _sortInventory(self):
         if self._hasUpdates:
             self._sortedInventory = sorted(self._inventory.values())
             self._hasUpdates = False
-
 
     ''' Prints out a list of our inventory in order of earliest expiration date and also 
         returns the list in the form of an array. '''

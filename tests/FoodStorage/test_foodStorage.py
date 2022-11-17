@@ -15,6 +15,13 @@ class Test_FoodStorage(unittest.TestCase):
         self.assertFalse(self.foodStorage.isOpen)
         self.assertEqual(dateToday, self.foodStorage.current_date)
         self.assertTrue(isEmptyInventory(self.foodStorage))
+        self.assertEqual(7, self.foodStorage.expiration_window.days)
+
+        self.foodStorage = FoodStorage(expiration_window=8)
+        self.assertFalse(self.foodStorage.isOpen)
+        self.assertEqual(dateToday, self.foodStorage.current_date)
+        self.assertTrue(isEmptyInventory(self.foodStorage))
+        self.assertEqual(8, self.foodStorage.expiration_window.days)
 
     def testAddFoods(self):
         # Inventory should start as empty
@@ -22,18 +29,35 @@ class Test_FoodStorage(unittest.TestCase):
 
         # Inventory should be sorted after adding multiple foods
         self.foodStorage.addFoods([food1, food2, food3])
-        self.assertEquals(
-            [(fooddate3, food3), (fooddate1, food1), (fooddate2, food2)], 
-            self.foodStorage.list()
-            )
+        self.assertEqual([food3, food1, food2], self.foodStorage.list())
 
         # Adding new food, after listing, should still return a sorted inventory.
         self.foodStorage.addFoods([foodFuture, foodTomorrow, foodToday])
-        self.assertEquals(
-            [(fooddate3, food3), (fooddate1, food1), (fooddate2, food2), 
-            (dateToday, foodToday), (dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
+        self.assertEqual(
+            [food3, food1, food2, foodToday, foodTomorrow, foodFuture], 
             self.foodStorage.list()
             )
+
+    def testRemoveFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.foodStorage))
+
+        # Grab print output from calling list()
+        capturedListOutput = io.StringIO()
+        sys.stdout = capturedListOutput
+
+
+        self.foodStorage.remove(name1)
+
+        self.assertEqual(f"{REMOVE_FOOD_FAILURE_MESSAGE.format(name1)}\n", capturedListOutput.getvalue())
+        self.assertTrue(isEmptyInventory(self.foodStorage))
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        self.foodStorage.addFoods([food1, food2, food3])
+        self.foodStorage.removeFoods([name1, name2])
+        self.assertEqual([food3], self.foodStorage.list())
 
     def testList(self):
         self.assertTrue(isEmptyInventory(self.foodStorage))
@@ -45,9 +69,8 @@ class Test_FoodStorage(unittest.TestCase):
         capturedListOutput = io.StringIO()
         sys.stdout = capturedListOutput
 
-        self.assertEquals(
-            [(dateMultDaysPassed, foodPast), (dateYesterday, foodYesterday), (dateToday, foodToday),
-             (dateTomorrow, foodTomorrow), (dateWithinRange, foodNearFuture), (dateOutsideRange, foodFuture)], 
+        self.assertEqual(
+            [foodPast, foodYesterday, foodToday, foodTomorrow, foodNearFuture, foodFuture], 
             self.foodStorage.list()
             )
 
@@ -60,8 +83,9 @@ class Test_FoodStorage(unittest.TestCase):
             f"{foodFuture.name} {dateOutsideRange} \n"
 
         actualListOutput = capturedListOutput.getvalue()
-        self.assertEquals(expectedListOutput, actualListOutput)
+        self.assertEqual(expectedListOutput, actualListOutput)
 
+        # reset standout
         sys.stdout = sys.__stdout__
 
     def testOpen(self):

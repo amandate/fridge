@@ -26,14 +26,14 @@ dateMultDaysPassed = dateToday - timedelta2
 dateWithinRange = dateToday + timedelta2
 dateOutsideRange = dateToday + timedelta8
 
-food1 = Food("apple", fooddate1.isoformat(), 3)
-food2 = Food("pear", fooddate2.isoformat(), 3)
+food1 = Food(name1, fooddate1.isoformat(), 3)
+food2 = Food(name2, fooddate2.isoformat(), 3)
 food3 = Food("banana", fooddate3.isoformat(), 2)
 food4 = Food("soda", fooddate1.isoformat(), 3)
 food5 = Food("apple", fooddate1.isoformat(), 3)
 foodToday = Food("grape", dateToday.isoformat(), 2)
 foodTomorrow = Food("curry", dateTomorrow.isoformat(), 2)
-foodYesterday = Food("grape", dateYesterday.isoformat(), 4)
+foodYesterday = Food("apricots", dateYesterday.isoformat(), 4)
 foodPast = Food("noodles", dateMultDaysPassed.isoformat(), 3)
 foodNearFuture = Food("lettuce", dateWithinRange.isoformat(), 7)
 foodFuture = Food("meat", dateOutsideRange.isoformat(), 5)
