@@ -15,13 +15,13 @@ class Test_Freezer(unittest.TestCase):
         self.assertFalse(self.freezer.isOpen)
         self.assertEqual(dateToday, self.freezer.current_date)
         self.assertTrue(isEmptyInventory(self.freezer))
-        self.assertEqual(7, self.freezer.expiration_window)
+        self.assertEqual(7, self.freezer.expiration_window.days)
 
-        self.foodStorage = Freezer(expiration_window=8)
+        self.freezer = Freezer(expiration_window=8)
         self.assertFalse(self.freezer.isOpen)
         self.assertEqual(dateToday, self.freezer.current_date)
         self.assertTrue(isEmptyInventory(self.freezer))
-        self.assertEqual(8, self.freezer.expiration_window)
+        self.assertEqual(8, self.freezer.expiration_window.days)
 
     def testAddFoods(self):
         # Inventory should start as empty
@@ -50,7 +50,7 @@ class Test_Freezer(unittest.TestCase):
 
         self.freezer.remove(name1)
 
-        self.assertEqual(REMOVE_FOOD_FAILURE_MESSAGE.format(name1), capturedListOutput.getvalue())
+        self.assertEqual(f"{REMOVE_FOOD_FAILURE_MESSAGE.format(name1)}\n", capturedListOutput.getvalue())
         self.assertTrue(isEmptyInventory(self.freezer))
 
         # reset standout

@@ -68,14 +68,14 @@ class FoodStorage:
     ''' Prints self._sortedInventory to user.'''
     def _printList(self):
         for food in self._sortedInventory:
-            notice = self._getExpirationNotice(expiration_date)
+            notice = self._getExpirationNotice(food.expiration_date)
             print(f"{food.name} {food.expiration_date} {notice}")
 
     ''' Updates self._sortedInventory if there has been new updates since the last
         time we called .list() '''
     def _sortInventory(self):
         if self._hasUpdates:
-            self._sortedInventory = sorted(self._inventory.items())
+            self._sortedInventory = sorted(self._inventory.values())
             self._hasUpdates = False
 
     ''' Prints out a list of our inventory in order of earliest expiration date and also 
