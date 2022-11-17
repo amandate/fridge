@@ -24,7 +24,7 @@ class Test_Food(unittest.TestCase):
         self.assertLessEqual(food1, food4) # date1 = date4
         self.assertLessEqual(food1, food2) # date1 < date2
         self.assertEqual(food1, food5) # name1, date1 = name5, date5
-        self.assertNotEqual(food1, food6) # name1 != name6, date1 = date6
+        self.assertNotEqual(food1, food4) # name1 != name4, date1 = date4
         self.assertNotEqual(food1, food2) # name1 != name2, date1 != date 2
         self.assertGreaterEqual(food4, food1) # date4 = date1
         self.assertGreaterEqual(food2, food1) # date2 > date1
@@ -32,8 +32,8 @@ class Test_Food(unittest.TestCase):
         self.assertGreater(food4, food1) # date4 = date1
 
         # When given a list of food items, food items should be sorted. 
-        actual = sorted([food1, food6, food3, food2, food5, food4])
-        expected = [food3, food1, food5, food6, food4, food2]
+        actual = sorted([food1, food3, food2, food5, food4])
+        expected = [food3, food1, food5, food4, food2]
         self.assertEqual(expected, actual)
 
     def testOpenFoods(self): 
