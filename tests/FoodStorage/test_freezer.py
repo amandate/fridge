@@ -35,30 +35,6 @@ class Test_Freezer(unittest.TestCase):
             self.freezer.list()
             )
 
-    def testRemoveFoods(self):
-        # Inventory should start as empty
-        self.assertTrue(isEmptyInventory(self.freezer))
-
-        # At this point, PQ and _sortedList are empty and _stagedForRemoval has items
-        self.freezer.removeFoods([name1, name3])
-        self.assertEquals([], self.freezer.list())
-
-        # At this point, PQ has items, _sortedList is empty, and _stagedForRemoval has items
-        self.freezer.addFoods([food1, food2, food3, foodYesterday])
-        self.freezer.removeFoods([name1, name33])
-        self.assertEquals([(fooddate2, food2), (dateYesterday, foodYesterday)], self.freezer.list())
-
-        # At this point, PQ is empty but _sortedList and _stagedForRemoval have items
-        self.freezer.remove(name2)
-        self.assertEquals([(dateYesterday, foodYesterday)], self.freezer.list())
-
-        # At this point, PQ, _sortedList, and _stagedForRemoval have items
-        self.freezer.addFoods([foodFuture, foodTomorrow, foodToday])
-        self.freezer.removeFoods([nameToday, nameYesterday])
-        self.assertEquals(
-            [(dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
-            self.freezer.list())
-
     def testList(self):
         self.assertTrue(isEmptyInventory(self.freezer))
 
@@ -94,6 +70,36 @@ class Test_Freezer(unittest.TestCase):
         self.freezer.open()
         self.assertTrue(self.freezer.isOpen)
 
+    def testUpdateFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.freezer))
+
+        # Grab print output from calling list()
+        capturedUpdateOutput = io.StringIO()
+        sys.stdout = capturedUpdateOutput
+
+        # Update nonexistent foods
+        self.freezer.updateFoods([name1, name3])
+        expectedUpdateOutput = f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name1)}\n" + \
+                               f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name3)}\n"
+        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
+        sys.stdout = sys.__stdout__ # reset standout
+        self.assertTrue(isEmptyInventory(self.freezer))
+
+        # Update food that's there
+        self.freezer.addFoods([food1, food2])
+        self.assertEqual([food1, food2], self.freezer.list())
+
+        # Grab print output from calling list()
+        capturedUpdateOutput = io.StringIO()
+        sys.stdout = capturedUpdateOutput
+
+        self.freezer.update(name1)
+        expectedUpdateOutput = \
+            f"{UPDATE_FOODS_SUCCESS_MESSAGE.format(food1, Food(name1, fooddate1open, 3))}\n"
+        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
+        self.assertEqual([food2, food1], self.freezer.list())
+        sys.stdout = sys.__stdout__ # reset standout
 
 if __name__ == '__main__':
     unittest.main()

@@ -35,30 +35,6 @@ class Test_Fridge(unittest.TestCase):
             self.fridge.list()
             )
 
-    def testRemoveFoods(self):
-        # Inventory should start as empty
-        self.assertTrue(isEmptyInventory(self.fridge))
-
-        # At this point, PQ and _sortedList are empty and _stagedForRemoval has items
-        self.fridge.removeFoods([name1, name3])
-        self.assertEquals([], self.fridge.list())
-
-        # At this point, PQ has items, _sortedList is empty, and _stagedForRemoval has items
-        self.fridge.addFoods([food1, food2, food3, foodYesterday])
-        self.fridge.removeFoods([name1, name3])
-        self.assertEquals([(fooddate2, food2), (dateYesterday, foodYesterday)], self.fridge.list())
-
-        # At this point, PQ is empty but _sortedList and _stagedForRemoval have items
-        self.fridge.remove(name2)
-        self.assertEquals([(dateYesterday, foodYesterday)], self.fridge.list())
-
-        # At this point, PQ, _sortedList, and _stagedForRemoval have items
-        self.fridge.addFoods([foodFuture, foodTomorrow, foodToday])
-        self.fridge.removeFoods([nameToday, nameYesterday])
-        self.assertEquals(
-            [(dateTomorrow, foodTomorrow), (dateOutsideRange, foodFuture)], 
-            self.fridge.list())
-
     def testList(self):
         self.assertTrue(isEmptyInventory(self.fridge))
 
@@ -93,6 +69,37 @@ class Test_Fridge(unittest.TestCase):
 
         self.fridge.open()
         self.assertTrue(self.fridge.isOpen)
+
+    def testUpdateFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.fridge))
+
+        # Grab print output from calling list()
+        capturedUpdateOutput = io.StringIO()
+        sys.stdout = capturedUpdateOutput
+
+        # Update nonexistent foods
+        self.fridge.updateFoods([name1, name3])
+        expectedUpdateOutput = f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name1)}\n" + \
+                               f"{UPDATE_FOODS_FAILURE_MESSAGE.format(name3)}\n"
+        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
+        sys.stdout = sys.__stdout__ # reset standout
+        self.assertTrue(isEmptyInventory(self.fridge))
+
+        # Update food that's there
+        self.fridge.addFoods([food1, food2])
+        self.assertEqual([food1, food2], self.fridge.list())
+
+        # Grab print output from calling list()
+        capturedUpdateOutput = io.StringIO()
+        sys.stdout = capturedUpdateOutput
+
+        self.fridge.update(name1)
+        expectedUpdateOutput = \
+            f"{UPDATE_FOODS_SUCCESS_MESSAGE.format(food1, Food(name1, fooddate1open, 3))}\n"
+        self.assertEqual(expectedUpdateOutput, capturedUpdateOutput.getvalue())
+        self.assertEqual([food2, food1], self.fridge.list())
+        sys.stdout = sys.__stdout__ # reset standout
 
 if __name__ == '__main__':
     unittest.main()

@@ -25,15 +25,8 @@ class FoodStorage:
             self.add(food)
         print(ADD_FOODS_SUCCESS_MESSAGE.format(list_of_foods))
 
-    def remove(self, foodName):
-        if foodName in self._inventory:
-            self._hasUpdates = True
-            self._inventory.pop(foodName)
-
-    def removeFoods(self, list_of_food_names):
-        for food in list_of_food_names:
-            self.remove(food)
-        print(REMOVE_FOODS_SUCCESS_MESSAGE.format(list_of_food_names))
+    def remove(self, food):
+        return
 
     ''' Gets the notice message for a food that's about to expire or is expired. '''
     def _getExpirationNotice(self, expiration_date):
@@ -94,8 +87,13 @@ class FoodStorage:
     
     def update(self, foodName):
         if foodName in self._inventory:
+            prevFood = self._inventory[foodName]
+
             self._hasUpdates = True
-            self._inventory[foodName].open()
+            newFood = self._inventory[foodName].open()
+            UPDATE_FOODS_SUCCESS_MESSAGE.format(prevFood, newFood)
+        else:
+            UPDATE_FOODS_FAILURE_MESSAGE.format(foodName)
 
     def updateFoods(self, list_of_food_names):
         for food in list_of_food_names:

@@ -19,6 +19,7 @@ fooddate1 = date(2022, 11, 8)
 fooddate2 = date(2022, 11, 10)
 fooddate3 = date(2022, 11, 6)
 dateToday = date.today()
+fooddate1open = dateToday + timedelta(3)
 dateTomorrow = dateToday + timedelta1
 dateYesterday = dateToday - timedelta1
 dateMultDaysPassed = dateToday - timedelta2
