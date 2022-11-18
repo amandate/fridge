@@ -95,17 +95,20 @@ class FoodStorage:
         self.isOpen = True
         self.current_date = date.today()
         self.list()
-    
-    def update(self, foodName):
-        if foodName in self._inventory:
-            prevFood = self._inventory[foodName]
+
+    ''' Updates a specified Food by the given food_name by opening the Food Item. 
+        Takes into consideration if the Food doesn't exist in our _inventory. '''
+    def update(self, food_name):
+        if food_name in self._inventory:
+            prevFood = self._inventory[food_name]
 
             self._hasUpdates = True
-            self._inventory[foodName].open()
-            print(UPDATE_FOODS_SUCCESS_MESSAGE.format(prevFood, self._inventory[foodName]))
+            self._inventory[food_name].open()
+            print(UPDATE_FOODS_SUCCESS_MESSAGE.format(prevFood, self._inventory[food_name]))
         else:
-            print(UPDATE_FOODS_FAILURE_MESSAGE.format(foodName))
+            print(UPDATE_FOODS_FAILURE_MESSAGE.format(food_name))
 
+    ''' Updates a list_of_food_names. '''
     def updateFoods(self, list_of_food_names):
         for food in list_of_food_names:
             self.update(food)
