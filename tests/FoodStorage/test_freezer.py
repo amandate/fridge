@@ -96,6 +96,20 @@ class Test_Freezer(unittest.TestCase):
         self.freezer.open()
         self.assertTrue(self.freezer.isOpen)
 
+    def testUpdateFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.freezer))
+
+        # Update nonexistent foods
+        self.freezer.updateFoods([name1, name3])
+        self.assertTrue(isEmptyInventory(self.freezer))
+
+        # Update food that's there
+        self.freezer.addFoods([food1, food2])
+        self.assertEqual([food1, food2], self.freezer.list())
+
+        self.freezer.update(name1)
+        self.assertEqual([food2, food1], self.freezer.list())
 
 if __name__ == '__main__':
     unittest.main()

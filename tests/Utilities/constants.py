@@ -7,11 +7,19 @@ timedelta8 = timedelta(days=8)
 
 name1 = "apple"
 name2 = "pear"
+name3 = "banana"
+nameToday = "grape"
+nameTomorrow = "curry"
+nameYesterday = "beef"
+namePast = "noodles"
+nameNearFuture = "lettuce"
+nameFuture = "meat"
 
 fooddate1 = date(2022, 11, 8)
 fooddate2 = date(2022, 11, 10)
 fooddate3 = date(2022, 11, 6)
 dateToday = date.today()
+fooddate1open = dateToday + timedelta(3)
 dateTomorrow = dateToday + timedelta1
 dateYesterday = dateToday - timedelta1
 dateMultDaysPassed = dateToday - timedelta2

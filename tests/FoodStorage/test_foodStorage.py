@@ -93,6 +93,21 @@ class Test_FoodStorage(unittest.TestCase):
 
         self.foodStorage.open()
         self.assertTrue(self.foodStorage.isOpen)
+
+    def testUpdateFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.foodStorage))
+
+        # Update nonexistent foods
+        self.foodStorage.updateFoods([name1, name3])
+        self.assertTrue(isEmptyInventory(self.foodStorage))
+
+        # Update food that's there
+        self.foodStorage.addFoods([food1, food2])
+        self.assertEqual([food1, food2], self.foodStorage.list())
+
+        self.foodStorage.update(name1)
+        self.assertEqual([food2, food1], self.foodStorage.list())
         
 if __name__ == '__main__':
     unittest.main()

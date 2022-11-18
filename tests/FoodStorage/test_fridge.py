@@ -95,5 +95,21 @@ class Test_Fridge(unittest.TestCase):
         self.fridge.open()
         self.assertTrue(self.fridge.isOpen)
 
+    def testUpdateFoods(self):
+        # Inventory should start as empty
+        self.assertTrue(isEmptyInventory(self.fridge))
+
+        # Update nonexistent foods
+        self.fridge.updateFoods([name1, name3])
+
+        self.assertTrue(isEmptyInventory(self.fridge))
+
+        # Update food that's there
+        self.fridge.addFoods([food1, food2])
+        self.assertEqual([food1, food2], self.fridge.list())
+
+        self.fridge.update(name1)
+        self.assertEqual([food2, food1], self.fridge.list())
+
 if __name__ == '__main__':
     unittest.main()
