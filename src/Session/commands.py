@@ -1,6 +1,8 @@
+from src.Session.profile import Profile
+
 class Commands:
     def __init__(self):
-        pass
+        self.profile = None
 
     def add_food(self):
         pass
@@ -15,7 +17,13 @@ class Commands:
         pass
 
     def create_profile(self):
-        pass
+        profile_name = input("What would you like to name your profile?: ")
+
+        if self.profile and self.profile.name != profile_name:
+            self.profile.save()
+
+        self.profile = Profile(profile_name)
+        print(f"Successfully created profile. Now switching to profile: {profile_name}.")
 
     def help(self):
         pass
