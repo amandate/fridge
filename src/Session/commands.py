@@ -29,19 +29,16 @@ class Commands:
     def list_freezers(self):
         pass
 
-    def load(self):
+    def load(self, profile):
         pass
     
-    def open(self):
+    def open(self, food_storage):
         pass
 
     def save(self):
         pass
 
-    def delete_fridge(self):
-        pass
-
-    def delete_freezer(self):
+    def delete(self, food_storage):
         pass
     
     def delete_profile(self):
