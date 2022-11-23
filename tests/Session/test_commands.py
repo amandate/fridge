@@ -7,9 +7,6 @@ class Test_Commands(unittest.TestCase):
     def setUp(self):
         self.commands = Commands()
 
-    def get_input(text):
-        return input(text)
-
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
 
