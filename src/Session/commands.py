@@ -1,3 +1,4 @@
+from src.Constants.commands_messages import *
 from src.Session.profile import Profile
 
 class Commands:
@@ -16,14 +17,16 @@ class Commands:
     def create_fridge(self):
         pass
 
+    ''' Prompts user to create a new profile and name it. If there's already a 
+        profile opened, we save it and then create a new profile with the given name. '''
     def create_profile(self):
-        profile_name = input("What would you like to name your profile?: ")
+        profile_name = input(CREATE_PROFILE_NAME)
 
         if self.profile and self.profile.name != profile_name:
             self.profile.save()
 
         self.profile = Profile(profile_name)
-        print(f"Successfully created profile. Now switching to profile: {profile_name}.")
+        print(CREATE_PROFILE_SUCCESS_MESSAGE.format(profile_name))
 
     def help(self):
         pass

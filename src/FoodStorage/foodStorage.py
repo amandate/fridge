@@ -1,4 +1,4 @@
-from src.Constants.messages import *
+from src.Constants.foodStorage_messages import *
 from datetime import date, timedelta
 
 class FoodStorage:
