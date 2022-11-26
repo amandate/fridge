@@ -3,11 +3,11 @@ from src.Session.profile import Profile
 
 import unittest
 
-class Test_FoodStorage(unittest.TestCase):
+class Test_Profile(unittest.TestCase):
     def setUp(self):
         self.profile = Profile("test")
 
-    def testInitializeFoodStorage(self):
+    def testInitialize(self):
         self.assertEqual("test", self.profile.name)
         self.assertEqual(date.today(), self.profile.current_date)
         self.assertEqual({}, self.profile.foodStorages)
