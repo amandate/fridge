@@ -10,6 +10,7 @@ from src.Constants.commands_messages import \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.keys import \
     FREEZER
+from src.FoodStorage.freezer import Freezer
 from tests.Utilities.constants import \
     freezer_name, \
     profile_name
@@ -47,7 +48,9 @@ class Test_Commands(unittest.TestCase):
         mocked_input.side_effect = [profile_name, freezer_name]
         self.commands.create_profile()
         self.commands.create_freezer()
-        self.assertIsNotNone(self.commands.profile.getFoodStorage(FREEZER, freezer_name))
+        freezer = self.commands.profile.getFoodStorage(FREEZER, freezer_name)
+        self.assertIsNotNone(freezer)
+        self.assertTrue(isinstance(freezer, Freezer))
 
         ## new freezer with existing name, invalid response, abort ##
         # Grab print output from calling list()
