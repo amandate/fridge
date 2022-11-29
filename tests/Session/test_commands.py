@@ -37,7 +37,7 @@ class Test_Commands(unittest.TestCase):
         self.commands.create_freezer()
 
         expectedOutput = \
-            NO_LOADED_PROFILE_MESSAGE + "\n" + \
+            NO_LOADED_PROFILE_MESSAGE + " " + \
             SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + "\n"
         self.assertEqual(expectedOutput, capturedListOutput.getvalue())
 

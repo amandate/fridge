@@ -16,8 +16,8 @@ class Commands:
         If a freezer with this name exists, confirms with user if they want to override it.'''
     def create_freezer(self):
         if not self.profile:
-            print(NO_LOADED_PROFILE_MESSAGE)
-            print(SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)))
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)))
             return
 
         freezer_name = input(CREATE_FREEZER_NAME_MESSAGE)
