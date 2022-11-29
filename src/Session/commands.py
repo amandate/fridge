@@ -23,12 +23,10 @@ class Commands:
 
         freezer_name = input(CREATE_FREEZER_NAME_MESSAGE)
 
-        if FREEZER not in self.profile.foodStorages:
-            self.profile.foodStorages[FREEZER] = {}
-        freezers = self.profile.foodStorages[FREEZER]
-        if freezer_name in freezers:
+        # Handle if a Freezer exists with this name
+        if self.profile.getFoodStorage(FREEZER, freezer_name):
             while True:
-                doOverride = input(CREATE_FREEZER_OVERRIDE_NAME)
+                doOverride = input(CREATE_FREEZER_OVERRIDE_NAME.format(freezer_name))
                 if doOverride == "n":
                     print(CANCEL_ACTION_MESSAGE.format(CREATE_FREEZER_ACTION.format(freezer_name)))
                     return
@@ -37,8 +35,8 @@ class Commands:
                 else:
                     print(INVALID_RESPONSE_MESSAGE)
         
-        freezers[freezer_name] = Freezer()
-        print(CREATE_FREEZER_SUCCESS_MESSAGE)
+        self.profile.addFoodStorage(FREEZER, freezer_name)
+        print(CREATE_FREEZER_SUCCESS_MESSAGE.format(freezer_name))
 
     def create_fridge(self):
         pass
