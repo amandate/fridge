@@ -1,7 +1,6 @@
 from src.Constants.commands_messages import *
 from src.Constants.keys import *
 from src.Session.profile import Profile
-from src.FoodStorage.freezer import Freezer
 
 class Commands:
     def __init__(self):
