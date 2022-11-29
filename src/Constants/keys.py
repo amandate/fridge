@@ -1,0 +1,2 @@
+FREEZER = "freezer"
+FRIDGE = "fridge"
