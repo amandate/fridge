@@ -25,7 +25,9 @@ class Commands:
         # Handle if a Freezer exists with this name
         if self.profile.getFoodStorage(FREEZER, freezer_name):
             while True:
-                doOverride = input(CREATE_FREEZER_OVERRIDE_NAME.format(freezer_name))
+                override_request = EXISTING_NAME_MESSAGE.format(FREEZER, freezer_name) + \
+                                    OVERRIDE_REQUEST_MESSAGE.format(FREEZER)
+                doOverride = input(override_request)
                 if doOverride == "n":
                     print(CANCEL_ACTION_MESSAGE.format(CREATE_FREEZER_ACTION.format(freezer_name)))
                     return
