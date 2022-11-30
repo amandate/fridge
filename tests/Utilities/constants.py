@@ -37,3 +37,6 @@ foodYesterday = Food("apricots", dateYesterday.isoformat(), 4)
 foodPast = Food("noodles", dateMultDaysPassed.isoformat(), 3)
 foodNearFuture = Food("lettuce", dateWithinRange.isoformat(), 7)
 foodFuture = Food("meat", dateOutsideRange.isoformat(), 5)
+
+profile_name = "testProfile"
+freezer_name = "testFreezer"
