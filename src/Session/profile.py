@@ -11,6 +11,8 @@ class Profile:
         self._foodStorages = {}
         self._opened_foodStorage = None
 
+    ''' Adds a new FoodStorage object of foodStorage_type with the given name and 
+        sets self._opened_foodStorage to it. '''
     def addFoodStorage(self, foodStorage_type, name):
         if foodStorage_type not in self._foodStorages:
             self._foodStorages[foodStorage_type] = {}
@@ -24,6 +26,8 @@ class Profile:
         self._foodStorages[foodStorage_type][name] = newFoodStorage
         self._opened_foodStorage = self._foodStorages[foodStorage_type][name]
 
+    ''' Gets the FoodStorage object of foodStorage_type with the given name. 
+        Returns None if it does not exist. '''
     def getFoodStorage(self, foodStorage_type, name):
         if foodStorage_type not in self._foodStorages or \
             name not in self._foodStorages[foodStorage_type]:
