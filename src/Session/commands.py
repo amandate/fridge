@@ -14,13 +14,13 @@ class Commands:
 
     ''' Prompts user to create a new freezer. If no profile is active, suggests user to create or load one.
         If a freezer with this name exists, confirms with user if they want to override it.'''
-    def create_freezer(self):
+    def create_foodStorage(self, foodStorage_type):
         if not self.profile:
             print(NO_LOADED_PROFILE_MESSAGE, \
                 SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)))
             return
 
-        freezer_name = input(CREATE_FREEZER_NAME_MESSAGE)
+        foodStorage_name = input(CREATE_FOOD_STORAGE_NAME_MESSAGE.format(foodStorage_name))
 
         # Handle if a Freezer exists with this name
         if self.profile.getFoodStorage(FREEZER, freezer_name):

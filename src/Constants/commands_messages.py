@@ -1,6 +1,6 @@
 CANCEL_ACTION_MESSAGE = "Canceling action: {}"
 CREATE_FREEZER_ACTION = "Create freezer with name '{}'."
-CREATE_FREEZER_NAME_MESSAGE = "What would like to name this freezer?: "
+CREATE_FOOD_STORAGE_NAME_MESSAGE = "What would like to name this {}?: "
 CREATE_FREEZER_SUCCESS_MESSAGE = "Successfully created freezer! Now opening freezer: {}"
 CREATE_PROFILE = "create profile"
 CREATE_PROFILE_NAME_MESSAGE = "What would you like to name your profile?: "
