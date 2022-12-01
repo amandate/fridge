@@ -1,5 +1,5 @@
 from src.Constants.commands_messages import *
-from src.Constants.keys import *
+from src.Constants.constants import *
 from src.Session.profile import Profile
 
 class Commands:
@@ -53,8 +53,22 @@ class Commands:
         self.profile = Profile(profile_name)
         print(CREATE_PROFILE_SUCCESS_MESSAGE.format(profile_name))
 
+    ''' Displays available commands when prompted by user. '''
     def help(self):
-        pass
+        print(ADD_FOOD, \
+             CREATE_FREEZER, \
+             CREATE_FRIDGE, \
+             CREATE_PROFILE, \
+             DELETE, \
+             DELETE_PROFILE, \
+             LIST_FOOD_STORAGES, \
+             LIST_FREEZERS, \
+             LIST_FRIDGES, \
+             LOAD, \
+             OPEN, \
+             REMOVE_FOOD, \
+             SAVE, \
+             sep = NEW_LINE)
 
     def list_food_storages(self):
         pass

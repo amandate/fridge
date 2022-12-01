@@ -1,6 +1,0 @@
-FREEZER = "freezer"
-FRIDGE = "fridge"
-PROFILES_PATH = "profiles"
-JSON_EXTENSION = ".json"
-EMPTY_STRING = ""
-TAB_STRING = "    "
