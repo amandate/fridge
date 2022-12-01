@@ -1,5 +1,5 @@
 from datetime import date
-from src.Constants.keys import *
+from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
 from src.FoodStorage.freezer import Freezer
 from src.FoodStorage.fridge import Fridge
