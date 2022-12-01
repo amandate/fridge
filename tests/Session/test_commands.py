@@ -3,13 +3,10 @@ from src.Constants.commands_messages import \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FREEZER_ACTION, \
     CREATE_FREEZER_SUCCESS_MESSAGE, \
-    CREATE_PROFILE, \
     INVALID_RESPONSE_MESSAGE, \
-    LOAD, \
     NO_LOADED_PROFILE_MESSAGE, \
     SUGGESTED_ACTIONS_MESSAGE
-from src.Constants.keys import \
-    FREEZER
+from src.Constants.constants import *
 from src.FoodStorage.freezer import Freezer
 from tests.Utilities.constants import \
     freezer_name, \
@@ -88,6 +85,20 @@ class Test_Commands(unittest.TestCase):
         mocked_input.side_effect = [profile_name]
         self.commands.create_profile()
         self.assertEqual(profile_name, self.commands.profile.name)
+
+    def testHelp(self):
+        capturedListOutput = io.StringIO()
+        sys.stdout = capturedListOutput
+
+        self.commands.help()
+
+        expectedOutput = \
+            NEW_LINE.join([ADD_FOOD, CREATE_FREEZER, CREATE_FRIDGE, CREATE_PROFILE, DELETE, DELETE_PROFILE, \
+                LIST_FOOD_STORAGES, LIST_FREEZERS, LIST_FRIDGES, LOAD, OPEN, REMOVE_FOOD, SAVE]) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
 
 if __name__ == '__main__':
     unittest.main()
