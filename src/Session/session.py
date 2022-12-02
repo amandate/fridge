@@ -1,6 +1,7 @@
 from os import listdir
-from src.Constants.keys import \
+from src.Constants.constants import \
     EMPTY_STRING, \
+    EXIT, \
     JSON_EXTENSION, \
     PROFILES_PATH, \
     TAB_STRING
@@ -20,11 +21,13 @@ class Session:
         pass
 
     def start(self):
-        print(WELCOME_MESSAGE)
+        print(WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE)
         self._printSavedProfiles()
         while True:
-            user_input = input()
+            user_input = input(ENTER_COMMAND_MESSAGE)
             self.redirect(user_input)
+            if user_input == EXIT:
+                break
 
     def end(self):
         pass 
