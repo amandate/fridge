@@ -1,2 +1,0 @@
-FREEZER = "freezer"
-FRIDGE = "fridge"

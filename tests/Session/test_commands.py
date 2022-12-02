@@ -3,13 +3,10 @@ from src.Constants.commands_messages import \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
-    CREATE_PROFILE, \
     INVALID_RESPONSE_MESSAGE, \
-    LOAD, \
     NO_LOADED_PROFILE_MESSAGE, \
     SUGGESTED_ACTIONS_MESSAGE
-from src.Constants.constants import \
-    FOOD_STORAGE
+from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
 from tests.Utilities.constants import \
     foodstorage_name, \
@@ -31,16 +28,16 @@ class Test_Commands(unittest.TestCase):
     @patch('src.Session.commands.input', create=True)
     def testCreateFoodStorage(self, mocked_input):
         ## no profile ##
-        # Grab print output from calling list()
-        capturedListOutput = io.StringIO()
-        sys.stdout = capturedListOutput
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
 
         self.commands.create_foodStorage(freezer_name)
 
         expectedOutput = \
             NO_LOADED_PROFILE_MESSAGE + " " + \
             SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + "\n"
-        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
 
         # reset standout
         sys.stdout = sys.__stdout__
@@ -82,13 +79,27 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-
     @patch('src.Session.commands.input', create=True)
     def testCreateProfile(self, mocked_input):
         # What we pass in for user input whenever input() is called
         mocked_input.side_effect = [profile_name]
         self.commands.create_profile()
         self.assertEqual(profile_name, self.commands.profile.name)
+
+    def testHelp(self):
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.help()
+
+        expectedOutput = \
+            NEW_LINE.join([ADD_FOOD, CREATE_FREEZER, CREATE_FRIDGE, CREATE_PROFILE, DELETE, DELETE_PROFILE, \
+                LIST_FOOD_STORAGES, LIST_FREEZERS, LIST_FRIDGES, LOAD, OPEN, REMOVE_FOOD, SAVE]) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
 
 if __name__ == '__main__':
     unittest.main()
