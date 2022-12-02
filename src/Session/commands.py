@@ -22,7 +22,7 @@ class Commands:
 
         foodStorage_name = input(CREATE_FOOD_STORAGE_NAME_MESSAGE.format(foodStorage_type))
 
-        # Handle if a Freezer exists with this name
+        # Handle if a food storage exists with this name
         if self.profile.getFoodStorage(foodStorage_type, foodStorage_name):
             while True:
                 override_request = EXISTING_NAME_MESSAGE.format(foodStorage_type, foodStorage_name) + \
@@ -38,9 +38,6 @@ class Commands:
         
         self.profile.addFoodStorage(foodStorage_type, foodStorage_name)
         print(CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
-
-    def create_fridge(self):
-        pass
 
     ''' Prompts user to create a new profile and name it. If there's already a 
         profile opened, we save it and then create a new profile with the given name. '''
