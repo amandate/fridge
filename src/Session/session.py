@@ -17,12 +17,20 @@ class Session:
     def _printSavedProfiles(self):
         print(TAB_STRING.join(self._profiles))
 
+    def _printWelcomeMessage(self):
+        if len(self._profiles):
+            print(WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE)
+            self._printSavedProfiles()
+        else:
+            print(WELCOME_MESSAGE, NO_PROFILES_MESSAGE)
+
     def _redirect(self, user_input):
         pass
 
+    ''' This method starts a session. It will greet the user and then prompt the user
+        to enter a command that will be redirected. '''
     def start(self):
-        print(WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE)
-        self._printSavedProfiles()
+        self._printWelcomeMessage()
         while True:
             user_input = input(ENTER_COMMAND_MESSAGE)
             self._redirect(user_input)
