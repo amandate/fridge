@@ -79,7 +79,7 @@ class Commands:
     def load(self, profile):
         pass
     
-    def open(self, food_storage):
+    def open(self, foodStorage_type):
         pass
 
     def save(self):
