@@ -55,7 +55,7 @@ class Test_Commands(unittest.TestCase):
         capturedListOutput = io.StringIO()
         sys.stdout = capturedListOutput
 
-        mocked_input.side_effect = [foodstorage_name, "x", "n"]
+        mocked_input.side_effect = [foodstorage_name, FREEZER, NO]
         self.commands.create_foodStorage(freezer_name)
 
         expectedOutput = \
@@ -71,7 +71,7 @@ class Test_Commands(unittest.TestCase):
         capturedListOutput = io.StringIO()
         sys.stdout = capturedListOutput
 
-        mocked_input.side_effect = [foodstorage_name, "y"]
+        mocked_input.side_effect = [foodstorage_name, YES]
         self.commands.create_foodStorage(freezer_name)
 
         self.assertEqual(f"{CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)}\n", capturedListOutput.getvalue())
