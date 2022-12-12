@@ -15,9 +15,13 @@ class Session:
     def __init__(self):
         self._profiles = self._getSavedProfiles()
 
+    ''' Fetches currently saved profiles and returns their names in an array. '''
     def _getSavedProfiles(self):
         return [file.replace(JSON_EXTENSION, EMPTY_STRING) for file in sorted(listdir(PROFILES_PATH))]
 
+    ''' Prints the welcome message the user sees when they first start our application.
+        It will also print a list of profiles the user can load if there are any or
+        prompt the user to create a new one. '''
     def _printWelcomeMessage(self):
         if len(self._profiles):
             print(WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE)
