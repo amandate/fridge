@@ -1,7 +1,7 @@
 from src.Constants.foodStorage_messages import *
 from src.FoodStorage.foodStorage import FoodStorage
-from tests.Utilities.constants import *
-from tests.Utilities.utils import *
+from tests.TestUtils.constants import *
+from tests.TestUtils.utils import *
 
 import io
 import sys

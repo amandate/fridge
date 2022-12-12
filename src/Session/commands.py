@@ -1,6 +1,7 @@
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
 from src.Session.profile import Profile
+from src.Utils.utils import listInQuotes
 
 class Commands:
     def __init__(self):
@@ -17,7 +18,7 @@ class Commands:
     def create_freezer(self):
         if not self.profile:
             print(NO_LOADED_PROFILE_MESSAGE, \
-                SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)))
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
             return
 
         freezer_name = input(CREATE_FREEZER_NAME_MESSAGE)

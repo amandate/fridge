@@ -8,7 +8,7 @@ from src.Constants.commands_messages import \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
 from src.FoodStorage.freezer import Freezer
-from tests.Utilities.constants import \
+from tests.TestUtils.constants import \
     freezer_name, \
     profile_name
 from unittest.mock import patch

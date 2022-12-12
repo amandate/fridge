@@ -1,10 +1,4 @@
 from src.Session.session import Session
-from src.Constants.constants import \
-    EMPTY_STRING, \
-    EXIT, \
-    JSON_EXTENSION, \
-    PROFILES_PATH, \
-    TAB_STRING
 from src.Constants.session_messages import *
 from unittest.mock import patch
 
@@ -16,5 +10,5 @@ class Test_Session(unittest.TestCase):
 
     @patch('src.Session.session.input', create=True)
     def testStart(self, mocked_input):
-        # TODO: This can't be tested right now until we implement _redirect
+        # TODO: This can't be tested right now until we do regression tests
         pass

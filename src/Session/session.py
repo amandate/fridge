@@ -1,11 +1,15 @@
 from os import listdir
+from src.Constants.commands_messages import \
+    SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import \
+    CREATE_PROFILE, \
     EMPTY_STRING, \
     EXIT, \
     JSON_EXTENSION, \
     PROFILES_PATH, \
-    TAB_STRING
+    WITHIN_QUOTES
 from src.Constants.session_messages import *
+from src.Utils.utils import listSepByTab
 
 class Session:
     def __init__(self):
@@ -14,15 +18,13 @@ class Session:
     def _getSavedProfiles(self):
         return [file.replace(JSON_EXTENSION, EMPTY_STRING) for file in sorted(listdir(PROFILES_PATH))]
 
-    def _printSavedProfiles(self):
-        print(TAB_STRING.join(self._profiles))
-
     def _printWelcomeMessage(self):
         if len(self._profiles):
             print(WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE)
-            self._printSavedProfiles()
+            print(listSepByTab(self._profiles))
         else:
             print(WELCOME_MESSAGE, NO_PROFILES_MESSAGE)
+            print(SUGGESTED_ACTIONS_MESSAGE.format(WITHIN_QUOTES.format(CREATE_PROFILE)))
 
     def _redirect(self, user_input):
         pass

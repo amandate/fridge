@@ -2,7 +2,7 @@ from datetime import date
 from src.Constants.constants import FREEZER
 from src.FoodStorage.freezer import Freezer
 from src.Session.profile import Profile
-from tests.Utilities.constants import profile_name, freezer_name
+from tests.TestUtils.constants import profile_name, freezer_name
 
 import unittest
 
