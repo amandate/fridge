@@ -44,17 +44,17 @@ class Profile:
             return 1
         return 0
 
-    ''' Lists names of added items in the FoodStorages. IF food storage 
+    ''' Lists names of added items in the FoodStorages. If food storage 
         type does not exist, returns a blank list. '''
-    def listFoodStorages(self, foodStorage_type):
-        if foodStorage_type not in self._foodStorages:
-            return [] 
-        elif foodStorage_type == FOOD_STORAGES:
+    def listFoodStorages(self, foodStorage_type): 
+        if foodStorage_type == FOOD_STORAGES:
             allNames = []
             for type in self._foodStorages.keys():
-                allNames += self._foodStorages[type].keys()
+                allNames += list(self._foodStorages[type].keys())
             return allNames
-        return self._foodStorages[foodStorage_type].keys() 
+        elif foodStorage_type not in self._foodStorages:
+            return []
+        return list(self._foodStorages[foodStorage_type].keys())
     
     def load(self, name):
         pass

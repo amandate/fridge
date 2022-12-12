@@ -41,3 +41,4 @@ foodFuture = Food("meat", dateOutsideRange.isoformat(), 5)
 profile_name = "testProfile"
 foodstorage_name = "testFoodStorage"
 freezer_name = "testFreezer"
+fridge_name = "testFridge"

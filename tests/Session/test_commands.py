@@ -4,7 +4,11 @@ from src.Constants.commands_messages import \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
     INVALID_RESPONSE_MESSAGE, \
+    NEW_FOOD_STORAGE_REQUEST_MESSAGE, \
     NO_LOADED_PROFILE_MESSAGE, \
+    OPEN_FOOD_STORAGE_ACTION, \
+    OPEN_FOOD_STORAGE_MESSAGE, \
+    OPEN_FOOD_STORAGE_SUCCESS_MESSAGE, \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
@@ -100,6 +104,9 @@ class Test_Commands(unittest.TestCase):
 
         # reset standout
         sys.stdout = sys.__stdout__
+    
+    def testOpen(self):
+        pass 
 
 if __name__ == '__main__':
     unittest.main()
