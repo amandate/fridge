@@ -13,35 +13,32 @@ class Commands:
     def remove_food(self):
         pass
 
-    ''' Prompts user to create a new freezer. If no profile is active, suggests user to create or load one.
-        If a freezer with this name exists, confirms with user if they want to override it.'''
-    def create_freezer(self):
+    ''' Prompts user to create a new food storage. If no profile is active, suggests user to create or load one.
+        If a food storage with this name exists, confirms with user if they want to override it.'''
+    def create_foodStorage(self, foodStorage_type):
         if not self.profile:
             print(NO_LOADED_PROFILE_MESSAGE, \
                 SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
             return
 
-        freezer_name = input(CREATE_FREEZER_NAME_MESSAGE)
+        foodStorage_name = input(CREATE_FOOD_STORAGE_NAME_MESSAGE.format(foodStorage_type))
 
-        # Handle if a Freezer exists with this name
-        if self.profile.getFoodStorage(FREEZER, freezer_name):
+        # Handle if a food storage exists with this name
+        if self.profile.getFoodStorage(foodStorage_type, foodStorage_name):
             while True:
-                override_request = EXISTING_NAME_MESSAGE.format(FREEZER, freezer_name) + \
-                                    OVERRIDE_REQUEST_MESSAGE.format(FREEZER)
+                override_request = EXISTING_NAME_MESSAGE.format(foodStorage_type, foodStorage_name) + \
+                                    OVERRIDE_REQUEST_MESSAGE.format(foodStorage_type)
                 doOverride = input(override_request)
-                if doOverride == "n":
-                    print(CANCEL_ACTION_MESSAGE.format(CREATE_FREEZER_ACTION.format(freezer_name)))
+                if doOverride == NO:
+                    print(CANCEL_ACTION_MESSAGE.format(CREATE_FOOD_STORAGE_ACTION.format(foodStorage_type, foodStorage_name)))
                     return
-                elif doOverride == "y":
+                elif doOverride == YES:
                     break
                 else:
                     print(INVALID_RESPONSE_MESSAGE)
         
-        self.profile.addFoodStorage(FREEZER, freezer_name)
-        print(CREATE_FREEZER_SUCCESS_MESSAGE.format(freezer_name))
-
-    def create_fridge(self):
-        pass
+        self.profile.addFoodStorage(foodStorage_type, foodStorage_name)
+        print(CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
 
     ''' Prompts user to create a new profile and name it. If there's already a 
         profile opened, we save it and then create a new profile with the given name. '''

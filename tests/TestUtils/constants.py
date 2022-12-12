@@ -39,4 +39,5 @@ foodNearFuture = Food("lettuce", dateWithinRange.isoformat(), 7)
 foodFuture = Food("meat", dateOutsideRange.isoformat(), 5)
 
 profile_name = "testProfile"
+foodstorage_name = "testFoodStorage"
 freezer_name = "testFreezer"
