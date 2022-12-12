@@ -78,10 +78,31 @@ class Commands:
 
     def load(self, profile):
         pass
-    
+   
+    ''' Prompts user input to open a food storage. If a food storage with that name does not exist, 
+        prompts user to create a new one. '''
     def open(self, foodStorage_type):
-        pass
+        foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
+        print(OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_list))
+        
+        user_foodStorage_type = input(OPEN_FOOD_STORAGE_NAME)
 
+        if self.profile.open(foodStorage_type, user_foodStorage_type):
+            while True:
+                print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(user_foodStorage_type))
+                   
+        # Handle if a food storage does not exist with this name.
+        newStorage_request = NEW_FOOD_STORAGE_REQUEST_MESSAGE 
+        doNewStorage = input(newStorage_request)
+        if doNewStorage == YES:
+            self.create_foodStorage(foodStorage_type)
+            return
+        elif doNewStorage == NO:
+            print(CANCEL_ACTION_MESSAGE.format(OPEN_FOOD_STORAGE_ACTION))
+            return 
+        else:
+            print(INVALID_RESPONSE_MESSAGE)
+        
     def save(self):
         pass
 

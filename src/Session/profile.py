@@ -34,7 +34,8 @@ class Profile:
             return None
         return self._foodStorages[foodStorage_type][name]
 
-    ''' '''
+    ''' Retrieves FoodStorage object with getFoodStorage method and sets it 
+        to open if it exists, otherwise return 0. '''
     def open(self, foodStorage_type, name):
         retrievedFoodStorage = self.getFoodStorage(foodStorage_type, name)
         if retrievedFoodStorage is not None:
@@ -43,7 +44,8 @@ class Profile:
             return 1
         return 0
 
-    ''' '''
+    ''' Lists names of added items in the FoodStorages. IF food storage 
+        type does not exist, returns a blank list. '''
     def listFoodStorages(self, foodStorage_type):
         if foodStorage_type not in self._foodStorages:
             return [] 
