@@ -105,8 +105,60 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
     
-    def testOpen(self):
-        pass 
+    @patch('src.Session.commands.input', create=True)
+    def testOpenFoodStorage(self, mocked_input):
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.create_foodStorage(freezer_name)
+        self.commands.open(freezer_name)
+
+        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(freezer_name)
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+        
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Happy path: opens food storage with existing name ##
+        mocked_input.side_effect = [freezer_name, foodstorage_name]
+        self.commands.open(freezer_name)
+
+        expectedOutput = OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+        
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Food storage does not exist, invalid response, cancel - NO ##
+        # Grab print output from calling list()
+        capturedListOutput = io.StringIO()
+        sys.stdout = capturedListOutput
+
+        mocked_input.side_effect = [foodstorage_name, FREEZER, NO]
+        self.commands.open(freezer_name)
+
+        expectedOutput = \
+            INVALID_RESPONSE_MESSAGE + "\n" + \
+            CANCEL_ACTION_MESSAGE.format(OPEN_FOOD_STORAGE_ACTION.format(freezer_name)) + "\n"
+        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+
+         # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Food storage does not exist, create new food storage - YES ##
+        # Grab print output from calling list
+        capturedListOutput = io.StringIO()
+        sys.stdout = capturedListOutput
+
+        mocked_input.side_effect = [foodstorage_name, YES]
+        self.commands.open(freezer_name)
+        self.commands.create_foodStorage(freezer_name)
+
+        self.assertEqual(f"{CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)}\n", capturedListOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
 
 if __name__ == '__main__':
     unittest.main()

@@ -78,21 +78,18 @@ class Commands:
 
     def load(self, profile):
         pass
-   
-    def print_foodStorage_list(self, foodStorage_type):
-        foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
-        return
   
     ''' Prompts user input to open a food storage. If a food storage with that name does not exist, 
         prompts user to create a new one. '''
     def open(self, foodStorage_type):
+        foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
         print(OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
         
         foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
 
+        # Handle if a food storage does not exist with this name.
         if not self.profile.open(foodStorage_type, foodStorage_name):
             while True:
-                # Handle if a food storage does not exist with this name.
                 newStorage_request = NEW_FOOD_STORAGE_REQUEST_MESSAGE.format(foodStorage_type) 
                 doNewStorage = input(newStorage_request)
                 if doNewStorage == YES:
