@@ -8,7 +8,7 @@ from src.Constants.commands_messages import \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
-from tests.Utilities.constants import \
+from tests.TestUtils.constants import \
     foodstorage_name, \
     freezer_name, \
     profile_name

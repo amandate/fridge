@@ -9,4 +9,4 @@ INVALID_RESPONSE_MESSAGE = "Sorry, that response was not recognized. Please try 
 NO_LOADED_PROFILE_MESSAGE = "Please create or load a profile before proceeding."
 OVERRIDE_REQUEST_MESSAGE = "Would you like to override it? Note: This will permanently erase " + \
                             "that {}'s contents. (y/n): "
-SUGGESTED_ACTIONS_MESSAGE = "Suggested Actions: {}"
+SUGGESTED_ACTIONS_MESSAGE = "Suggested Action(s): {}"

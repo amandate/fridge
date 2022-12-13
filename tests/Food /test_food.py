@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from src.Food.food import Food
-from tests.Utilities.constants import *
+from tests.TestUtils.constants import *
 
 import unittest
 
