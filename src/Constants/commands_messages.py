@@ -14,4 +14,4 @@ OPEN_FOOD_STORAGE_NAME = "{} name: "
 OPEN_FOOD_STORAGE_SUCCESS_MESSAGE = "Successfully opened food storage: {}."
 OVERRIDE_REQUEST_MESSAGE = "Would you like to override it? Note: This will permanently erase " + \
                             "that {}'s contents. (y/n): "
-SUGGESTED_ACTIONS_MESSAGE = "Suggested Actions: {}"
+SUGGESTED_ACTIONS_MESSAGE = "Suggested Action(s): {}"
