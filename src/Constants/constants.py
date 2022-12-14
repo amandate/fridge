@@ -5,12 +5,9 @@ CREATE_FRIDGE = "create fridge"
 CREATE_PROFILE = "create profile"
 DELETE = "delete"
 DELETE_PROFILE = "delete profile"
-<<<<<<< HEAD
 FOOD_STORAGES = "food storages"
-=======
 EMPTY_STRING = ""
 EXIT = "exit"
->>>>>>> 966bf0af5849ce071343d303a83ea9e35d2bbc84
 FREEZER = "freezer"
 FRIDGE = "fridge"
 HELP = "help"
