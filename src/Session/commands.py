@@ -1,7 +1,7 @@
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
 from src.Session.profile import Profile
-from src.Utils.utils import listInQuotes
+from src.Utils.utils import listInQuotes, listSepByTab
 
 class Commands:
     def __init__(self):
@@ -80,11 +80,18 @@ class Commands:
     def load(self, profile):
         pass
   
-    ''' Prompts user input to open a food storage. If a food storage with that name does not exist, 
-        prompts user to create a new one. '''
+    ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
+        If a food storage with that name does not exist, prompts user to create a new one. '''
     def open(self, foodStorage_type):
         foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
         print(OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
+        
+        # Prints empty space if there is no food storages to list. 
+        if not foodStorage_list:
+            print(SPACE)
+            return 
+        
+        print(listSepByTab(foodStorage_list))
         
         foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
 
