@@ -1,7 +1,7 @@
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
 from src.Session.profile import Profile
-from src.Utils.utils import listInQuotes, listSepByTab, twoPrintOutcomes
+from src.Utils.utils import listInQuotes, twoPrintOutcomes
 
 class Commands:
     def __init__(self):

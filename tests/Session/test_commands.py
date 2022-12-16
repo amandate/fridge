@@ -4,7 +4,7 @@ from src.Constants.commands_messages import \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
     INVALID_RESPONSE_MESSAGE, \
-    NEW_FOOD_STORAGE_REQUEST_MESSAGE, \
+    NO_FOOD_STORAGE_MESSAGE, \
     NO_LOADED_PROFILE_MESSAGE, \
     OPEN_FOOD_STORAGE_ACTION, \
     OPEN_FOOD_STORAGE_MESSAGE, \
@@ -12,9 +12,11 @@ from src.Constants.commands_messages import \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
+from src.Utils.utils import listInQuotes
 from tests.TestUtils.constants import \
     foodstorage_name, \
     freezer_name, \
+    fridge_name, \
     profile_name
 from unittest.mock import patch
 
@@ -107,24 +109,33 @@ class Test_Commands(unittest.TestCase):
     
     @patch('src.Session.commands.input', create=True)
     def testOpenFoodStorage(self, mocked_input):
+        ## no profile ##
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
 
         self.commands.create_foodStorage(freezer_name)
-        self.commands.open(freezer_name)
 
-        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(freezer_name)
+        expectedOutput = \
+            NO_LOADED_PROFILE_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + "\n"
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
-        
+
         # reset standout
         sys.stdout = sys.__stdout__
 
         ## Happy path: opens food storage with existing name ##
-        mocked_input.side_effect = [freezer_name, foodstorage_name]
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        mocked_input.side_effect = [profile_name, foodstorage_name]
+        self.commands.create_profile()
+        self.commands.create_foodStorage(freezer_name)
         self.commands.open(freezer_name)
 
-        expectedOutput = OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)
+        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(freezer_name) + "\n" + \
+            OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
         
         # reset standout
@@ -151,12 +162,18 @@ class Test_Commands(unittest.TestCase):
         capturedListOutput = io.StringIO()
         sys.stdout = capturedListOutput
 
-        mocked_input.side_effect = [foodstorage_name, YES]
-        self.commands.open(freezer_name)
-        self.commands.create_foodStorage(freezer_name)
+        mocked_input.side_effect = [freezer_name, YES]
+        self.commands.open(fridge_name)
 
-        self.assertEqual(f"{CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)}\n", capturedListOutput.getvalue())
+        self.assertEqual(f"{CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(fridge_name, foodstorage_name)}\n", capturedListOutput.getvalue())
 
+        # Check if new food storage was created by opening successfully 
+        self.commands.open(fridge_name)
+
+        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(fridge_name) + "\n" + \
+            OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(fridge_name, foodstorage_name)
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+        
         # reset standout
         sys.stdout = sys.__stdout__
 
