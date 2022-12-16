@@ -114,7 +114,7 @@ class Test_Commands(unittest.TestCase):
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
 
-        self.commands.create_foodStorage(freezer_name)
+        self.commands.open(freezer_name)
 
         expectedOutput = \
             NO_LOADED_PROFILE_MESSAGE + " " + \
@@ -125,16 +125,16 @@ class Test_Commands(unittest.TestCase):
         sys.stdout = sys.__stdout__
 
         ## Happy path: opens food storage with existing name ##
+        mocked_input.side_effect = [profile_name, foodstorage_name, foodstorage_name]
+        self.commands.create_profile()
+        self.commands.create_foodStorage(freezer_name)
+        
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
-
-        mocked_input.side_effect = [profile_name, foodstorage_name]
-        self.commands.create_profile()
-        self.commands.create_foodStorage(freezer_name)
         self.commands.open(freezer_name)
 
-        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(freezer_name) + "\n" + \
+        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(foodstorage_name) + "\n" + \
             OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
         
