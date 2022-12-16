@@ -9,7 +9,7 @@ from src.Constants.constants import \
     PROFILES_PATH, \
     WITHIN_QUOTES
 from src.Constants.session_messages import *
-from src.Utils.utils import listSepByTab
+from src.Utils.utils import listSepByTab, twoPrintOutcomes
 
 class Session:
     def __init__(self):
@@ -23,12 +23,8 @@ class Session:
         It will also print a list of profiles the user can load if there are any or
         prompt the user to create a new one. '''
     def _printWelcomeMessage(self):
-        if len(self._profiles):
-            print(WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE)
-            print(listSepByTab(self._profiles))
-        else:
-            print(WELCOME_MESSAGE, NO_PROFILES_MESSAGE)
-            print(SUGGESTED_ACTIONS_MESSAGE.format(WITHIN_QUOTES.format(CREATE_PROFILE)))
+        twoPrintOutcomes(self._profiles, [WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE], \
+            [WELCOME_MESSAGE, NO_PROFILES_MESSAGE], CREATE_PROFILE)
 
     def _redirect(self, user_input):
         pass

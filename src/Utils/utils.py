@@ -1,3 +1,4 @@
+from src.Constants.commands_messages import SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import \
     COMMA, \
     SPACE, \
@@ -14,6 +15,12 @@ def listInQuotes(array):
 def listSepByTab(array):
     return TAB.join(array)
 
-
-def twoPrintOutcomes(array):
-    
+''' Takes in an array and prints 2 outcomes and corresponding messages depending on 
+    if the array is empty or not. '''
+def twoPrintOutcomes(array, posOutcome, negOutcome, suggestActions):
+    if array:
+        print(SPACE.join(posOutcome))
+        print(listSepByTab(array))
+    else:
+        print(SPACE.join(negOutcome))
+        print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes(suggestActions)))

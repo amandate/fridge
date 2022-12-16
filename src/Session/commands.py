@@ -1,7 +1,7 @@
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
 from src.Session.profile import Profile
-from src.Utils.utils import listInQuotes, listSepByTab
+from src.Utils.utils import listInQuotes, listSepByTab, twoPrintOutcomes
 
 class Commands:
     def __init__(self):
@@ -81,7 +81,7 @@ class Commands:
         pass
   
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
-        If a food storage with that name does not exist, prompts user to create a new one. '''
+        If a food storage is not available or a food storage with that name does not exist, prompts user to create a new one. '''
     def open(self, foodStorage_type):
         # Checks if a profile is loaded -> if not, prompts to load or create one
         if not self.profile:
@@ -94,12 +94,8 @@ class Commands:
 
         # If there are food storages available, prints open message and lists available food storages.
         # If there are no food storages, prompts user to create one.
-        if foodStorage_list:
-            print(OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
-            print(listSepByTab(foodStorage_list))
-        else:
-            print(NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
-            print(SUGGESTED_ACTIONS_MESSAGE.format(WITHIN_QUOTES.format(CREATE_FOOD_STORAGE)))
+        twoPrintOutcomes(foodStorage_list, [OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], \
+            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], CREATE_FOOD_STORAGE)
 
         # Handles user input for food storage name 
         foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
