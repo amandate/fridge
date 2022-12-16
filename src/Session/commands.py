@@ -95,7 +95,7 @@ class Commands:
         # If there are food storages available, prints open message and lists available food storages.
         # If there are no food storages, prompts user to create one.
         twoPrintOutcomes(foodStorage_list, [OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], \
-            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], CREATE_FOOD_STORAGE)
+            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])
 
         # Handles user input for food storage name 
         foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
@@ -103,7 +103,7 @@ class Commands:
         # Handle if a food storage does not exist with this name.
         if not self.profile.open(foodStorage_type, foodStorage_name):
             while True:
-                newStorage_request = OBJECT_DOES_NOT_EXIST.format(foodStorage_type), \
+                newStorage_request = NON_EXISTING_NAME_MESSAGE.format(foodStorage_type, foodStorage_name) + \
                     CREATE_NEW_OBJECT_REQUEST_MESSAGE
                 doNewStorage = input(newStorage_request)
                 if doNewStorage == YES:

@@ -17,10 +17,10 @@ def listSepByTab(array):
 
 ''' Takes in an array and prints 2 outcomes and corresponding messages depending on 
     if the array is empty or not. '''
-def twoPrintOutcomes(array, posOutcome, negOutcome, suggestActions):
+def twoPrintOutcomes(array, posOutcome, negOutcome, suggestedActions):
     if array:
         print(SPACE.join(posOutcome))
         print(listSepByTab(array))
     else:
         print(SPACE.join(negOutcome))
-        print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes(suggestActions)))
+        print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes(suggestedActions)))

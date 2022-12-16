@@ -24,7 +24,7 @@ class Session:
         prompt the user to create a new one. '''
     def _printWelcomeMessage(self):
         twoPrintOutcomes(self._profiles, [WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE], \
-            [WELCOME_MESSAGE, NO_PROFILES_MESSAGE], CREATE_PROFILE)
+            [WELCOME_MESSAGE, NO_PROFILES_MESSAGE], [CREATE_PROFILE])
 
     def _redirect(self, user_input):
         pass
