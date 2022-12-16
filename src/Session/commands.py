@@ -83,33 +83,43 @@ class Commands:
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
         If a food storage with that name does not exist, prompts user to create a new one. '''
     def open(self, foodStorage_type):
+        # Checks if a profile is loaded -> if not, prompts to load or create one
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
+
+        # Compiles list of food storages available
         foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
-        print(OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
-        
-        # Prints empty space if there is no food storages to list. 
-        if not foodStorage_list:
-            print(SPACE)
-            return 
-        
-        print(listSepByTab(foodStorage_list))
-        
+
+        # If there are food storages available, prints open message and lists available food storages.
+        # If there are no food storages, prompts user to create one.
+        if foodStorage_list:
+            print(OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
+            print(listSepByTab(foodStorage_list))
+        else:
+            print(NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type))
+            print(SUGGESTED_ACTIONS_MESSAGE.format(WITHIN_QUOTES.format(CREATE_FOOD_STORAGE)))
+
+        # Handles user input for food storage name 
         foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
 
         # Handle if a food storage does not exist with this name.
         if not self.profile.open(foodStorage_type, foodStorage_name):
             while True:
-                newStorage_request = NEW_FOOD_STORAGE_REQUEST_MESSAGE.format(foodStorage_type) 
+                newStorage_request = OBJECT_DOES_NOT_EXIST.format(foodStorage_type), \
+                    CREATE_NEW_OBJECT_REQUEST_MESSAGE
                 doNewStorage = input(newStorage_request)
                 if doNewStorage == YES:
-                    self.create_foodStorage(foodStorage_type)
-                    return
+                    return self.create_foodStorage(foodStorage_type)
                 elif doNewStorage == NO:
                     print(CANCEL_ACTION_MESSAGE.format(OPEN_FOOD_STORAGE_ACTION.format(foodStorage_type)))
                     return 
                 else:
                     print(INVALID_RESPONSE_MESSAGE)
         
-        print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_name))
+        # If food storage exists with this name, prints open success message. 
+        print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
                    
     def save(self):
         pass

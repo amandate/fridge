@@ -1,5 +1,6 @@
 ADD_FOOD = "add food"
 COMMA = ","
+CREATE_FOOD_STORAGE = "create food storage"
 CREATE_FREEZER = "create freezer"
 CREATE_FRIDGE = "create fridge"
 CREATE_PROFILE = "create profile"

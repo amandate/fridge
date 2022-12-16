@@ -13,3 +13,7 @@ def listInQuotes(array):
     object separated by a tab. '''
 def listSepByTab(array):
     return TAB.join(array)
+
+
+def twoPrintOutcomes(array):
+    
