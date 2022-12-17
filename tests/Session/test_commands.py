@@ -42,7 +42,7 @@ class Test_Commands(unittest.TestCase):
 
         expectedOutput = \
             NO_LOADED_PROFILE_MESSAGE + " " + \
-            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + "\n"
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
 
         # reset standout
@@ -65,8 +65,8 @@ class Test_Commands(unittest.TestCase):
         self.commands.create_foodStorage(freezer_name)
 
         expectedOutput = \
-            INVALID_RESPONSE_MESSAGE + "\n" + \
-            CANCEL_ACTION_MESSAGE.format(CREATE_FOOD_STORAGE_ACTION.format(freezer_name, foodstorage_name)) + "\n"
+            INVALID_RESPONSE_MESSAGE + NEW_LINE + \
+            CANCEL_ACTION_MESSAGE.format(CREATE_FOOD_STORAGE_ACTION.format(freezer_name, foodstorage_name)) + NEW_LINE
         self.assertEqual(expectedOutput, capturedListOutput.getvalue())
 
         # reset standout
@@ -118,62 +118,71 @@ class Test_Commands(unittest.TestCase):
 
         expectedOutput = \
             NO_LOADED_PROFILE_MESSAGE + " " + \
-            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + "\n"
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
 
         # reset standout
         sys.stdout = sys.__stdout__
-
+        
         ## Happy path: opens food storage with existing name ##
-        mocked_input.side_effect = [profile_name, foodstorage_name, foodstorage_name]
+        mocked_input.side_effect = [profile_name, freezer_name, freezer_name]
         self.commands.create_profile()
-        self.commands.create_foodStorage(freezer_name)
+        self.commands.create_foodStorage(FREEZER)
         
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
-        self.commands.open(freezer_name)
+        self.commands.open(FREEZER)
 
-        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(foodstorage_name) + "\n" + \
-            OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(freezer_name, foodstorage_name)
+        expectedPosOutcome = OPEN_FOOD_STORAGE_MESSAGE.format(FREEZER) + NEW_LINE + freezer_name + NEW_LINE
+        expectedOutput = expectedPosOutcome + \
+            OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(FREEZER, freezer_name) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
         
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## Food storage does not exist, invalid response, cancel - NO ##
+        ## Negative outcome: no food storage object of this type ##
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        self.commands.open(FRIDGE)
+
+        expectedOutput = NO_FOOD_STORAGE_MESSAGE.format(FRIDGE) + NEW_LINE + \
+            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Food storage objects exist but food storage name does not exist, invalid response, cancel - NO ##
         # Grab print output from calling list()
         capturedListOutput = io.StringIO()
         sys.stdout = capturedListOutput
 
-        mocked_input.side_effect = [foodstorage_name, FREEZER, NO]
-        self.commands.open(freezer_name)
+        mocked_input.side_effect = [fridge_name, FRIDGE, NO]
+        self.commands.open(FREEZER)
 
-        expectedOutput = \
-            INVALID_RESPONSE_MESSAGE + "\n" + \
-            CANCEL_ACTION_MESSAGE.format(OPEN_FOOD_STORAGE_ACTION.format(freezer_name)) + "\n"
+        expectedOutput = expectedPosOutcome + \
+            INVALID_RESPONSE_MESSAGE + NEW_LINE + \
+            CANCEL_ACTION_MESSAGE.format(OPEN_FOOD_STORAGE_ACTION.format(FREEZER)) + NEW_LINE
         self.assertEqual(expectedOutput, capturedListOutput.getvalue())
 
          # reset standout
         sys.stdout = sys.__stdout__
 
-        ## Food storage does not exist, create new food storage - YES ##
+        ## Food storage objects exist but food storage name does not exist, create new food storage - YES ##
         # Grab print output from calling list
         capturedListOutput = io.StringIO()
         sys.stdout = capturedListOutput
 
-        mocked_input.side_effect = [freezer_name, YES]
-        self.commands.open(fridge_name)
+        mocked_input.side_effect = [fridge_name, YES, fridge_name]
+        self.commands.open(FREEZER)
 
-        self.assertEqual(f"{CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(fridge_name, foodstorage_name)}\n", capturedListOutput.getvalue())
+        expectedOutput = expectedPosOutcome + \
+            CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(FREEZER, fridge_name) + NEW_LINE
 
-        # Check if new food storage was created by opening successfully 
-        self.commands.open(fridge_name)
+        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
 
-        expectedOutput = OPEN_FOOD_STORAGE_MESSAGE.format(fridge_name) + "\n" + \
-            OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(fridge_name, foodstorage_name)
-        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
-        
         # reset standout
         sys.stdout = sys.__stdout__
 

@@ -94,9 +94,11 @@ class Commands:
 
         # If there are food storages available, prints open message and lists available food storages.
         # If there are no food storages, prompts user to create one.
-        twoPrintOutcomes(foodStorage_list, [OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], \
-            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])
-
+        isPosOutcome = twoPrintOutcomes(foodStorage_list, [OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], \
+            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
+        if not isPosOutcome:
+            return
+            
         # Handles user input for food storage name 
         foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
 

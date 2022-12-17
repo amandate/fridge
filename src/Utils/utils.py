@@ -21,6 +21,8 @@ def twoPrintOutcomes(array, posOutcome, negOutcome, suggestedActions):
     if array:
         print(SPACE.join(posOutcome))
         print(listSepByTab(array))
-    else:
-        print(SPACE.join(negOutcome))
-        print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes(suggestedActions)))
+        return True
+        
+    print(SPACE.join(negOutcome))
+    print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes(suggestedActions)))
+    return False 
