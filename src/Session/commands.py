@@ -1,7 +1,7 @@
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
 from src.Session.profile import Profile
-from src.Utils.utils import listInQuotes
+from src.Utils.utils import listInQuotes, twoPrintOutcomes
 
 class Commands:
     def __init__(self):
@@ -79,10 +79,46 @@ class Commands:
 
     def load(self, profile):
         pass
-    
-    def open(self, food_storage):
-        pass
+  
+    ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
+        If a food storage is not available or a food storage with that name does not exist, prompts user to create a new one. '''
+    def open(self, foodStorage_type):
+        # Checks if a profile is loaded -> if not, prompts to load or create one
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
 
+        # Compiles list of food storages available
+        foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
+
+        # If there are food storages available, prints open message and lists available food storages.
+        # If there are no food storages, prompts user to create one.
+        isPosOutcome = twoPrintOutcomes(foodStorage_list, [OPEN_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], \
+            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
+        if not isPosOutcome:
+            return
+            
+        # Handles user input for food storage name 
+        foodStorage_name = input(OPEN_FOOD_STORAGE_NAME.format(foodStorage_type))
+
+        # Handle if a food storage does not exist with this name.
+        if not self.profile.open(foodStorage_type, foodStorage_name):
+            while True:
+                newStorage_request = NON_EXISTING_NAME_MESSAGE.format(foodStorage_type, foodStorage_name) + \
+                    CREATE_NEW_OBJECT_REQUEST_MESSAGE
+                doNewStorage = input(newStorage_request)
+                if doNewStorage == YES:
+                    return self.create_foodStorage(foodStorage_type)
+                elif doNewStorage == NO:
+                    print(CANCEL_ACTION_MESSAGE.format(OPEN_FOOD_STORAGE_ACTION.format(foodStorage_type)))
+                    return 
+                else:
+                    print(INVALID_RESPONSE_MESSAGE)
+        
+        # If food storage exists with this name, prints open success message. 
+        print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
+                   
     def save(self):
         pass
 
