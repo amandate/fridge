@@ -68,13 +68,24 @@ class Commands:
              SAVE, \
              sep = NEW_LINE)
 
-    # consolidate fridges + freezers to food storages
-    def list_food_storages(self):
+    ''' Allows user to list available food storages. '''
+    def list_food_storages(self, foodStorage_type):
+        # Checks if a profile is loaded -> if not, prompts to load or create one
         if not self.profile:
             print(NO_LOADED_PROFILE_MESSAGE, \
                 SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
             return
-            
+        
+        if self.profile.listFoodStorages(foodStorage_type): 
+            listFoodStorages_request = input(LIST_FOOD_STORAGES_MESSAGE.format(foodStorage_type))
+            if listFoodStorages_request == YES:
+                return self.profile.listFoodStorages(foodStorage_type)
+            elif listFoodStorages_request == NO:
+                print(CANCEL_ACTION_MESSAGE.format(LIST_FOOD_STORAGES_ACTION.format(foodStorage_type)))
+                return 
+            else:
+                print(INVALID_RESPONSE_MESSAGE)
+
     def load(self, profile):
         pass
   
