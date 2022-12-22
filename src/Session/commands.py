@@ -68,15 +68,13 @@ class Commands:
              SAVE, \
              sep = NEW_LINE)
 
+    # consolidate fridges + freezers to food storages
     def list_food_storages(self):
-        pass
-
-    def list_fridges(self):
-        pass
-
-    def list_freezers(self):
-        pass
-
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
+            
     def load(self, profile):
         pass
   
