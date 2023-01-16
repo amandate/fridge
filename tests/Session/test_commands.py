@@ -4,6 +4,7 @@ from src.Constants.commands_messages import \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
     INVALID_RESPONSE_MESSAGE, \
+    LIST_FOOD_STORAGES_ACTION, \
     NO_FOOD_STORAGE_MESSAGE, \
     NO_LOADED_PROFILE_MESSAGE, \
     OPEN_FOOD_STORAGE_ACTION, \
@@ -106,7 +107,52 @@ class Test_Commands(unittest.TestCase):
 
         # reset standout
         sys.stdout = sys.__stdout__
-    
+
+    @patch('src.Session.commands.input', create=True)
+    def testListFoodStorages(self, mocked_input):
+        ## no profile ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.list_food_storages(freezer_name)
+
+        expectedOutput = \
+            NO_LOADED_PROFILE_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+       
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Postive outcome: lists existing food storages ##
+        mocked_input.side_effect = [profile_name, freezer_name, freezer_name]
+        self.commands.create_profile()
+        self.commands.create_foodStorage(FREEZER)
+        
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        self.commands.list_food_storages(FREEZER)
+
+        expectedOutput = LIST_FOOD_STORAGES_ACTION.format(FREEZER) + NEW_LINE + freezer_name + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+        
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Negative outcome: no food storage object of this type ##
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        self.commands.list_food_storages(FRIDGE)
+
+        expectedOutput = NO_FOOD_STORAGE_MESSAGE.format(FRIDGE) + NEW_LINE + \
+            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
     @patch('src.Session.commands.input', create=True)
     def testOpenFoodStorage(self, mocked_input):
         ## no profile ##

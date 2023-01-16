@@ -68,14 +68,18 @@ class Commands:
              SAVE, \
              sep = NEW_LINE)
 
-    def list_food_storages(self):
-        pass
+    ''' Allows user to list available food storages. '''
+    def list_food_storages(self, foodStorage_type):
+        # Checks if a profile is loaded -> if not, prompts to load or create one
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
+        
+        foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
 
-    def list_fridges(self):
-        pass
-
-    def list_freezers(self):
-        pass
+        twoPrintOutcomes(foodStorage_list, [LIST_FOOD_STORAGES_ACTION.format(foodStorage_type)], \
+            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
 
     def load(self, profile):
         pass
