@@ -8,7 +8,7 @@ class Commands:
         self.profile = None
 
     def add_food(self):
-        pass
+        
 
     def remove_food(self):
         pass
