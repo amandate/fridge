@@ -8,7 +8,6 @@ CREATE_PROFILE_SUCCESS_MESSAGE = "Successfully created profile. Now switching to
 EXISTING_NAME_MESSAGE = "A {} with the name '{}' already exists."
 INVALID_RESPONSE_MESSAGE = "Sorry, that response was not recognized. Please try again."
 LIST_FOOD_STORAGES_ACTION = "Listing available {}s."
-LIST_FOOD_STORAGES_MESSAGE = "Would you like to see what {}s you have? y/n: "
 NO_FOOD_STORAGE_MESSAGE = "You have no {}s available."
 NO_LOADED_PROFILE_MESSAGE = "Please create or load a profile before proceeding."
 NON_EXISTING_NAME_MESSAGE = "A {} with the name '{}' does not exist."

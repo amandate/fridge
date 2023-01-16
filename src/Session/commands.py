@@ -76,15 +76,10 @@ class Commands:
                 SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
             return
         
-        if self.profile.listFoodStorages(foodStorage_type): 
-            listFoodStorages_request = input(LIST_FOOD_STORAGES_MESSAGE.format(foodStorage_type))
-            if listFoodStorages_request == YES:
-                return self.profile.listFoodStorages(foodStorage_type)
-            elif listFoodStorages_request == NO:
-                print(CANCEL_ACTION_MESSAGE.format(LIST_FOOD_STORAGES_ACTION.format(foodStorage_type)))
-                return 
-            else:
-                print(INVALID_RESPONSE_MESSAGE)
+        foodStorage_list = self.profile.listFoodStorages(foodStorage_type)
+
+        twoPrintOutcomes(foodStorage_list, [LIST_FOOD_STORAGES_ACTION.format(foodStorage_type)], \
+            [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
 
     def load(self, profile):
         pass
