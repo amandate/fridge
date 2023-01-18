@@ -40,6 +40,7 @@ class Session:
     def _getSavedProfiles(self):
         return [file.replace(JSON_EXTENSION, EMPTY_STRING) for file in sorted(listdir(PROFILES_PATH))]
 
+    ''' Redirects user_input to the correct command method. '''
     def _redirect(self, user_input):
         if user_input == ADD_FOOD:
             self._commands.add_food()
@@ -79,14 +80,15 @@ class Session:
         return 1
 
     ''' This method starts a session. It will greet the user and then prompt the user
-        to enter a command that will be redirected. '''
+        to enter a command that will be redirected. If the redirect was unsuccessful or
+        the user requests 'exit', we will break and exit the program. '''
     def start(self):
         twoPrintOutcomes(self._profiles, [WELCOME_MESSAGE, LOAD_CREATE_PROFILE_MESSAGE], \
             [WELCOME_MESSAGE, NO_PROFILES_MESSAGE], [CREATE_PROFILE])
         while True:
             user_input = input(ENTER_COMMAND_MESSAGE).strip()
-            status = self._redirect(user_input)
-            if not status:
+            success = self._redirect(user_input)
+            if not success:
                 break
 
     def end(self):
