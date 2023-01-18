@@ -1,3 +1,8 @@
+ADD_FOOD_NAME_MESSAGE = "What would you like to name this food?: "
+ADD_FOOD_EXPIRATION_DATE_MESSAGE = "When does this food expire? (Enter in 'YYYY-MM-DD' format): "
+ADD_FOOD_USE_BY_DATE_MESSAGE = "How many days do you have to use this after opening? (Press 'Enter' to skip): "
+ADD_MORE_FOOD_MESSAGE = "Would you like to add more food? (y/n): "
+ADD_FOOD_SUCCESS_MESSAGE = "Successfully added food(s)."
 CANCEL_ACTION_MESSAGE = "Canceling action: {}"
 CREATE_FOOD_STORAGE_ACTION = "Create {} with name '{}'."
 CREATE_FOOD_STORAGE_NAME_MESSAGE = "What would you like to name this {}?: "

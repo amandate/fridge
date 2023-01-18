@@ -1,5 +1,6 @@
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
+from src.Food.food import Food
 from src.Session.profile import Profile
 from src.Utils.utils import listInQuotes, twoPrintOutcomes
 
@@ -8,7 +9,35 @@ class Commands:
         self.profile = None
 
     def add_food(self):
+        # Profile check
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
         
+        # Check if food storage is open
+        if self.profile.getOpenFoodStorage != None:
+            food_list = []
+            while True: 
+                food_name = input(ADD_FOOD_NAME_MESSAGE)
+                expiration_date = input(ADD_FOOD_EXPIRATION_DATE_MESSAGE)
+                try:
+                    use_by_date = int(input(ADD_FOOD_USE_BY_DATE_MESSAGE))
+                    food = Food(food_name, expiration_date, use_by_date)
+                except:
+                    food = Food(food_name, expiration_date)
+                food_list.append(food)
+                    
+                while True:
+                    add_more_food = input(ADD_MORE_FOOD_MESSAGE)
+                    if add_more_food == YES:
+                        break
+                    elif add_more_food == NO:
+                        self.profile.addFoods(food_list)
+                        print(ADD_FOOD_SUCCESS_MESSAGE)
+                        return
+                    else:
+                        print(INVALID_RESPONSE_MESSAGE)
 
     def remove_food(self):
         pass
