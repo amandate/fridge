@@ -90,8 +90,3 @@ class Session:
             success = self._redirect(user_input)
             if not success:
                 break
-
-    def end(self):
-        pass 
-
-
