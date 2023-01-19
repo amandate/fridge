@@ -29,8 +29,6 @@ from src.Constants.session_messages import *
 from src.Session.commands import Commands
 from src.Utils.utils import twoPrintOutcomes
 
-import atexit
-
 class Session:
     def __init__(self):
         self._profiles = self._getSavedProfiles()
