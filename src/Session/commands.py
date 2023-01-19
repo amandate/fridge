@@ -16,7 +16,7 @@ class Commands:
             return
         
         # Check if food storage is open
-        if self.profile.getOpenFoodStorage != None:
+        if self.profile.getOpenFoodStorage() != None:
             food_list = []
             while True: 
                 food_name = input(ADD_FOOD_NAME_MESSAGE)
@@ -38,6 +38,16 @@ class Commands:
                         return
                     else:
                         print(INVALID_RESPONSE_MESSAGE)
+        else:
+            print(ADD_FOOD_ERROR_MESSAGE)
+            while True:
+                open_storage_response = input(OPEN_FOOD_STORAGE_REQUEST)
+                if open_storage_response == FRIDGE or open_storage_response == FREEZER:
+                    return self.open(open_storage_response)
+                else:
+                    print(INVALID_RESPONSE_MESSAGE)
+
+
 
     def remove_food(self):
         pass

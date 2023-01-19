@@ -45,6 +45,7 @@ class Profile:
             return 1
         return 0
     
+    ''' Checks if a food storage is opened. '''
     def getOpenFoodStorage(self):
         return self._opened_foodStorage 
 
@@ -60,8 +61,13 @@ class Profile:
             return []
         return list(self._foodStorages[foodStorage_type].keys())
     
+    ''' Adds foods to the opened food storage that the user is in. 
+        Can add multiple food items. '''
     def addFoods(self, foods):
-        self._opened_foodStorage.addFoods(foods) 
+        if self._opened_foodStorage != None:
+            self._opened_foodStorage.addFoods(foods)
+            return 1
+        return 0
 
     def load(self, name):
         pass
