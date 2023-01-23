@@ -57,7 +57,7 @@ class Test_Profile(unittest.TestCase):
         self.assertEqual([freezer_name, fridge_name], self.profile.listFoodStorages(FOOD_STORAGES)) 
 
     def testAddFoods(self):
-        # TODO: check self.profile.addFoods returns 0 = tests that food storage is not open yet 
+        # Check self.profile.addFoods returns 0 = tests that food storage is not open yet 
         self.profile.addFoodStorage(FREEZER, freezer_name)
         self.assertIsNotNone(self.profile.getOpenFoodStorage())
         

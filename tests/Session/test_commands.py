@@ -1,5 +1,6 @@
 from src.Session.commands import Commands
 from src.Constants.commands_messages import \
+    ADD_FOOD_SUCCESS_MESSAGE_FINAL, \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
@@ -31,6 +32,85 @@ class Test_Commands(unittest.TestCase):
 
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
+
+    @patch('src.Session.commands.input', create=True)
+    def testAddFood(self, mocked_input):
+        ## no profile ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.add_food()
+
+        expectedOutput = \
+            NO_LOADED_PROFILE_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+       
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Negative path: food storage not open, invalid response, correct response ##
+        mocked_input.side_effect = [profile_name]
+        self.commands.create_profile()
+
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        mocked_input.side_effect = [FOOD_STORAGES, FRIDGE]
+        self.commands.add_food()
+
+        expectedOutput = ADD_FOOD_ERROR_MESSAGE + NEW_LINE + INVALID_RESPONSE_MESSAGE + \
+            ADD_FOOD_ERROR_MESSAGE + NEW_LINE + NO_FOOD_STORAGE_MESSAGE.format(FRIDGE) + NEW_LINE + \
+            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Success path: food storage exists, is open, 1 food added ##
+        mocked_input.side_effect = [freezer_name, freezer_name]
+        self.commands.create_foodStorage(FREEZER)
+
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        mocked_input.side_effect = ["apple", "2023-02-03", "2", NO]
+        self.commands.add_food()
+
+        expectedOutput = ADD_FOOD_SUCCESS_MESSAGE.format(food) + NEW_LINE + ADD_FOOD_SUCCESS_MESSAGE_FINAL 
+        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Success path: food storage exists, is open, 2 foods added ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        mocked_input.side_effect = ["apple", "2023-02-03", "2", YES, "banana", "2023-02-05", NO]
+        self.commands.add_food()
+
+        expectedOutput = ADD_FOOD_SUCCESS_MESSAGE.format(food) + NEW_LINE + \
+            ADD_FOOD_SUCCESS_MESSAGE.format(food) + ADD_FOOD_SUCCESS_MESSAGE_FINAL 
+        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+    
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Success path: foods added w/ invalid response ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        mocked_input.side_effect = ["apple", "2023-02-03", "2", "dummy", NO]
+        self.commands.add_food()
+
+        expectedOutput = INVALID_RESPONSE_MESSAGE + NEW_LINE + ADD_FOOD_SUCCESS_MESSAGE.format(food) + \
+            NEW_LINE + ADD_FOOD_SUCCESS_MESSAGE_FINAL 
+        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
 
     @patch('src.Session.commands.input', create=True)
     def testCreateFoodStorage(self, mocked_input):

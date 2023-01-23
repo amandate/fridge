@@ -8,6 +8,8 @@ class Commands:
     def __init__(self):
         self.profile = None
 
+    ''' Prompts user to add foods to whichever food storage they are on. If the user is not in an opened 
+        food storage, suggests the user opens an existing food storage or create a new one. '''
     def add_food(self):
         # Profile check
         if not self.profile:
@@ -34,7 +36,7 @@ class Commands:
                         break
                     elif add_more_food == NO:
                         self.profile.addFoods(food_list)
-                        print(ADD_FOOD_SUCCESS_MESSAGE)
+                        print(ADD_FOOD_SUCCESS_MESSAGE_FINAL)
                         return
                     else:
                         print(INVALID_RESPONSE_MESSAGE)
@@ -46,8 +48,6 @@ class Commands:
                     return self.open(open_storage_response)
                 else:
                     print(INVALID_RESPONSE_MESSAGE)
-
-
 
     def remove_food(self):
         pass
