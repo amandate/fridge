@@ -42,12 +42,7 @@ class Commands:
                         print(INVALID_RESPONSE_MESSAGE)
         else:
             print(ADD_FOOD_ERROR_MESSAGE)
-            while True:
-                open_storage_response = input(OPEN_FOOD_STORAGE_REQUEST)
-                if open_storage_response == FRIDGE or open_storage_response == FREEZER:
-                    return self.open(open_storage_response)
-                else:
-                    print(INVALID_RESPONSE_MESSAGE)
+            print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN, CREATE_FREEZER, CREATE_FRIDGE])))
 
     def remove_food(self):
         pass

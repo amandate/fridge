@@ -1,5 +1,6 @@
 from src.Session.commands import Commands
 from src.Constants.commands_messages import \
+    ADD_FOOD_ERROR_MESSAGE, \
     ADD_FOOD_SUCCESS_MESSAGE_FINAL, \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FOOD_STORAGE_ACTION, \
@@ -16,10 +17,15 @@ from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
 from src.Utils.utils import listInQuotes
 from tests.TestUtils.constants import \
+    date1, \
+    date2, \
     foodstorage_name, \
     freezer_name, \
     fridge_name, \
-    profile_name
+    name1, \
+    name2, \
+    profile_name, \
+    use_by_date1 
 from unittest.mock import patch
 
 import io
@@ -50,50 +56,34 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## Negative path: food storage not open, invalid response, correct response ##
+        ## Negative path: food storage not open ##
         mocked_input.side_effect = [profile_name]
         self.commands.create_profile()
 
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
-        mocked_input.side_effect = [FOOD_STORAGES, FRIDGE]
         self.commands.add_food()
 
-        expectedOutput = ADD_FOOD_ERROR_MESSAGE + NEW_LINE + INVALID_RESPONSE_MESSAGE + \
-            ADD_FOOD_ERROR_MESSAGE + NEW_LINE + NO_FOOD_STORAGE_MESSAGE.format(FRIDGE) + NEW_LINE + \
-            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
+        expectedOutput = ADD_FOOD_ERROR_MESSAGE + NEW_LINE + \
+            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## Success path: food storage exists, is open, 1 food added ##
+        ## Success path: food storage exists, is open, 2 foods added ##
         mocked_input.side_effect = [freezer_name, freezer_name]
         self.commands.create_foodStorage(FREEZER)
 
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
-        mocked_input.side_effect = ["apple", "2023-02-03", "2", NO]
+        mocked_input.side_effect = [name1, date1, use_by_date1, YES, name2, date2, EMPTY_STRING, NO]
         self.commands.add_food()
 
-        expectedOutput = ADD_FOOD_SUCCESS_MESSAGE.format(food) + NEW_LINE + ADD_FOOD_SUCCESS_MESSAGE_FINAL 
-        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
-
-        # reset standout
-        sys.stdout = sys.__stdout__
-
-        ## Success path: food storage exists, is open, 2 foods added ##
-        # grab print output
-        capturedPrintOutput = io.StringIO()
-        sys.stdout = capturedPrintOutput
-        mocked_input.side_effect = ["apple", "2023-02-03", "2", YES, "banana", "2023-02-05", NO]
-        self.commands.add_food()
-
-        expectedOutput = ADD_FOOD_SUCCESS_MESSAGE.format(food) + NEW_LINE + \
-            ADD_FOOD_SUCCESS_MESSAGE.format(food) + ADD_FOOD_SUCCESS_MESSAGE_FINAL 
-        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+        actualOutput = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
+        self.assertEqual(ADD_FOOD_SUCCESS_MESSAGE_FINAL, actualOutput)
     
         # reset standout
         sys.stdout = sys.__stdout__
@@ -102,12 +92,13 @@ class Test_Commands(unittest.TestCase):
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
-        mocked_input.side_effect = ["apple", "2023-02-03", "2", "dummy", NO]
+        mocked_input.side_effect = [name1, date1, use_by_date1, EXIT, NO]
         self.commands.add_food()
 
-        expectedOutput = INVALID_RESPONSE_MESSAGE + NEW_LINE + ADD_FOOD_SUCCESS_MESSAGE.format(food) + \
-            NEW_LINE + ADD_FOOD_SUCCESS_MESSAGE_FINAL 
-        self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+        output1 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[0]
+        output2 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
+        self.assertEqual(INVALID_RESPONSE_MESSAGE, output1)
+        self.assertEqual(ADD_FOOD_SUCCESS_MESSAGE_FINAL, output2)
 
         # reset standout
         sys.stdout = sys.__stdout__
