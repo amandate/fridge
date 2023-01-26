@@ -88,19 +88,23 @@ class Commands:
     ''' Displays available commands when prompted by user. '''
     def help(self):
         print(ADD_FOOD, \
-             CREATE_FREEZER, \
-             CREATE_FRIDGE, \
-             CREATE_PROFILE, \
-             DELETE, \
-             DELETE_PROFILE, \
-             LIST_FOOD_STORAGES, \
-             LIST_FREEZERS, \
-             LIST_FRIDGES, \
-             LOAD, \
-             OPEN, \
-             REMOVE_FOOD, \
-             SAVE, \
-             sep = NEW_LINE)
+            CREATE_FREEZER, \
+            CREATE_FRIDGE, \
+            CREATE_PROFILE, \
+            DELETE_FOOD_STORAGE, \
+            DELETE_FREEZER, \
+            DELETE_FRIDGE, \
+            DELETE_PROFILE, \
+            LIST_FOOD_STORAGES, \
+            LIST_FREEZERS, \
+            LIST_FRIDGES, \
+            LOAD, \
+            OPEN_FOOD_STORAGE, \
+            OPEN_FREEZER, \
+            OPEN_FRIDGE, \
+            REMOVE_FOOD, \
+            SAVE, \
+            sep = NEW_LINE)
 
     ''' Allows user to list available food storages. '''
     def list_food_storages(self, foodStorage_type):

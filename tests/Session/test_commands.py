@@ -172,8 +172,9 @@ class Test_Commands(unittest.TestCase):
         self.commands.help()
 
         expectedOutput = \
-            NEW_LINE.join([ADD_FOOD, CREATE_FREEZER, CREATE_FRIDGE, CREATE_PROFILE, DELETE, DELETE_PROFILE, \
-                LIST_FOOD_STORAGES, LIST_FREEZERS, LIST_FRIDGES, LOAD, OPEN, REMOVE_FOOD, SAVE]) + NEW_LINE
+            NEW_LINE.join([ADD_FOOD, CREATE_FREEZER, CREATE_FRIDGE, CREATE_PROFILE, DELETE_FOOD_STORAGE, 
+                DELETE_FREEZER, DELETE_FRIDGE, DELETE_PROFILE, LIST_FOOD_STORAGES, LIST_FREEZERS, 
+                LIST_FRIDGES, LOAD, OPEN_FOOD_STORAGE, OPEN_FREEZER, OPEN_FRIDGE, REMOVE_FOOD, SAVE]) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
 
         # reset standout
