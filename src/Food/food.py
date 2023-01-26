@@ -57,6 +57,7 @@ class Food(object):
             self.expiration_date = date.today() + self.use_by_date
             self.isOpen = True
     
+    ''' Compiles food objects into a dictionary. '''
     def asDictionary(self):
         food_dict = {
             "name" : self.name,

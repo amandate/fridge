@@ -113,6 +113,7 @@ class FoodStorage:
         for food in list_of_food_names:
             self.update(food)
 
+    ''' Compiles food storages into a dictionary. Also includes food objects compiled in a dictionary. '''
     def asDictionary(self):
         foodStorage_dict = {
             "expiration window" : self.expiration_window.days,
