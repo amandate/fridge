@@ -1,5 +1,5 @@
 from datetime import date
-from src.Constants.constants import FREEZER, FRIDGE, FOOD_STORAGES
+from src.Constants.constants import FREEZER, FRIDGE, FOOD_STORAGE
 from src.FoodStorage.freezer import Freezer
 from src.Session.profile import Profile
 from tests.TestUtils.constants import profile_name, freezer_name, fridge_name
@@ -46,7 +46,7 @@ class Test_Profile(unittest.TestCase):
         self.assertEqual([freezer_name], self.profile.listFoodStorages(FREEZER)) 
 
         self.profile.addFoodStorage(FRIDGE, fridge_name)
-        self.assertEqual([freezer_name, fridge_name], self.profile.listFoodStorages(FOOD_STORAGES)) 
+        self.assertEqual([freezer_name, fridge_name], self.profile.listFoodStorages(FOOD_STORAGE)) 
 
 if __name__ == '__main__':
     unittest.main()
