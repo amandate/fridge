@@ -4,6 +4,8 @@ from src.FoodStorage.foodStorage import FoodStorage
 from src.FoodStorage.freezer import Freezer
 from src.FoodStorage.fridge import Fridge
 
+import json 
+
 class Profile:
     def __init__(self, name):
         self.name = name
@@ -60,4 +62,23 @@ class Profile:
         pass
 
     def save(self):
-        pass
+        user_profile = {
+            PROFILE_NAME : self.name, 
+            FOOD_STORAGES : {
+                
+            }
+        }  
+        # creates array by food storage type
+        for type in self._foodStorages:
+            user_profile[FOOD_STORAGES][type] = []
+
+            for food_storage_name in self._foodStorages[type]:
+                foodStorage_dictionary = self._foodStorages[type][food_storage_name].asDictionary()
+                foodStorage_dictionary['name'] = food_storage_name
+                user_profile[FOOD_STORAGES][type].append(foodStorage_dictionary)
+
+        json_profile = json.dumps(user_profile, indent=4)
+       
+        with open(PROFILES_PATH + SLASH + self.name + JSON_EXTENSION, "w") as outfile:
+            outfile.write(json_profile)
+        

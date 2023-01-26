@@ -112,3 +112,12 @@ class FoodStorage:
     def updateFoods(self, list_of_food_names):
         for food in list_of_food_names:
             self.update(food)
+
+    def asDictionary(self):
+        foodStorage_dict = {
+            "expiration window" : self.expiration_window.days,
+            "food" : []
+        }
+        for x in self._inventory:
+            foodStorage_dict["food"].append(self._inventory[x].asDictionary())
+        return foodStorage_dict 

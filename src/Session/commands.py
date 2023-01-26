@@ -124,7 +124,7 @@ class Commands:
         print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
                    
     def save(self):
-        
+        pass
 
     def delete(self, food_storage):
         pass
