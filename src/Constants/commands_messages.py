@@ -22,7 +22,6 @@ NON_EXISTING_NAME_MESSAGE = "A {} with the name '{}' does not exist."
 OPEN_FOOD_STORAGE_ACTION = "Opening {}."
 OPEN_FOOD_STORAGE_MESSAGE = "Which {} would you like to open?"
 OPEN_FOOD_STORAGE_NAME = "{} name: "
-OPEN_FOOD_STORAGE_REQUEST = "Would you like to open a 'fridge' or 'freezer'?: "
 OPEN_FOOD_STORAGE_SUCCESS_MESSAGE = "Successfully opened {}: {}."
 OVERRIDE_REQUEST_MESSAGE = "Would you like to override it? Note: This will permanently erase " + \
                             "that {}'s contents. (y/n): "

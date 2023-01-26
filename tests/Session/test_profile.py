@@ -43,7 +43,9 @@ class Test_Profile(unittest.TestCase):
        
         # Should return not none if food storage is open. 
         self.profile.addFoodStorage(FREEZER, freezer_name)
+        freezer = self.profile.getFoodStorage(FREEZER, freezer_name)
         self.assertIsNotNone(self.profile.getOpenFoodStorage())
+        self.assertTrue(isinstance(freezer, Freezer))
 
     def testListFoodStorages(self):
         # Should return an empty list if type does not exist. 
@@ -57,12 +59,13 @@ class Test_Profile(unittest.TestCase):
         self.assertEqual([freezer_name, fridge_name], self.profile.listFoodStorages(FOOD_STORAGE)) 
 
     def testAddFoods(self):
-        # Check self.profile.addFoods returns 0 = tests that food storage is not open yet 
+        # Should return 0 if food storage is not open yet.
+        self.assertEqual(0, self.profile.addFoods([food1]))
+
+        # Should return 1 if food item can be added. 
         self.profile.addFoodStorage(FREEZER, freezer_name)
-        self.assertIsNotNone(self.profile.getOpenFoodStorage())
-        
+        self.assertEqual(1, self.profile.open(FREEZER, freezer_name)) 
         self.assertEqual(1, self.profile.addFoods([food1]))
-        # Test food gets added into inventory after list_foods command is implemented 
 
 if __name__ == '__main__':
     unittest.main()

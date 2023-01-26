@@ -66,14 +66,14 @@ class Test_Commands(unittest.TestCase):
         self.commands.add_food()
 
         expectedOutput = ADD_FOOD_ERROR_MESSAGE + NEW_LINE + \
-            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
+            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
         # reset standout
         sys.stdout = sys.__stdout__
 
         ## Success path: food storage exists, is open, 2 foods added ##
-        mocked_input.side_effect = [freezer_name, freezer_name]
+        mocked_input.side_effect = [freezer_name]
         self.commands.create_foodStorage(FREEZER)
 
         # grab print output
