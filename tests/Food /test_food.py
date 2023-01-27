@@ -45,5 +45,8 @@ class Test_Food(unittest.TestCase):
         self.assertEqual(date.today() + timedelta(days = 2), self.food.expiration_date)
         self.assertTrue(self.food.isOpen)
 
+    def testAsDictionary(self):
+        pass 
+
 if __name__ == '__main__':
     unittest.main()

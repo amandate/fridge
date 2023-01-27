@@ -1,0 +1,12 @@
+{
+    "profile name": "amanda",
+    "food storages": {
+        "fridge": [
+            {
+                "expiration window": 7,
+                "food": [],
+                "name": "kitchen"
+            }
+        ]
+    }
+}

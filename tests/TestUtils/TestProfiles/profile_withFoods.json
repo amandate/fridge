@@ -1,0 +1,19 @@
+{
+    "profile name": "sesame",
+    "food storages": {
+        "fridge": [
+            {
+                "expiration window": 7,
+                "food": [],
+                "name": "mini"
+            }
+        ],
+        "freezer": [
+            {
+                "expiration window": 7,
+                "food": [],
+                "name": "kitchen"
+            }
+        ]        
+    }
+}
