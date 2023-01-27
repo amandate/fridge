@@ -1,18 +1,18 @@
 {
-    "profile name": "josh",
+    "name": "josh",
     "food storages": {
         "fridge": [
             {
                 "expiration window": 7,
                 "food": [],
-                "name": "mini"
+                "name": "testFridge"
             }
         ],
         "freezer": [
             {
                 "expiration window": 7,
                 "food": [],
-                "name": "kitchen"
+                "name": "testFreezer"
             }
         ]        
     }

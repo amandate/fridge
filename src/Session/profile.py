@@ -64,7 +64,7 @@ class Profile:
     ''' Takes information provided by user and creates a json with the profile information saved to it. '''
     def save(self):
         user_profile = {
-            PROFILE_NAME : self.name, 
+            NAME : self.name, 
             FOOD_STORAGES : {
                 
             }
@@ -76,12 +76,11 @@ class Profile:
             # appends them to the empty array.
             for food_storage_name in self._foodStorages[type]:
                 foodStorage_dictionary = self._foodStorages[type][food_storage_name].asDictionary()
-                foodStorage_dictionary['name'] = food_storage_name
+                foodStorage_dictionary[NAME] = food_storage_name
                 user_profile[FOOD_STORAGES][type].append(foodStorage_dictionary)
 
         # Creates the .json file for user profile.
-        json_profile = json.dumps(user_profile, indent=4)
-       
+        json_profile = json.dumps(user_profile, indent=4)     
         with open(PROFILES_PATH + SLASH + self.name + JSON_EXTENSION, "w") as outfile:
             outfile.write(json_profile)
         

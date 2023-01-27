@@ -1,3 +1,4 @@
+from src.Constants.constants import EXPIRATION_WINDOW, FOOD
 from src.Constants.foodStorage_messages import *
 from datetime import date, timedelta
 
@@ -116,9 +117,9 @@ class FoodStorage:
     ''' Compiles food storages into a dictionary. Also includes food objects compiled in a dictionary. '''
     def asDictionary(self):
         foodStorage_dict = {
-            "expiration window" : self.expiration_window.days,
-            "food" : []
+            EXPIRATION_WINDOW : self.expiration_window.days,
+            FOOD : []
         }
         for x in self._inventory:
-            foodStorage_dict["food"].append(self._inventory[x].asDictionary())
+            foodStorage_dict[FOOD].append(self._inventory[x].asDictionary())
         return foodStorage_dict 
