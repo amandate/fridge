@@ -1,5 +1,6 @@
 from datetime import date
 from src.Constants.constants import *
+from src.Food.food import Food
 from src.FoodStorage.foodStorage import FoodStorage
 from src.FoodStorage.freezer import Freezer
 from src.FoodStorage.fridge import Fridge
@@ -45,6 +46,10 @@ class Profile:
             self._opened_foodStorage.open()
             return 1
         return 0
+    
+    ''' Checks if a food storage is opened. '''
+    def getOpenFoodStorage(self):
+        return self._opened_foodStorage 
 
     ''' Lists names of added items in the FoodStorages. If food storage 
         type does not exist, returns a blank list. '''
@@ -58,6 +63,14 @@ class Profile:
             return []
         return list(self._foodStorages[foodStorage_type].keys())
     
+    ''' Adds array of foods to the opened food storage that the user is in.  
+        Can add multiple food items. '''
+    def addFoods(self, foods):
+        if self._opened_foodStorage:
+            self._opened_foodStorage.addFoods(foods)
+            return 1
+        return 0
+
     def load(self, name):
         pass
 
