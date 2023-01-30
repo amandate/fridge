@@ -67,7 +67,7 @@ class Food(object):
     def asDictionary(self):
         food_dict = {
             NAME : self.name,
-            EXPIRATION_DATE : self.expiration_date,
-            USE_BY_DATE : self.use_by_date
+            EXPIRATION_DATE : self.expiration_date.isoformat(),
+            USE_BY_DATE : self.use_by_date.days
         }
         return food_dict 

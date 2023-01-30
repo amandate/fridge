@@ -54,8 +54,8 @@ class Test_Food(unittest.TestCase):
         actual = self.food.asDictionary() 
         expected = {
             NAME : name1,
-            EXPIRATION_DATE : date(2022, 5, 4),
-            USE_BY_DATE : timedelta(days = 2)
+            EXPIRATION_DATE : "2022-05-04",
+            USE_BY_DATE : 2
         } 
         self.assertEqual(expected, actual)
 

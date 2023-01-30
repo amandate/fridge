@@ -5,14 +5,18 @@
             {
                 "expiration_window": 7,
                 "food": [],
-                "name": "mini"
+                "name": "testFridge"
             }
         ],
         "freezer": [
             {
                 "expiration_window": 7,
-                "food": [],
-                "name": "kitchen"
+                "food": [{
+                    "name" : "apple",
+                    "expiration_date" : "2022-11-08",
+                    "use_by_date" : 3
+                }],
+                "name": "testFreezer"
             }
         ]        
     }

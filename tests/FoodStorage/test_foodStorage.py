@@ -126,8 +126,8 @@ class Test_FoodStorage(unittest.TestCase):
             EXPIRATION_WINDOW : 7,
             FOOD : [{
                 NAME : name1,
-                EXPIRATION_DATE : date(2022, 11, 8),
-                USE_BY_DATE : timedelta(days = 3)
+                EXPIRATION_DATE : "2022-11-08",
+                USE_BY_DATE : 3
             }]
         } 
         self.assertEqual(expected, actual)

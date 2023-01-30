@@ -102,21 +102,20 @@ class Test_Profile(unittest.TestCase):
 
         self.assertEqual(testProfile, savedProfile)
 
-        # ## will add after merge with add_food command ##
-        # # Profile with food storage and food objects
-        # TEST_PROFILE_NAME_4 = "sesame"
-        # PROFILE_W_FOOD = "profile_withFoods"
-        # profile4 = Profile(TEST_PROFILE_NAME_4)
-        # profile4.addFoodStorage(FRIDGE, fridge_name)
-        # profile4.addFoodStorage(FREEZER, freezer_name)
-        # profile4.addFoods
-        # profile4.save()
-        # with open(TEST_PROFILES_PATH + PROFILE_W_FOOD + JSON_EXTENSION) as user_file:
-        #     testProfile = json.load(user_file)
-        # with open(PROFILES_PATH + SLASH + TEST_PROFILE_NAME_4 + JSON_EXTENSION) as user_profile:
-        #     savedProfile = json.load(user_profile)
+        # Profile with food storage and food objects
+        TEST_PROFILE_NAME_4 = "sesame"
+        PROFILE_W_FOOD = "profile_withFoods"
+        profile4 = Profile(TEST_PROFILE_NAME_4)
+        profile4.addFoodStorage(FRIDGE, fridge_name)
+        profile4.addFoodStorage(FREEZER, freezer_name)
+        profile4.addFoods([food1])
+        profile4.save()
+        with open(TEST_PROFILES_PATH + PROFILE_W_FOOD + JSON_EXTENSION) as user_file:
+            testProfile = json.load(user_file)
+        with open(PROFILES_PATH + SLASH + TEST_PROFILE_NAME_4 + JSON_EXTENSION) as user_profile:
+            savedProfile = json.load(user_profile)
 
-        # self.assertEqual(testProfile, savedProfile)
+        self.assertEqual(testProfile, savedProfile)
 
     def testAddFoods(self):
         # Should return 0 if food storage is not open yet.
