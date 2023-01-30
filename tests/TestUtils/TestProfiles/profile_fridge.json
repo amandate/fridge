@@ -3,7 +3,7 @@
     "food storages": {
         "fridge": [
             {
-                "expiration window": 7,
+                "expiration_window": 7,
                 "food": [],
                 "name": "testFridge"
             }

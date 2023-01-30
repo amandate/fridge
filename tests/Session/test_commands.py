@@ -268,7 +268,5 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## May add another test with food added after merge w/ add_foods ##
-
 if __name__ == '__main__':
     unittest.main()

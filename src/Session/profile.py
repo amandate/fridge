@@ -65,9 +65,7 @@ class Profile:
     def save(self):
         user_profile = {
             NAME : self.name, 
-            FOOD_STORAGES : {
-                
-            }
+            FOOD_STORAGES : {}
         }  
         # Creates array by food storage type.
         for type in self._foodStorages:

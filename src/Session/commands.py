@@ -127,7 +127,7 @@ class Commands:
         # If food storage exists with this name, prints open success message. 
         print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
                    
-    ''' Allows user to save their profile information. '''
+    ''' Allows user to save their profile information as a JSON file under the profiles folder. '''
     def save(self):
         # Checks if a profile is loaded -> if not, prompts to load or create one
         if not self.profile:

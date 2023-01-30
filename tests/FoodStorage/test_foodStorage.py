@@ -1,4 +1,4 @@
-from src.Constants.constants import EXPIRATION_WINDOW, FOOD
+from src.Constants.constants import EXPIRATION_DATE, EXPIRATION_WINDOW, FOOD, NAME, USE_BY_DATE
 from src.Constants.foodStorage_messages import *
 from src.FoodStorage.foodStorage import FoodStorage
 from tests.TestUtils.constants import *
@@ -111,12 +111,26 @@ class Test_FoodStorage(unittest.TestCase):
         self.assertEqual([food2, food1], self.foodStorage.list())
     
     def testAsDictionary(self):
+        ## Saves food storages as a dictionary without foods ##
         actual = self.foodStorage.asDictionary() 
         expected = {
             EXPIRATION_WINDOW : 7,
             FOOD : [],
         } 
         self.assertEqual(expected, actual)
-        
+
+        ## Saves food storages as a dictionary w/ foods ##
+        self.foodStorage.addFoods([food1])
+        actual = self.foodStorage.asDictionary() 
+        expected = {
+            EXPIRATION_WINDOW : 7,
+            FOOD : [{
+                NAME : name1,
+                EXPIRATION_DATE : date(2022, 11, 8),
+                USE_BY_DATE : timedelta(days = 3)
+            }]
+        } 
+        self.assertEqual(expected, actual)
+
 if __name__ == '__main__':
     unittest.main()
