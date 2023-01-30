@@ -1,5 +1,7 @@
+from datetime import date
 from src.Constants.commands_messages import *
 from src.Constants.constants import *
+from src.Food.food import Food
 from src.Session.profile import Profile
 from src.Utils.utils import listInQuotes, twoPrintOutcomes
 
@@ -7,8 +9,47 @@ class Commands:
     def __init__(self):
         self.profile = None
 
+    ''' Prompts user to add foods to whichever food storage they are in. If the user is not in an opened 
+        food storage, suggests the user opens an existing food storage or create a new one. '''
     def add_food(self):
-        pass
+        # Profile check
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
+        
+        # Check if food storage is open
+        if self.profile.getOpenFoodStorage():
+            food_list = []
+            while True: 
+                food_name = input(ADD_FOOD_NAME_MESSAGE)
+                while True:
+                    try:
+                        expiration_date = input(ADD_FOOD_EXPIRATION_DATE_MESSAGE)
+                        date.fromisoformat(expiration_date)
+                        break 
+                    except ValueError:
+                        print(INVALID_RESPONSE_MESSAGE)
+                try:
+                    use_by_date = int(input(ADD_FOOD_USE_BY_DATE_MESSAGE))
+                    food = Food(food_name, expiration_date, use_by_date)
+                except:
+                    food = Food(food_name, expiration_date)
+                food_list.append(food)
+                    
+                while True:
+                    add_more_food = input(ADD_MORE_FOOD_MESSAGE)
+                    if add_more_food == YES:
+                        break
+                    elif add_more_food == NO:
+                        self.profile.addFoods(food_list)
+                        print(ADD_FOOD_SUCCESS_MESSAGE_FINAL)
+                        return
+                    else:
+                        print(INVALID_RESPONSE_MESSAGE)
+        else:
+            print(ADD_FOOD_ERROR_MESSAGE)
+            print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
     def remove_food(self):
         pass

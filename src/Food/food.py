@@ -1,13 +1,16 @@
 from datetime import date, timedelta
 
 class Food(object):
-    def __init__(self, name, expiration_date, use_by_date):
+    def __init__(self, name, expiration_date, use_by_date=None):
         self.name = name
         self.expiration_date = date.fromisoformat(expiration_date)
         
-        # use_by_date indicates the amount of time (in days) 
-        # a food's quality will deteriorate after it is opened.
-        self.use_by_date = timedelta(days = use_by_date)
+        if use_by_date:
+            # use_by_date indicates the amount of time (in days) 
+            # a food's quality will deteriorate after it is opened.
+            self.use_by_date = timedelta(days = use_by_date)
+        else:
+            self.use_by_date = use_by_date
         self.isOpen = False
 
     ''' Following methods are comparators that will sort food items by expiration_date and name. 
@@ -54,6 +57,7 @@ class Food(object):
         and updates self.isOpen. '''
     def open(self):
         if not self.isOpen:
-            self.expiration_date = date.today() + self.use_by_date
+            if self.use_by_date:
+                self.expiration_date = date.today() + self.use_by_date
             self.isOpen = True
     

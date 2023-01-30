@@ -15,8 +15,11 @@ namePast = "noodles"
 nameNearFuture = "lettuce"
 nameFuture = "meat"
 
-fooddate1 = date(2022, 11, 8)
-fooddate2 = date(2022, 11, 10)
+date1 = "2022-11-08"
+date2 = "2022-11-10"
+
+fooddate1 = date.fromisoformat(date1)
+fooddate2 = date.fromisoformat(date2)
 fooddate3 = date(2022, 11, 6)
 dateToday = date.today()
 fooddate1open = dateToday + timedelta(3)
@@ -26,7 +29,9 @@ dateMultDaysPassed = dateToday - timedelta2
 dateWithinRange = dateToday + timedelta2
 dateOutsideRange = dateToday + timedelta8
 
-food1 = Food(name1, fooddate1.isoformat(), 3)
+use_by_date1 = "3"
+
+food1 = Food(name1, fooddate1.isoformat(), int(use_by_date1))
 food2 = Food(name2, fooddate2.isoformat(), 3)
 food3 = Food("banana", fooddate3.isoformat(), 2)
 food4 = Food("soda", fooddate1.isoformat(), 3)
