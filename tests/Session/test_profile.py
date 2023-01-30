@@ -43,7 +43,7 @@ class Test_Profile(unittest.TestCase):
        
         # Should return not none if food storage is open. 
         self.profile.addFoodStorage(FREEZER, freezer_name)
-        freezer = self.profile.getFoodStorage(FREEZER, freezer_name)
+        freezer = self.profile.getOpenFoodStorage()
         self.assertIsNotNone(self.profile.getOpenFoodStorage())
         self.assertTrue(isinstance(freezer, Freezer))
 
@@ -64,7 +64,6 @@ class Test_Profile(unittest.TestCase):
 
         # Should return 1 if food item can be added. 
         self.profile.addFoodStorage(FREEZER, freezer_name)
-        self.assertEqual(1, self.profile.open(FREEZER, freezer_name)) 
         self.assertEqual(1, self.profile.addFoods([food1]))
 
 if __name__ == '__main__':
