@@ -86,7 +86,7 @@ class Commands:
             [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
 
     def load(self, profile):
-        pass
+        pass 
   
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
         If a food storage is not available or a food storage with that name does not exist, prompts user to create a new one. '''
