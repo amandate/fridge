@@ -57,7 +57,9 @@ class Profile:
         return list(self._foodStorages[foodStorage_type].keys())
     
     def load(self, name):
-        pass
+        # retrieves info from json file
+        # calls previous methods to get info
+        pass 
 
     def save(self):
         pass
