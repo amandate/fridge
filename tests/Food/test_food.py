@@ -5,15 +5,19 @@ from tests.TestUtils.constants import *
 import unittest
 
 class Test_Food(unittest.TestCase):
-   
     def setUp(self):
         self.food = Food("apple", "2022-05-04", 2)
+        self.food2 = Food("cheese", "2024-06-01")
 
     def testInitializeFood(self):
         self.assertEqual("apple", self.food.name)
         self.assertEqual(date(2022, 5, 4), self.food.expiration_date)
         self.assertEqual(timedelta(days = 2), self.food.use_by_date)
         self.assertFalse(self.food.isOpen)  
+        self.assertEqual("cheese", self.food2.name)
+        self.assertEqual(date(2024, 6, 1), self.food2.expiration_date)
+        self.assertEqual(None, self.food2.use_by_date)
+        self.assertFalse(self.food2.isOpen)  
     
     def testCompareFoods(self):
         # Checks that comparators are comparing expiration dates and names properly. 
