@@ -5,6 +5,8 @@ from src.Food.food import Food
 from src.Session.profile import Profile
 from src.Utils.utils import listInQuotes, twoPrintOutcomes
 
+import json
+
 class Commands:
     def __init__(self):
         self.profile = None
@@ -127,7 +129,25 @@ class Commands:
             [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
 
     def load(self, profile):
-        pass 
+        if profile == self.profile: 
+            with open(PROFILES_PATH + SLASH + self.profile + JSON_EXTENSION) as user_profile:
+                savedProfile = json.load(user_profile)
+
+            self.profile = Profile(savedProfile[NAME]) 
+
+            for type in savedProfile[FOOD_STORAGES]: 
+                for food_storage in savedProfile[FOOD_STORAGES][type]:
+                    self.profile.addFoodStorage(type, food_storage[NAME])
+                    foods = []
+                    for food in food_storage[foods]:
+                        food_item = Food(food[NAME], food[EXPIRATION_DATE], food[USE_BY_DATE])
+                        foods.append(food_item)
+                        self.profile.addFoods(foods) 
+            
+            print(LOAD_PROFILE_SUCCESS_MESSAGE.format(profile))
+                
+        # If profile name does not exist
+        print(LOAD_PROFILE_ERROR_MESSAGE, SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE))
   
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
         If a food storage is not available or a food storage with that name does not exist, prompts user to create a new one. '''
@@ -169,7 +189,7 @@ class Commands:
         print(OPEN_FOOD_STORAGE_SUCCESS_MESSAGE.format(foodStorage_type, foodStorage_name))
                    
     def save(self):
-        pass
+        pass 
 
     def delete(self, food_storage):
         pass
