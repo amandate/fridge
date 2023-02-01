@@ -128,8 +128,12 @@ class Commands:
         twoPrintOutcomes(foodStorage_list, [LIST_FOOD_STORAGES_ACTION.format(foodStorage_type)], \
             [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
 
+    ''' Allows user to load an existing profile. '''
     def load(self, profile):
-        if profile == self.profile: 
+        if self.profile:
+            self.profile.save()
+            
+        try: 
             with open(PROFILES_PATH + SLASH + self.profile + JSON_EXTENSION) as user_profile:
                 savedProfile = json.load(user_profile)
 
@@ -139,15 +143,16 @@ class Commands:
                 for food_storage in savedProfile[FOOD_STORAGES][type]:
                     self.profile.addFoodStorage(type, food_storage[NAME])
                     foods = []
-                    for food in food_storage[foods]:
+                    for food in food_storage[FOOD]:
                         food_item = Food(food[NAME], food[EXPIRATION_DATE], food[USE_BY_DATE])
                         foods.append(food_item)
-                        self.profile.addFoods(foods) 
+                    self.profile.addFoods(foods) 
             
             print(LOAD_PROFILE_SUCCESS_MESSAGE.format(profile))
-                
-        # If profile name does not exist
-        print(LOAD_PROFILE_ERROR_MESSAGE, SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE))
+
+        except:        
+            # If profile name does not exist
+            print(LOAD_PROFILE_ERROR_MESSAGE, SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE))
   
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
         If a food storage is not available or a food storage with that name does not exist, prompts user to create a new one. '''

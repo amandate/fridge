@@ -69,10 +69,13 @@ class Profile:
             return 1
         return 0
 
-    def load(self, name):
-        # retrieves info from json file
-        # calls previous methods to get info
-        pass 
+    ''' Checks if self.name of food items are the same. '''
+    def __eq__(self, other):
+        return self.name == other.name and self._foodStorages == other._foodStorages 
+
+    ''' Checks if self.name of food items are not the same. '''
+    def __ne__(self, other):
+        return self.name == other.name or self._foodStorages != other._foodStorages
 
     def save(self):
         pass
