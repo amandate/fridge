@@ -112,3 +112,11 @@ class FoodStorage:
     def updateFoods(self, list_of_food_names):
         for food in list_of_food_names:
             self.update(food)
+
+    ''' Checks if self.name of food items are the same. '''
+    def __eq__(self, other):
+        return self.expiration_window == other.expiration_window and self._inventory == other._inventory 
+
+    ''' Checks if self.name of food items are not the same. '''
+    def __ne__(self, other):
+        return self.expiration_window == other.expiration_window or self._inventory != other._inventory
