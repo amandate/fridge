@@ -1,0 +1,19 @@
+{
+    "name": "josh",
+    "food storages": {
+        "fridge": [
+            {
+                "expiration_window": 7,
+                "food": [],
+                "name": "testFridge"
+            }
+        ],
+        "freezer": [
+            {
+                "expiration_window": 7,
+                "food": [],
+                "name": "testFreezer"
+            }
+        ]        
+    }
+}

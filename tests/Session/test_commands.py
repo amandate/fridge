@@ -12,6 +12,7 @@ from src.Constants.commands_messages import \
     OPEN_FOOD_STORAGE_ACTION, \
     OPEN_FOOD_STORAGE_MESSAGE, \
     OPEN_FOOD_STORAGE_SUCCESS_MESSAGE, \
+    SAVE_PROFILE_SUCCESS_MESSAGE, \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
 from src.FoodStorage.foodStorage import FoodStorage
@@ -300,6 +301,40 @@ class Test_Commands(unittest.TestCase):
             CREATE_FOOD_STORAGE_SUCCESS_MESSAGE.format(FREEZER, fridge_name) + NEW_LINE
 
         self.assertEqual(expectedOutput, capturedListOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+    @patch('src.Session.commands.input', create=True)
+    def testSave(self, mocked_input):
+        ## no profile ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.save()
+
+        expectedOutput = \
+            NO_LOADED_PROFILE_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Profile exists: saves profile ##
+        mocked_input.side_effect = [profile_name, freezer_name, freezer_name]
+        self.commands.create_profile()
+        self.commands.create_foodStorage(FREEZER)
+
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.save()
+
+        expectedOutput = SAVE_PROFILE_SUCCESS_MESSAGE + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
 
         # reset standout
         sys.stdout = sys.__stdout__

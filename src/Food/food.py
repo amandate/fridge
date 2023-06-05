@@ -1,4 +1,6 @@
 from datetime import date, timedelta
+from src.Constants.constants import NAME, EXPIRATION_DATE, USE_BY_DATE
+
 
 class Food(object):
     def __init__(self, name, expiration_date, use_by_date=None):
@@ -61,3 +63,11 @@ class Food(object):
                 self.expiration_date = date.today() + self.use_by_date
             self.isOpen = True
     
+    ''' Compiles food objects into a dictionary. '''
+    def asDictionary(self):
+        food_dict = {
+            NAME : self.name,
+            EXPIRATION_DATE : self.expiration_date.isoformat(),
+            USE_BY_DATE : self.use_by_date.days
+        }
+        return food_dict 
