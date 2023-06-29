@@ -1,5 +1,6 @@
 venv
 .vscode
+.DS_STORE
 *.pyc
 playground.py
 profiles
