@@ -227,44 +227,44 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-    # @patch('src.Session.commands.input', create=True)
-    # def testLoad(self, mocked_input):
-    #     ## no profile ##
-    #     # grab print output
-    #     capturedPrintOutput = io.StringIO()
-    #     sys.stdout = capturedPrintOutput
+    @patch('src.Session.commands.input', create=True)
+    def testLoad(self, mocked_input):
+        ## no profile ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
 
-    #     self.commands.load(profile_name)
+        self.commands.load(profile_name)
 
-    #     expectedOutput = \
-    #         LOAD_PROFILE_ERROR_MESSAGE + \
-    #         SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE) + NEW_LINE
-    #     self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+        expectedOutput = \
+            LOAD_PROFILE_ERROR_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
 
-    #     # reset standout
-    #     sys.stdout = sys.__stdout__
+        # reset standout
+        sys.stdout = sys.__stdout__
 
-    #     ## with profile ##
-    #     mocked_input.side_effect = [profile_name]
-    #     self.commands.create_profile()
-    #     savedProfile = self.commands.profile
-    #     self.commands.save() 
+        ## with profile ##
+        mocked_input.side_effect = [profile_name]
+        self.commands.create_profile()
+        savedProfile = self.commands.profile
+        self.commands.save() 
 
-    #     # grab print output
-    #     capturedPrintOutput = io.StringIO()
-    #     sys.stdout = capturedPrintOutput
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
 
-    #     self.commands.load(profile_name)
-    #     loadedProfile = self.commands.profile
+        self.commands.load(profile_name)
+        loadedProfile = self.commands.profile
 
-    #     self.assertEqual(savedProfile, loadedProfile)
+        self.assertEqual(savedProfile, loadedProfile)
 
-    #     # reset standout
-    #     sys.stdout = sys.__stdout__
+        # reset standout
+        sys.stdout = sys.__stdout__
 
 
-    #     # check with food storage
-    #     # check with foods added
+        # check with food storage
+        # check with foods added
 
 
     @patch('src.Session.commands.input', create=True)

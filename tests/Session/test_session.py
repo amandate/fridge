@@ -69,7 +69,7 @@ class Test_Session(unittest.TestCase):
         self.checkCommandMethodCalled(mocked_input, [LIST_FOOD_STORAGES, EXIT], command_class_path + ".list_food_storages", FOOD_STORAGE)
         self.checkCommandMethodCalled(mocked_input, [LIST_FREEZERS, EXIT], command_class_path + ".list_food_storages", FREEZER)
         self.checkCommandMethodCalled(mocked_input, [LIST_FRIDGES, EXIT], command_class_path + ".list_food_storages", FRIDGE)
-        self.checkCommandMethodCalled(mocked_input, [LOAD, EXIT], command_class_path + ".load")
+        self.checkCommandMethodCalled(mocked_input, [LOAD, EXIT], command_class_path + ".load", '')
         self.checkCommandMethodCalled(mocked_input, [OPEN_FOOD_STORAGE, EXIT], command_class_path + ".open", FOOD_STORAGE)
         self.checkCommandMethodCalled(mocked_input, [OPEN_FREEZER, EXIT], command_class_path + ".open", FREEZER)
         self.checkCommandMethodCalled(mocked_input, [OPEN_FRIDGE, EXIT], command_class_path + ".open", FRIDGE)
