@@ -1,3 +1,4 @@
+from src.Constants.constants import EXPIRATION_WINDOW, FOOD
 from src.Constants.foodStorage_messages import *
 from datetime import date, timedelta
 
@@ -113,10 +114,12 @@ class FoodStorage:
         for food in list_of_food_names:
             self.update(food)
 
-    ''' Checks if self.name of food items are the same. '''
-    def __eq__(self, other):
-        return self.expiration_window == other.expiration_window and self._inventory == other._inventory 
-
-    ''' Checks if self.name of food items are not the same. '''
-    def __ne__(self, other):
-        return self.expiration_window == other.expiration_window or self._inventory != other._inventory
+    ''' Compiles food storages into a dictionary. Also includes food objects compiled in a dictionary. '''
+    def asDictionary(self):
+        foodStorage_dict = {
+            EXPIRATION_WINDOW : self.expiration_window.days,
+            FOOD : []
+        }
+        for x in self._inventory:
+            foodStorage_dict[FOOD].append(self._inventory[x].asDictionary())
+        return foodStorage_dict 

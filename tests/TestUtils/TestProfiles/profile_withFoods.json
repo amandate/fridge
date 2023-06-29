@@ -1,0 +1,23 @@
+{
+    "name": "sesame",
+    "food storages": {
+        "fridge": [
+            {
+                "expiration_window": 7,
+                "food": [],
+                "name": "testFridge"
+            }
+        ],
+        "freezer": [
+            {
+                "expiration_window": 7,
+                "food": [{
+                    "name" : "apple",
+                    "expiration_date" : "2022-11-08",
+                    "use_by_date" : 3
+                }],
+                "name": "testFreezer"
+            }
+        ]        
+    }
+}

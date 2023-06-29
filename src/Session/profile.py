@@ -5,6 +5,8 @@ from src.FoodStorage.foodStorage import FoodStorage
 from src.FoodStorage.freezer import Freezer
 from src.FoodStorage.fridge import Fridge
 
+import json 
+
 class Profile:
     def __init__(self, name):
         self.name = name
@@ -77,5 +79,24 @@ class Profile:
     def __ne__(self, other):
         return self.name == other.name or self._foodStorages != other._foodStorages
 
+    ''' Takes information provided by user and creates a json with the profile information saved to it. '''
     def save(self):
-        pass
+        user_profile = {
+            NAME : self.name, 
+            FOOD_STORAGES : {}
+        }  
+        # Creates array by food storage type.
+        for type in self._foodStorages:
+            user_profile[FOOD_STORAGES][type] = []
+            # Accesses self._foodStorages to pull information of food storages and food objects and 
+            # appends them to the empty array.
+            for food_storage_name in self._foodStorages[type]:
+                foodStorage_dictionary = self._foodStorages[type][food_storage_name].asDictionary()
+                foodStorage_dictionary[NAME] = food_storage_name
+                user_profile[FOOD_STORAGES][type].append(foodStorage_dictionary)
+
+        # Creates the .json file for user profile.
+        json_profile = json.dumps(user_profile, indent=4)     
+        with open(PROFILES_PATH + SLASH + self.name + JSON_EXTENSION, "w") as outfile:
+            outfile.write(json_profile)
+        

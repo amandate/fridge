@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from src.Constants.constants import NAME, EXPIRATION_DATE, USE_BY_DATE
 from src.Food.food import Food
 from tests.TestUtils.constants import *
 
@@ -48,6 +49,15 @@ class Test_Food(unittest.TestCase):
         self.food.open()
         self.assertEqual(date.today() + timedelta(days = 2), self.food.expiration_date)
         self.assertTrue(self.food.isOpen)
+
+    def testAsDictionary(self):
+        actual = self.food.asDictionary() 
+        expected = {
+            NAME : name1,
+            EXPIRATION_DATE : "2022-05-04",
+            USE_BY_DATE : 2
+        } 
+        self.assertEqual(expected, actual)
 
 if __name__ == '__main__':
     unittest.main()
