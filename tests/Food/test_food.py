@@ -17,7 +17,7 @@ class Test_Food(unittest.TestCase):
         self.assertFalse(self.food.isOpen)  
         self.assertEqual("cheese", self.food2.name)
         self.assertEqual(date(2024, 6, 1), self.food2.expiration_date)
-        self.assertEqual(None, self.food2.use_by_date)
+        self.assertEqual(timedelta(days = 14), self.food2.use_by_date)
         self.assertFalse(self.food2.isOpen)  
     
     def testCompareFoods(self):
