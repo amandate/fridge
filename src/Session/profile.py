@@ -88,8 +88,8 @@ class Profile:
         # Creates array by food storage type.
         for type in self._foodStorages:
             user_profile[FOOD_STORAGES][type] = []
-            # Accesses self._foodStorages to pull information of food storages and food objects and 
-            # appends them to the empty array.
+            ''' Accesses self._foodStorages to pull information of food storages and food objects and 
+                appends them to the empty array. '''
             for food_storage_name in self._foodStorages[type]:
                 foodStorage_dictionary = self._foodStorages[type][food_storage_name].asDictionary()
                 foodStorage_dictionary[NAME] = food_storage_name

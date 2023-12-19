@@ -22,6 +22,7 @@ class Commands:
         
         # Check if food storage is open
         if self.profile.getOpenFoodStorage():
+            # Create food list and prompts user for information 
             food_list = []
             while True: 
                 food_name = input(ADD_FOOD_NAME_MESSAGE)
@@ -37,8 +38,10 @@ class Commands:
                     food = Food(food_name, expiration_date, use_by_date)
                 except:
                     food = Food(food_name, expiration_date)
+                
                 food_list.append(food)
-                    
+
+                # Asks user if they want to add additional food items     
                 while True:
                     add_more_food = input(ADD_MORE_FOOD_MESSAGE)
                     if add_more_food == YES:
@@ -49,6 +52,8 @@ class Commands:
                         return
                     else:
                         print(INVALID_RESPONSE_MESSAGE)
+                        
+        # If food storage is not open 
         else:
             print(ADD_FOOD_ERROR_MESSAGE)
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))

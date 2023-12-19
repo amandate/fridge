@@ -262,8 +262,9 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
+        ## with food storage ##
+        
 
-        # check with food storage
         # check with foods added
 
 
