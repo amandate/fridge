@@ -229,7 +229,7 @@ class Test_Commands(unittest.TestCase):
 
     @patch('src.Session.commands.input', create=True)
     def testLoad(self, mocked_input):
-        ## no profile ##
+        ## profile does not exist ##
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
@@ -244,10 +244,14 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## with profile ##
-        mocked_input.side_effect = [profile_name]
+        ## profile exists w/ food storage and food ##
+        mocked_input.side_effect = [profile_name, foodstorage_name]
         self.commands.create_profile()
         savedProfile = self.commands.profile
+        self.commands.create_foodStorage(freezer_name)
+
+        mocked_input.side_effect = [name1, date1, use_by_date1, NO]
+        self.commands.add_food()
         self.commands.save() 
 
         # grab print output
@@ -261,11 +265,6 @@ class Test_Commands(unittest.TestCase):
 
         # reset standout
         sys.stdout = sys.__stdout__
-
-        ## with food storage ##
-        
-
-        # check with foods added
 
 
     @patch('src.Session.commands.input', create=True)

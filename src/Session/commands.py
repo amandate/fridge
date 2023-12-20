@@ -141,6 +141,8 @@ class Commands:
         try: 
             with open(PROFILES_PATH + SLASH + self.profile + JSON_EXTENSION) as user_profile:
                 savedProfile = json.load(user_profile)
+            # with open("/Users/leezahuor/Desktop/portfolio projects/fridge-backend/profiles/leeza.json") as user_profile:
+            #     savedProfile = json.load(user_profile)
 
             self.profile = Profile(savedProfile[NAME]) 
 
