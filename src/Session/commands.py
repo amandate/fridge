@@ -135,9 +135,11 @@ class Commands:
 
     ''' Allows user to load an existing profile. '''
     def load(self, profile):
+        # Saves current profile
         if self.profile:
             self.profile.save()
-            
+        
+        # Opens profile if it exists
         try: 
             with open(PROFILES_PATH + SLASH + profile + JSON_EXTENSION) as user_profile:
                 savedProfile = json.load(user_profile)
@@ -155,8 +157,8 @@ class Commands:
             
             print(LOAD_PROFILE_SUCCESS_MESSAGE.format(profile))
 
+        # Gives error message if profile does not exist
         except:        
-            # If profile name does not exist
             print(LOAD_PROFILE_ERROR_MESSAGE, SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE))
   
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 

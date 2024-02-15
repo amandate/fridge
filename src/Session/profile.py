@@ -27,7 +27,6 @@ class Profile:
             newFoodStorage = Fridge()
 
         self._foodStorages[foodStorage_type][name] = newFoodStorage
-        # print(newFoodStorage)
         self.open(foodStorage_type, name) 
 
     ''' Gets the FoodStorage object of foodStorage_type with the given name. 
@@ -36,7 +35,7 @@ class Profile:
         if foodStorage_type not in self._foodStorages or \
             name not in self._foodStorages[foodStorage_type]:
             return None
-        return self._foodStorages[foodStorage_type][name] # <src.FoodStorage.fridge.Fridge object at 0x102be2380>
+        return self._foodStorages[foodStorage_type][name] 
 
     ''' Retrieves FoodStorage object with getFoodStorage method and sets it 
         to open if it exists, otherwise return 0. '''
@@ -62,7 +61,6 @@ class Profile:
             return allNames
         elif foodStorage_type not in self._foodStorages:
             return []
-        # print(list(self._foodStorages[foodStorage_type].keys())) # ['kitchen', 'garage']
         return list(self._foodStorages[foodStorage_type].keys())
     
     ''' Adds array of foods to the opened food storage that the user is in.  
@@ -97,7 +95,7 @@ class Profile:
                 foodStorage_dictionary[NAME] = food_storage_name
                 user_profile[FOOD_STORAGES][type].append(foodStorage_dictionary)
 
-        # Creates the .json file for user profile.
+        # Creates the json file for user profile.
         json_profile = json.dumps(user_profile, indent=4)     
         with open(PROFILES_PATH + SLASH + self.name + JSON_EXTENSION, "w") as outfile:
             outfile.write(json_profile)

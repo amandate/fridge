@@ -28,7 +28,6 @@ from tests.TestUtils.constants import \
     name2, \
     profile_name, \
     use_by_date1 
-# from TestUtils.utils import compareProfiles 
 from unittest.mock import patch
 
 import io
@@ -46,17 +45,18 @@ class Test_Commands(unittest.TestCase):
             os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
         except FileNotFoundError:
             return
-
+    
+    # Compares contents between two profiles
     def compareProfiles(self, profile1, profile2):
-        #compare names
+        # Compare profile names
         self.assertEqual(profile1.name, profile2.name)
 
-        #compare food storage names
+        # Compare food storage names
         savedProfileFoodStorageNames = profile1.listFoodStorages(FOOD_STORAGE)
         loadedProfileFoodStoragesNames = profile2.listFoodStorages(FOOD_STORAGE)
         self.assertEqual(savedProfileFoodStorageNames, loadedProfileFoodStoragesNames)
 
-        #compare food storage foods
+        # Compare food storage contents
         for x, y in zip(savedProfileFoodStorageNames, loadedProfileFoodStoragesNames):
             savedProfileFoods = profile1.getFoodStorage(freezer_name, x).asDictionary()
             loadedProfileFoods = profile2.getFoodStorage(freezer_name, y).asDictionary()
@@ -268,7 +268,7 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        # profile exists w/ food storage and food ##
+        ## profile exists w/ food storage and food ##
         mocked_input.side_effect = [profile_name, foodstorage_name]
         self.commands.create_profile()
         self.commands.create_foodStorage(freezer_name)
@@ -285,12 +285,11 @@ class Test_Commands(unittest.TestCase):
         self.commands.load(profile_name)
         loadedProfile = self.commands.profile
 
-        ## profile name, food storage name, added food
+        # checks if the loaded profile is the same as the profile previously saved 
         self.compareProfiles(savedProfile, loadedProfile)
 
         # reset standout
         sys.stdout = sys.__stdout__
-
 
     @patch('src.Session.commands.input', create=True)
     def testOpenFoodStorage(self, mocked_input):
