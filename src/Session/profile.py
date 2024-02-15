@@ -27,6 +27,7 @@ class Profile:
             newFoodStorage = Fridge()
 
         self._foodStorages[foodStorage_type][name] = newFoodStorage
+        # print(newFoodStorage)
         self.open(foodStorage_type, name) 
 
     ''' Gets the FoodStorage object of foodStorage_type with the given name. 
@@ -35,7 +36,7 @@ class Profile:
         if foodStorage_type not in self._foodStorages or \
             name not in self._foodStorages[foodStorage_type]:
             return None
-        return self._foodStorages[foodStorage_type][name]
+        return self._foodStorages[foodStorage_type][name] # <src.FoodStorage.fridge.Fridge object at 0x102be2380>
 
     ''' Retrieves FoodStorage object with getFoodStorage method and sets it 
         to open if it exists, otherwise return 0. '''
@@ -61,6 +62,7 @@ class Profile:
             return allNames
         elif foodStorage_type not in self._foodStorages:
             return []
+        # print(list(self._foodStorages[foodStorage_type].keys())) # ['kitchen', 'garage']
         return list(self._foodStorages[foodStorage_type].keys())
     
     ''' Adds array of foods to the opened food storage that the user is in.  
@@ -88,8 +90,8 @@ class Profile:
         # Creates array by food storage type.
         for type in self._foodStorages:
             user_profile[FOOD_STORAGES][type] = []
-            ''' Accesses self._foodStorages to pull information of food storages and food objects and 
-                appends them to the empty array. '''
+            # Accesses self._foodStorages to pull information of food storages and food objects and 
+            # appends them to the empty array.
             for food_storage_name in self._foodStorages[type]:
                 foodStorage_dictionary = self._foodStorages[type][food_storage_name].asDictionary()
                 foodStorage_dictionary[NAME] = food_storage_name

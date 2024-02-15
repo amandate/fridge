@@ -28,15 +28,39 @@ from tests.TestUtils.constants import \
     name2, \
     profile_name, \
     use_by_date1 
+# from TestUtils.utils import compareProfiles 
 from unittest.mock import patch
 
 import io
+import json 
+import os
 import sys
 import unittest
 
 class Test_Commands(unittest.TestCase):
     def setUp(self):
         self.commands = Commands()
+    
+    def tearDown(self):
+        try:
+            os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
+        except FileNotFoundError:
+            return
+
+    def compareProfiles(self, profile1, profile2):
+        #compare names
+        self.assertEqual(profile1.name, profile2.name)
+
+        #compare food storage names
+        savedProfileFoodStorageNames = profile1.listFoodStorages(FOOD_STORAGE)
+        loadedProfileFoodStoragesNames = profile2.listFoodStorages(FOOD_STORAGE)
+        self.assertEqual(savedProfileFoodStorageNames, loadedProfileFoodStoragesNames)
+
+        #compare food storage foods
+        for x, y in zip(savedProfileFoodStorageNames, loadedProfileFoodStoragesNames):
+            savedProfileFoods = profile1.getFoodStorage(freezer_name, x).asDictionary()
+            loadedProfileFoods = profile2.getFoodStorage(freezer_name, y).asDictionary()
+            self.assertEqual(savedProfileFoods,loadedProfileFoods)
 
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
@@ -244,15 +268,15 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## profile exists w/ food storage and food ##
+        # profile exists w/ food storage and food ##
         mocked_input.side_effect = [profile_name, foodstorage_name]
         self.commands.create_profile()
-        savedProfile = self.commands.profile
         self.commands.create_foodStorage(freezer_name)
 
         mocked_input.side_effect = [name1, date1, use_by_date1, NO]
         self.commands.add_food()
         self.commands.save() 
+        savedProfile = self.commands.profile
 
         # grab print output
         capturedPrintOutput = io.StringIO()
@@ -261,7 +285,8 @@ class Test_Commands(unittest.TestCase):
         self.commands.load(profile_name)
         loadedProfile = self.commands.profile
 
-        self.assertEqual(savedProfile, loadedProfile)
+        ## profile name, food storage name, added food
+        self.compareProfiles(savedProfile, loadedProfile)
 
         # reset standout
         sys.stdout = sys.__stdout__
