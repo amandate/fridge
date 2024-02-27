@@ -72,7 +72,10 @@ class Profile:
         return 0
 
     def removeFoods(self, foods):
-        pass
+        if self._opened_foodStorage:
+            self._opened_foodStorage.removeFoods(foods)
+            return 1
+        return 0
 
     def load(self, name):
         pass
