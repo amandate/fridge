@@ -71,6 +71,9 @@ class Profile:
             return 1
         return 0
 
+    def removeFoods(self, foods):
+        pass
+
     def load(self, name):
         pass
 

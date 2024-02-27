@@ -52,7 +52,24 @@ class Commands:
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
     def remove_food(self):
-        pass
+        # Profile check
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
+        
+            
+        '''
+        check if user is on a valid profile
+
+        check if food storage is open?
+            if food name is in inventory
+            .pop off
+            print success message ("Successfully removed: {food name}")
+        
+            if food name is not in inventory
+            print error message ("Failed removing {}. Food does not exist.")
+        '''
 
     ''' Prompts user to create a new food storage. If no profile is active, suggests user to create or load one.
         If a food storage with this name exists, confirms with user if they want to override it.'''
