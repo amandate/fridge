@@ -139,7 +139,7 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## Success path: food storage exists, is open, 2 foods added ##
+        ## Success path: food storage exists, is open, 2 foods added, 1 food removed ##
         mocked_input.side_effect = [freezer_name]
         self.commands.create_foodStorage(FREEZER)
         mocked_input.side_effect = [name1, date1, use_by_date1, YES, name2, date2, EMPTY_STRING, NO]

@@ -71,6 +71,8 @@ class Profile:
             return 1
         return 0
 
+    ''' Removes array of foods from the opened food storage that the user is in.  
+        Can remove multiple food items. '''
     def removeFoods(self, foods):
         if self._opened_foodStorage:
             self._opened_foodStorage.removeFoods(foods)

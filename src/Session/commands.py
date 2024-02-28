@@ -51,6 +51,8 @@ class Commands:
             print(ADD_FOOD_ERROR_MESSAGE)
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
+    ''' Prompts user to remove foods when they are in an open food storage. If the user is not in an opened
+        food storage, suggests the user opens an existing food storage or create a new one. '''
     def remove_food(self):
         # Profile check
         if not self.profile:
