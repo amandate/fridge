@@ -124,6 +124,15 @@ class Test_Profile(unittest.TestCase):
         # Should return 1 if food item can be added. 
         self.profile.addFoodStorage(FREEZER, freezer_name)
         self.assertEqual(1, self.profile.addFoods([food1]))
+    
+    def testRemoveFoods(self):
+        # Should return 0 if food storage is not open yet.
+        self.assertEqual(0, self.profile.addFoods([food1]))
+
+        # Should return 1 if food item can be removed. 
+        self.profile.addFoodStorage(FREEZER, freezer_name)
+        self.profile.addFoods([food1])
+        self.assertEqual(1, self.profile.removeFoods([food1]))
 
 if __name__ == '__main__':
     unittest.main()
