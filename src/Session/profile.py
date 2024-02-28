@@ -35,7 +35,7 @@ class Profile:
         if foodStorage_type not in self._foodStorages or \
             name not in self._foodStorages[foodStorage_type]:
             return None
-        return self._foodStorages[foodStorage_type][name] 
+        return self._foodStorages[foodStorage_type][name]
 
     ''' Retrieves FoodStorage object with getFoodStorage method and sets it 
         to open if it exists, otherwise return 0. '''
@@ -71,13 +71,13 @@ class Profile:
             return 1
         return 0
 
-    ''' Checks if self.name of food items are the same. '''
+    ''' Checks if self.name and self._foodstorages of profile are the same as other.name and other._foodStorages. '''
     def __eq__(self, other):
-        return self.name == other.name and self._foodStorages == other._foodStorages 
+        return self.name == other.name and self._foodStorages == other._foodStorages
 
-    ''' Checks if self.name of food items are not the same. '''
+    ''' Checks if self.name and self._foodstorages of profile are not the same as other.name and other._foodStorages. '''
     def __ne__(self, other):
-        return self.name == other.name or self._foodStorages != other._foodStorages
+        return self.name != other.name or self._foodStorages != other._foodStorages
 
     ''' Takes information provided by user and creates a json with the profile information saved to it. '''
     def save(self):

@@ -45,22 +45,6 @@ class Test_Commands(unittest.TestCase):
             os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
         except FileNotFoundError:
             return
-    
-    # Compares contents between two profiles
-    def compareProfiles(self, profile1, profile2):
-        # Compare profile names
-        self.assertEqual(profile1.name, profile2.name)
-
-        # Compare food storage names
-        savedProfileFoodStorageNames = profile1.listFoodStorages(FOOD_STORAGE)
-        loadedProfileFoodStoragesNames = profile2.listFoodStorages(FOOD_STORAGE)
-        self.assertEqual(savedProfileFoodStorageNames, loadedProfileFoodStoragesNames)
-
-        # Compare food storage contents
-        for x, y in zip(savedProfileFoodStorageNames, loadedProfileFoodStoragesNames):
-            savedProfileFoods = profile1.getFoodStorage(freezer_name, x).asDictionary()
-            loadedProfileFoods = profile2.getFoodStorage(freezer_name, y).asDictionary()
-            self.assertEqual(savedProfileFoods,loadedProfileFoods)
 
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
@@ -286,7 +270,7 @@ class Test_Commands(unittest.TestCase):
         loadedProfile = self.commands.profile
 
         # checks if the loaded profile is the same as the profile previously saved 
-        self.compareProfiles(savedProfile, loadedProfile)
+        self.assertEqual(savedProfile, loadedProfile)
 
         # reset standout
         sys.stdout = sys.__stdout__

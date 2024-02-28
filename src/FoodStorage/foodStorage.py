@@ -16,6 +16,14 @@ class FoodStorage:
 
         # Indicates if we've had updates since the last time .list() was called.
         self._hasUpdates = False
+    
+    ''' Checks if self._inventory is the same other._inventory. '''
+    def __eq__(self, other):
+        return self._inventory == other._inventory
+    
+    ''' Checks if self._inventory is not the same other._inventory. '''
+    def __ne__(self, other):
+        return self._inventory != other._inventory
 
     ''' Adds food item to self._inventory and sets our self._hasUpdates flag to True. '''
     def add(self, food):
