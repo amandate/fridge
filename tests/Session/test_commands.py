@@ -7,6 +7,7 @@ from src.Constants.commands_messages import \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
     INVALID_RESPONSE_MESSAGE, \
     LIST_FOOD_STORAGES_ACTION, \
+    LOAD_PROFILE_ERROR_MESSAGE, \
     NO_FOOD_STORAGE_MESSAGE, \
     NO_LOADED_PROFILE_MESSAGE, \
     OPEN_FOOD_STORAGE_ACTION, \
@@ -30,12 +31,20 @@ from tests.TestUtils.constants import \
 from unittest.mock import patch
 
 import io
+import json 
+import os
 import sys
 import unittest
 
 class Test_Commands(unittest.TestCase):
     def setUp(self):
         self.commands = Commands()
+    
+    def tearDown(self):
+        try:
+            os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
+        except FileNotFoundError:
+            return
 
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
@@ -222,6 +231,46 @@ class Test_Commands(unittest.TestCase):
         expectedOutput = NO_FOOD_STORAGE_MESSAGE.format(FRIDGE) + NEW_LINE + \
             SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+    @patch('src.Session.commands.input', create=True)
+    def testLoad(self, mocked_input):
+        ## profile does not exist ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.load(profile_name)
+
+        expectedOutput = \
+            LOAD_PROFILE_ERROR_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## profile exists w/ food storage and food ##
+        mocked_input.side_effect = [profile_name, foodstorage_name]
+        self.commands.create_profile()
+        self.commands.create_foodStorage(freezer_name)
+
+        mocked_input.side_effect = [name1, date1, use_by_date1, NO]
+        self.commands.add_food()
+        self.commands.save() 
+        savedProfile = self.commands.profile
+
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.load(profile_name)
+        loadedProfile = self.commands.profile
+
+        # checks if the loaded profile is the same as the profile previously saved 
+        self.assertEqual(savedProfile, loadedProfile)
 
         # reset standout
         sys.stdout = sys.__stdout__

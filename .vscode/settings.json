@@ -6,4 +6,6 @@
         "test_*.py"
     ],
     "python.testing.unittestEnabled": true,
+    "env": {"PYTHONPATH": "${workspaceFolder}"},
+    "terminal.integrated.env.osx": {"PYTHONPATH": "${workspaceFolder}"}
 }
