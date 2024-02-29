@@ -13,6 +13,14 @@ class Profile:
         self.current_date = date.today()
         self._foodStorages = {}
         self._opened_foodStorage = None
+    
+    ''' Determines if profile name and food storages are the same. '''
+    def __eq__(self, other):
+        return self.name == other.name and self._foodStorages == other._foodStorages
+
+    ''' Determines if profile name and food storages are not the same. '''
+    def __ne__(self, other):
+        return self.name != other.name or self._foodStorages != other._foodStorages
 
     ''' Adds a new FoodStorage object of foodStorage_type with the given name and 
         sets self._opened_foodStorage to it. '''
@@ -70,14 +78,6 @@ class Profile:
             self._opened_foodStorage.addFoods(foods)
             return 1
         return 0
-
-    ''' Determines if profile name and food storages are the same. '''
-    def __eq__(self, other):
-        return self.name == other.name and self._foodStorages == other._foodStorages
-
-    ''' Determines if profile name and food storages are not the same. '''
-    def __ne__(self, other):
-        return self.name != other.name or self._foodStorages != other._foodStorages
 
     ''' Takes information provided by user and creates a json with the profile information saved to it. '''
     def save(self):
