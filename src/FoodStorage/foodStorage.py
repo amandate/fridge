@@ -21,7 +21,7 @@ class FoodStorage:
     def __eq__(self, other):
         return self._inventory == other._inventory
     
-    ''' Checks if self._inventory is not the same other._inventory. '''
+    ''' Determines if two FoodStorages are not the same. '''
     def __ne__(self, other):
         return self._inventory != other._inventory
 

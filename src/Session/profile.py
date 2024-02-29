@@ -71,11 +71,11 @@ class Profile:
             return 1
         return 0
 
-    ''' Checks if self.name and self._foodstorages of profile are the same as other.name and other._foodStorages. '''
+    ''' Determines if profile name and food storages are the same. '''
     def __eq__(self, other):
         return self.name == other.name and self._foodStorages == other._foodStorages
 
-    ''' Checks if self.name and self._foodstorages of profile are not the same as other.name and other._foodStorages. '''
+    ''' Determines if profile name and food storages are not the same. '''
     def __ne__(self, other):
         return self.name != other.name or self._foodStorages != other._foodStorages
 
