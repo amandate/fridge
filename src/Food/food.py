@@ -15,9 +15,6 @@ class Food(object):
             self.use_by_date = use_by_date
         self.isOpen = False
 
-    def __hash__(self):
-        return hash(self.name)    
-
     ''' Following methods are comparators that will sort food items by expiration_date and name. 
         Returns self.expiration_date first if it has an earlier date than other.expiration_date. 
         If expiration_date's are equal, objects will be returned by name alphabetically. '''

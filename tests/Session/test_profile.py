@@ -132,7 +132,7 @@ class Test_Profile(unittest.TestCase):
         # Should return 1 if food item can be removed. 
         self.profile.addFoodStorage(FREEZER, freezer_name)
         self.profile.addFoods([food1])
-        self.assertEqual(1, self.profile.removeFoods([food1]))
+        self.assertEqual(1, self.profile.removeFoods([food1.name]))
 
 if __name__ == '__main__':
     unittest.main()

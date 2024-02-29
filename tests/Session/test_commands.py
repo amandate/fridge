@@ -158,7 +158,7 @@ class Test_Commands(unittest.TestCase):
         # reset standout
         sys.stdout = sys.__stdout__
 
-        ## Success path: foods added w/ invalid response ##
+        ## Success path: foods removed w/ invalid response ##
         # grab print output
         capturedPrintOutput = io.StringIO()
         sys.stdout = capturedPrintOutput
