@@ -17,7 +17,7 @@ class FoodStorage:
         # Indicates if we've had updates since the last time .list() was called.
         self._hasUpdates = False
     
-    ''' Checks if self._inventory is the same other._inventory. '''
+    ''' Determines if two FoodStorages are the same. '''
     def __eq__(self, other):
         return self._inventory == other._inventory
     
