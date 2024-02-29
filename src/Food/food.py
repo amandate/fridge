@@ -12,7 +12,7 @@ class Food(object):
             # a food's quality will deteriorate after it is opened.
             self.use_by_date = timedelta(days = use_by_date)
         else:
-            self.use_by_date = use_by_date
+            self.use_by_date = timedelta(days = 14)
         self.isOpen = False
 
     ''' Following methods are comparators that will sort food items by expiration_date and name. 

@@ -63,8 +63,8 @@ class Session:
             user_input == LIST_FRIDGES:
             user_input = user_input[:-1]
             self._commands.list_food_storages(SPACE.join(user_input.split()[1:]))
-        elif user_input == LOAD:
-            self._commands.load()
+        elif user_input.startswith(LOAD):
+            self._commands.load(SPACE.join(user_input.split()[1:]))
         elif user_input == OPEN_FOOD_STORAGE or \
             user_input == OPEN_FREEZER or \
             user_input == OPEN_FRIDGE:

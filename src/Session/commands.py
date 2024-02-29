@@ -5,6 +5,8 @@ from src.Food.food import Food
 from src.Session.profile import Profile
 from src.Utils.utils import listInQuotes, twoPrintOutcomes
 
+import json
+
 class Commands:
     def __init__(self):
         self.profile = None
@@ -20,6 +22,7 @@ class Commands:
         
         # Check if food storage is open
         if self.profile.getOpenFoodStorage():
+            # Create food list and prompts user for information 
             food_list = []
             while True: 
                 food_name = input(ADD_FOOD_NAME_MESSAGE)
@@ -35,8 +38,10 @@ class Commands:
                     food = Food(food_name, expiration_date, use_by_date)
                 except:
                     food = Food(food_name, expiration_date)
+                
                 food_list.append(food)
-                    
+
+                # Asks user if they want to add additional food items     
                 while True:
                     add_more_food = input(ADD_MORE_FOOD_MESSAGE)
                     if add_more_food == YES:
@@ -47,6 +52,8 @@ class Commands:
                         return
                     else:
                         print(INVALID_RESPONSE_MESSAGE)
+                        
+        # If food storage is not open 
         else:
             print(ADD_FOOD_ERROR_MESSAGE)
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
@@ -153,8 +160,33 @@ class Commands:
         twoPrintOutcomes(foodStorage_list, [LIST_FOOD_STORAGES_ACTION.format(foodStorage_type)], \
             [NO_FOOD_STORAGE_MESSAGE.format(foodStorage_type)], [CREATE_FOOD_STORAGE, CREATE_FREEZER, CREATE_FRIDGE]) 
 
+    ''' Allows user to load an existing profile. '''
     def load(self, profile):
-        pass
+        # Saves current profile
+        if self.profile:
+            self.profile.save()
+        
+        # Opens profile if it exists
+        try: 
+            with open(PROFILES_PATH + SLASH + profile + JSON_EXTENSION) as user_profile:
+                savedProfile = json.load(user_profile)
+
+            self.profile = Profile(savedProfile[NAME]) 
+
+            for type in savedProfile[FOOD_STORAGES]: 
+                for food_storage in savedProfile[FOOD_STORAGES][type]:
+                    self.profile.addFoodStorage(type, food_storage[NAME])
+                    foods = []
+                    for food in food_storage[FOOD]:
+                        food_item = Food(food[NAME], food[EXPIRATION_DATE], food[USE_BY_DATE])
+                        foods.append(food_item)
+                    self.profile.addFoods(foods) 
+            
+            print(LOAD_PROFILE_SUCCESS_MESSAGE.format(profile))
+
+        # Gives error message if profile does not exist
+        except:        
+            print(LOAD_PROFILE_ERROR_MESSAGE, SUGGESTED_ACTIONS_MESSAGE.format(CREATE_PROFILE))
   
     ''' Prompts user input to open a food storage. Also lists available food storages user can choose from. 
         If a food storage is not available or a food storage with that name does not exist, prompts user to create a new one. '''
