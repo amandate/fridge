@@ -1,10 +1,10 @@
 from src.Session.commands import Commands
 from src.Constants.commands_messages import \
-    ADD_FOOD_ERROR_MESSAGE, \
     ADD_FOOD_SUCCESS_MESSAGE_FINAL, \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
+    FOOD_OPEN_ERROR_MESSAGE , \
     INVALID_RESPONSE_MESSAGE, \
     LIST_FOOD_STORAGES_ACTION, \
     LOAD_PROFILE_ERROR_MESSAGE, \
@@ -13,8 +13,7 @@ from src.Constants.commands_messages import \
     OPEN_FOOD_STORAGE_ACTION, \
     OPEN_FOOD_STORAGE_MESSAGE, \
     OPEN_FOOD_STORAGE_SUCCESS_MESSAGE, \
-    REMOVE_FOOD_ERROR_MESSAGE, \
-    REMOVE_FOOD_SUCCESS_MESSAGE_FINAL, \
+    REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE, \
     SAVE_PROFILE_SUCCESS_MESSAGE, \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
@@ -42,11 +41,11 @@ class Test_Commands(unittest.TestCase):
     def setUp(self):
         self.commands = Commands()
     
-    def tearDown(self):
-        try:
-            os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
-        except FileNotFoundError:
-            return
+    # def tearDown(self):
+    #     try:
+    #         os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
+    #     except FileNotFoundError:
+    #         return
 
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
@@ -77,7 +76,7 @@ class Test_Commands(unittest.TestCase):
         sys.stdout = capturedPrintOutput
         self.commands.add_food()
 
-        expectedOutput = ADD_FOOD_ERROR_MESSAGE + NEW_LINE + \
+        expectedOutput = FOOD_OPEN_ERROR_MESSAGE + NEW_LINE + \
             SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
@@ -141,7 +140,7 @@ class Test_Commands(unittest.TestCase):
         sys.stdout = capturedPrintOutput
         self.commands.remove_food()
 
-        expectedOutput = REMOVE_FOOD_ERROR_MESSAGE + NEW_LINE + \
+        expectedOutput = FOOD_OPEN_ERROR_MESSAGE + NEW_LINE + \
             SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
@@ -162,7 +161,12 @@ class Test_Commands(unittest.TestCase):
         self.commands.remove_food()
 
         actualOutput = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
-        self.assertEqual(REMOVE_FOOD_SUCCESS_MESSAGE_FINAL, actualOutput)
+        self.assertEqual(REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE, actualOutput)
+
+        testInventory = self.commands.profile.getFoodStorage(FREEZER, freezer_name).list()
+
+        self.assertNotIn(name1, testInventory)
+        self.assertEqual(len(testInventory), 1)
     
         # reset standout
         sys.stdout = sys.__stdout__
@@ -177,7 +181,12 @@ class Test_Commands(unittest.TestCase):
         output1 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[0]
         output2 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
         self.assertEqual(INVALID_RESPONSE_MESSAGE, output1)
-        self.assertEqual(REMOVE_FOOD_SUCCESS_MESSAGE_FINAL, output2)
+        self.assertEqual(REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE, output2)
+
+        testInventory = self.commands.profile.getFoodStorage(FREEZER, freezer_name).list()
+
+        self.assertNotIn(name1, testInventory)
+        self.assertEqual(len(testInventory), 1)
 
         # reset standout
         sys.stdout = sys.__stdout__
