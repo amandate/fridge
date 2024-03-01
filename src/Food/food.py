@@ -35,6 +35,8 @@ class Food(object):
 
     ''' Checks if self.name of food items are the same. '''
     def __eq__(self, other):
+        if not isinstance(other, Food):
+            return False 
         return self.name == other.name
 
     ''' Checks if self.name of food items are not the same. '''

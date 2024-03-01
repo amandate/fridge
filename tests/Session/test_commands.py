@@ -1,10 +1,10 @@
 from src.Session.commands import Commands
 from src.Constants.commands_messages import \
-    ADD_FOOD_ERROR_MESSAGE, \
     ADD_FOOD_SUCCESS_MESSAGE_FINAL, \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
+    FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE , \
     INVALID_RESPONSE_MESSAGE, \
     LIST_FOOD_STORAGES_ACTION, \
     LOAD_PROFILE_ERROR_MESSAGE, \
@@ -13,6 +13,7 @@ from src.Constants.commands_messages import \
     OPEN_FOOD_STORAGE_ACTION, \
     OPEN_FOOD_STORAGE_MESSAGE, \
     OPEN_FOOD_STORAGE_SUCCESS_MESSAGE, \
+    REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE, \
     SAVE_PROFILE_SUCCESS_MESSAGE, \
     SUGGESTED_ACTIONS_MESSAGE
 from src.Constants.constants import *
@@ -21,6 +22,7 @@ from src.Utils.utils import listInQuotes
 from tests.TestUtils.constants import \
     date1, \
     date2, \
+    food1, \
     foodstorage_name, \
     freezer_name, \
     fridge_name, \
@@ -75,7 +77,7 @@ class Test_Commands(unittest.TestCase):
         sys.stdout = capturedPrintOutput
         self.commands.add_food()
 
-        expectedOutput = ADD_FOOD_ERROR_MESSAGE + NEW_LINE + \
+        expectedOutput = FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE + NEW_LINE + \
             SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
@@ -109,6 +111,83 @@ class Test_Commands(unittest.TestCase):
         output2 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
         self.assertEqual(INVALID_RESPONSE_MESSAGE, output1)
         self.assertEqual(ADD_FOOD_SUCCESS_MESSAGE_FINAL, output2)
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+    @patch('src.Session.commands.input', create=True)
+    def testRemoveFood(self, mocked_input):
+        ## no profile ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        self.commands.remove_food()
+
+        expectedOutput = \
+            NO_LOADED_PROFILE_MESSAGE + " " + \
+            SUGGESTED_ACTIONS_MESSAGE.format("'{}', '{}'".format(CREATE_PROFILE, LOAD)) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue())
+       
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Negative path: food storage not open ##
+        mocked_input.side_effect = [profile_name]
+        self.commands.create_profile()
+
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        self.commands.remove_food()
+
+        expectedOutput = FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE + NEW_LINE + \
+            SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
+        self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
+
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Success path: food storage exists, is open, 2 foods added, 1 food removed ##
+        mocked_input.side_effect = [freezer_name]
+        self.commands.create_foodStorage(FREEZER)
+        mocked_input.side_effect = [name1, date1, use_by_date1, YES, name2, date2, EMPTY_STRING, NO]
+        self.commands.add_food()
+
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+
+        mocked_input.side_effect = [name1, date1, use_by_date1, NO]
+        self.commands.remove_food()
+
+        actualOutput = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
+        self.assertEqual(REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE, actualOutput)
+
+        testInventory = self.commands.profile.getFoodStorage(FREEZER, freezer_name).list()
+
+        self.assertNotIn(food1, testInventory)
+        self.assertEqual(len(testInventory), 1)
+    
+        # reset standout
+        sys.stdout = sys.__stdout__
+
+        ## Success path: foods removed w/ invalid response ##
+        # grab print output
+        capturedPrintOutput = io.StringIO()
+        sys.stdout = capturedPrintOutput
+        mocked_input.side_effect = [name1, date1, use_by_date1, EXIT, NO]
+        self.commands.remove_food()
+
+        output1 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[0]
+        output2 = capturedPrintOutput.getvalue().strip().split(NEW_LINE)[-1]
+        self.assertEqual(INVALID_RESPONSE_MESSAGE, output1)
+        self.assertEqual(REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE, output2)
+
+        testInventory = self.commands.profile.getFoodStorage(FREEZER, freezer_name).list()
+
+        self.assertNotIn(food1, testInventory)
+        self.assertEqual(len(testInventory), 1)
 
         # reset standout
         sys.stdout = sys.__stdout__

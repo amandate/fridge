@@ -55,11 +55,38 @@ class Commands:
                         
         # If food storage is not open 
         else:
-            print(ADD_FOOD_ERROR_MESSAGE)
+            print(FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE)
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
+    ''' Prompts user to remove foods when they are in an open food storage. If the user is not in an opened
+        food storage, suggests the user opens an existing food storage or create a new one. '''
     def remove_food(self):
-        pass
+        # Profile check
+        if not self.profile:
+            print(NO_LOADED_PROFILE_MESSAGE, \
+                SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([CREATE_PROFILE, LOAD])))
+            return
+        
+        # Check if food storage is open
+        if self.profile.getOpenFoodStorage():
+            food_list = []
+            while True: 
+                food = input(REMOVE_FOOD_NAME_MESSAGE)
+                food_list.append(food)
+                    
+                while True:
+                    remove_more_food = input(REMOVE_MORE_FOOD_MESSAGE)
+                    if remove_more_food == YES:
+                        break
+                    elif remove_more_food == NO:
+                        self.profile.removeFoods(food_list)
+                        print(REMOVE_FOOD_SUCCESS_MESSAGE_COMPLETE)
+                        return
+                    else:
+                        print(INVALID_RESPONSE_MESSAGE)
+        else:
+            print(FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE)
+            print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
     ''' Prompts user to create a new food storage. If no profile is active, suggests user to create or load one.
         If a food storage with this name exists, confirms with user if they want to override it.'''
