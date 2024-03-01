@@ -55,7 +55,7 @@ class Commands:
                         
         # If food storage is not open 
         else:
-            print(FOOD_OPEN_ERROR_MESSAGE)
+            print(FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE)
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
     ''' Prompts user to remove foods when they are in an open food storage. If the user is not in an opened
@@ -85,7 +85,7 @@ class Commands:
                     else:
                         print(INVALID_RESPONSE_MESSAGE)
         else:
-            print(FOOD_OPEN_ERROR_MESSAGE)
+            print(FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE)
             print(SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])))
 
     ''' Prompts user to create a new food storage. If no profile is active, suggests user to create or load one.

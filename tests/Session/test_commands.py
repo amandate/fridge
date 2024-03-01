@@ -4,7 +4,7 @@ from src.Constants.commands_messages import \
     CANCEL_ACTION_MESSAGE, \
     CREATE_FOOD_STORAGE_ACTION, \
     CREATE_FOOD_STORAGE_SUCCESS_MESSAGE, \
-    FOOD_OPEN_ERROR_MESSAGE , \
+    FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE , \
     INVALID_RESPONSE_MESSAGE, \
     LIST_FOOD_STORAGES_ACTION, \
     LOAD_PROFILE_ERROR_MESSAGE, \
@@ -22,6 +22,7 @@ from src.Utils.utils import listInQuotes
 from tests.TestUtils.constants import \
     date1, \
     date2, \
+    food1, \
     foodstorage_name, \
     freezer_name, \
     fridge_name, \
@@ -41,11 +42,11 @@ class Test_Commands(unittest.TestCase):
     def setUp(self):
         self.commands = Commands()
     
-    # def tearDown(self):
-    #     try:
-    #         os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
-    #     except FileNotFoundError:
-    #         return
+    def tearDown(self):
+        try:
+            os.remove(PROFILES_PATH + SLASH + profile_name + JSON_EXTENSION)
+        except FileNotFoundError:
+            return
 
     def testInitialize(self):
         self.assertIsNone(self.commands.profile)
@@ -76,7 +77,7 @@ class Test_Commands(unittest.TestCase):
         sys.stdout = capturedPrintOutput
         self.commands.add_food()
 
-        expectedOutput = FOOD_OPEN_ERROR_MESSAGE + NEW_LINE + \
+        expectedOutput = FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE + NEW_LINE + \
             SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
@@ -140,7 +141,7 @@ class Test_Commands(unittest.TestCase):
         sys.stdout = capturedPrintOutput
         self.commands.remove_food()
 
-        expectedOutput = FOOD_OPEN_ERROR_MESSAGE + NEW_LINE + \
+        expectedOutput = FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE + NEW_LINE + \
             SUGGESTED_ACTIONS_MESSAGE.format(listInQuotes([OPEN_FRIDGE, OPEN_FREEZER, CREATE_FREEZER, CREATE_FRIDGE])) + NEW_LINE
         self.assertEqual(expectedOutput, capturedPrintOutput.getvalue()) 
 
@@ -165,7 +166,7 @@ class Test_Commands(unittest.TestCase):
 
         testInventory = self.commands.profile.getFoodStorage(FREEZER, freezer_name).list()
 
-        self.assertNotIn(name1, testInventory)
+        self.assertNotIn(food1, testInventory)
         self.assertEqual(len(testInventory), 1)
     
         # reset standout
@@ -185,7 +186,7 @@ class Test_Commands(unittest.TestCase):
 
         testInventory = self.commands.profile.getFoodStorage(FREEZER, freezer_name).list()
 
-        self.assertNotIn(name1, testInventory)
+        self.assertNotIn(food1, testInventory)
         self.assertEqual(len(testInventory), 1)
 
         # reset standout

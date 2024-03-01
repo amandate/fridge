@@ -12,7 +12,7 @@ CREATE_NEW_OBJECT_REQUEST_MESSAGE = "Would you like to create one? (y/n): "
 CREATE_PROFILE_NAME_MESSAGE = "What would you like to name your profile?: "
 CREATE_PROFILE_SUCCESS_MESSAGE = "Successfully created profile. Now switching to profile: {}"
 EXISTING_NAME_MESSAGE = "A {} with the name '{}' already exists."
-FOOD_OPEN_ERROR_MESSAGE = "Nothing is currently open. You must open a 'fridge' or 'freezer' " + \
+FOOD_STORAGE_NOT_OPEN_ERROR_MESSAGE = "Nothing is currently open. You must open a 'fridge' or 'freezer' " + \
                      "in order to proceed."
 INVALID_RESPONSE_MESSAGE = "Sorry, that response was not recognized. Please try again."
 LIST_FOOD_STORAGES_ACTION = "Listing available {}s."
